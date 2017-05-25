@@ -189,29 +189,3 @@ dropDuplicates' existing remaining =
                 dropDuplicates' existing rest
             else
                 first :: dropDuplicates' (first :: existing) rest
-
-
-
--- combinations : Cards -> List (Maybe Combination)
--- combinations cards =
---     case cards of
---         [] ->
---             Nothing
---
---         [ card ] ->
---             Just Single
---
---         [ c1, c2 ] ->
---             if rank c1 == rank c2 then
---                 Just Double
---             else
---                 Nothing
---
---         [ c1, c2, c3 ] ->
---             if (suit c1 == suit c2) && (suit c2 == suit c3) then
---                 if (order c1) == ((order c2) - 1) && (order c2) == ((order c3) - 1) then
---                     Just (Ordered Single)
---                 else
---                     Nothing
---             else
---                 Nothing
