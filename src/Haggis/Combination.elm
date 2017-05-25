@@ -201,42 +201,7 @@ sequence cards =
         if List.length cards < 3 then
             Nothing
         else if allSetsSameSize sets && allSetsSameSuits sets && allSetsConsecutive sets then
-            case sets of
-                first :: rest ->
-                    let
-                        sizeOfSets =
-                            List.length first
-                    in
-                        case sizeOfSets of
-                            1 ->
-                                Just SingleRun
-
-                            2 ->
-                                Just DoubleRun
-
-                            3 ->
-                                Just TripleRun
-
-                            4 ->
-                                Just QuadrupleRun
-
-                            5 ->
-                                Just QuintupleRun
-
-                            6 ->
-                                Just SextupleRun
-
-                            7 ->
-                                Just SeptupleRun
-
-                            8 ->
-                                Just OctupleRun
-
-                            otherwise ->
-                                Nothing
-
-                otherwise ->
-                    Nothing
+            makeSequenceFromSets sets
         else
             Nothing
 
@@ -299,3 +264,43 @@ allMaybeConsecutive cards =
 
                 otherwise ->
                     False
+
+
+makeSequenceFromSets : List Cards -> Maybe Sequence
+makeSequenceFromSets sets =
+    case sets of
+        first :: rest ->
+            let
+                sizeOfSets =
+                    List.length first
+            in
+                case sizeOfSets of
+                    1 ->
+                        Just SingleRun
+
+                    2 ->
+                        Just DoubleRun
+
+                    3 ->
+                        Just TripleRun
+
+                    4 ->
+                        Just QuadrupleRun
+
+                    5 ->
+                        Just QuintupleRun
+
+                    6 ->
+                        Just SextupleRun
+
+                    7 ->
+                        Just SeptupleRun
+
+                    8 ->
+                        Just OctupleRun
+
+                    otherwise ->
+                        Nothing
+
+        otherwise ->
+            Nothing

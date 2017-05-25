@@ -207,45 +207,40 @@ var _user$project$Haggis_Combination$QuadrupleRun = {ctor: 'QuadrupleRun'};
 var _user$project$Haggis_Combination$TripleRun = {ctor: 'TripleRun'};
 var _user$project$Haggis_Combination$DoubleRun = {ctor: 'DoubleRun'};
 var _user$project$Haggis_Combination$SingleRun = {ctor: 'SingleRun'};
+var _user$project$Haggis_Combination$makeSequenceFromSets = function (sets) {
+	var _p13 = sets;
+	if (_p13.ctor === '::') {
+		var sizeOfSets = _elm_lang$core$List$length(_p13._0);
+		var _p14 = sizeOfSets;
+		switch (_p14) {
+			case 1:
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SingleRun);
+			case 2:
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$DoubleRun);
+			case 3:
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$TripleRun);
+			case 4:
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$QuadrupleRun);
+			case 5:
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$QuintupleRun);
+			case 6:
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SextupleRun);
+			case 7:
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SeptupleRun);
+			case 8:
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$OctupleRun);
+			default:
+				return _elm_lang$core$Maybe$Nothing;
+		}
+	} else {
+		return _elm_lang$core$Maybe$Nothing;
+	}
+};
 var _user$project$Haggis_Combination$sequence = function (cards) {
 	var sets = A2(_elm_community$elm_list_extra$List_Extra$groupWhileTransitively, _user$project$Haggis_Card$equal, cards);
-	if (_elm_lang$core$Native_Utils.cmp(
+	return (_elm_lang$core$Native_Utils.cmp(
 		_elm_lang$core$List$length(cards),
-		3) < 0) {
-		return _elm_lang$core$Maybe$Nothing;
-	} else {
-		if (_user$project$Haggis_Combination$allSetsSameSize(sets) && (_user$project$Haggis_Combination$allSetsSameSuits(sets) && _user$project$Haggis_Combination$allSetsConsecutive(sets))) {
-			var _p13 = sets;
-			if (_p13.ctor === '::') {
-				var sizeOfSets = _elm_lang$core$List$length(_p13._0);
-				var _p14 = sizeOfSets;
-				switch (_p14) {
-					case 1:
-						return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SingleRun);
-					case 2:
-						return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$DoubleRun);
-					case 3:
-						return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$TripleRun);
-					case 4:
-						return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$QuadrupleRun);
-					case 5:
-						return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$QuintupleRun);
-					case 6:
-						return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SextupleRun);
-					case 7:
-						return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SeptupleRun);
-					case 8:
-						return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$OctupleRun);
-					default:
-						return _elm_lang$core$Maybe$Nothing;
-				}
-			} else {
-				return _elm_lang$core$Maybe$Nothing;
-			}
-		} else {
-			return _elm_lang$core$Maybe$Nothing;
-		}
-	}
+		3) < 0) ? _elm_lang$core$Maybe$Nothing : ((_user$project$Haggis_Combination$allSetsSameSize(sets) && (_user$project$Haggis_Combination$allSetsSameSuits(sets) && _user$project$Haggis_Combination$allSetsConsecutive(sets))) ? _user$project$Haggis_Combination$makeSequenceFromSets(sets) : _elm_lang$core$Maybe$Nothing);
 };
 var _user$project$Haggis_Combination$Suited = {ctor: 'Suited'};
 var _user$project$Haggis_Combination$JQK = {ctor: 'JQK'};
