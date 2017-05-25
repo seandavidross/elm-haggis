@@ -1,6 +1,7 @@
 module Haggis.Combination exposing (..)
 
 import Haggis.Card exposing (..)
+import List.Extra exposing (..)
 
 
 type Combination
@@ -189,3 +190,112 @@ dropDuplicates' existing remaining =
                 dropDuplicates' existing rest
             else
                 first :: dropDuplicates' (first :: existing) rest
+
+
+sequence : Cards -> Maybe Sequence
+sequence cards =
+    let
+        sets =
+            List.Extra.groupWhileTransitively (equal) cards
+    in
+        if List.length cards < 3 then
+            Nothing
+        else if allSetsSameSize sets && allSetsSameSuits sets && allSetsConsecutive sets then
+            case sets of
+                first :: rest ->
+                    let
+                        sizeOfSets =
+                            List.length first
+                    in
+                        case sizeOfSets of
+                            1 ->
+                                Just SingleRun
+
+                            2 ->
+                                Just DoubleRun
+
+                            3 ->
+                                Just TripleRun
+
+                            4 ->
+                                Just QuadrupleRun
+
+                            5 ->
+                                Just QuintupleRun
+
+                            6 ->
+                                Just SextupleRun
+
+                            7 ->
+                                Just SeptupleRun
+
+                            8 ->
+                                Just OctupleRun
+
+                            otherwise ->
+                                Nothing
+
+                otherwise ->
+                    Nothing
+        else
+            Nothing
+
+
+allSetsSameSize : List (List Card) -> Bool
+allSetsSameSize sets =
+    case sets of
+        first :: rest ->
+            let
+                sizeOfSets =
+                    List.length first
+            in
+                List.all (\s -> List.length s == sizeOfSets) rest
+
+        otherwise ->
+            False
+
+
+allSetsSameSuits : List (List Card) -> Bool
+allSetsSameSuits sets =
+    let
+        suitGroups =
+            List.map (\s -> List.map .suit s) sets
+    in
+        case suitGroups of
+            first :: rest ->
+                List.all ((==) first) rest
+
+            otherwise ->
+                False
+
+
+allSetsConsecutive : List (List Card) -> Bool
+allSetsConsecutive sets =
+    let
+        ranks =
+            List.map (\s -> List.head s) sets
+    in
+        allMaybeConsecutive ranks
+
+
+allMaybeConsecutive : List (Maybe Card) -> Bool
+allMaybeConsecutive cards =
+    case cards of
+        [] ->
+            False
+
+        c :: [] ->
+            case c of
+                Just c ->
+                    True
+
+                Nothing ->
+                    False
+
+        c :: c' :: rest ->
+            case ( c, c' ) of
+                ( Just c, Just c' ) ->
+                    rank c < (rank c' + 1) && allMaybeConsecutive ((Maybe.map identity (Just c')) :: rest)
+
+                otherwise ->
+                    False

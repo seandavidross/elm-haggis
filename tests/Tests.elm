@@ -6,71 +6,6 @@ import Test exposing (..)
 import Expect exposing (..)
 
 
-blueTwo : Card
-blueTwo =
-    { suit = Blue, rank = Two, points = 0 }
-
-
-greenTwo : Card
-greenTwo =
-    { suit = Green, rank = Two, points = 0 }
-
-
-blueThree : Card
-blueThree =
-    { suit = Blue, rank = Three, points = 1 }
-
-
-redThree : Card
-redThree =
-    { suit = Red, rank = Three, points = 1 }
-
-
-redFive : Card
-redFive =
-    { suit = Red, rank = Five, points = 1 }
-
-
-greenFive : Card
-greenFive =
-    { suit = Green, rank = Five, points = 1 }
-
-
-redSeven : Card
-redSeven =
-    { suit = Red, rank = Seven, points = 1 }
-
-
-orangeSeven : Card
-orangeSeven =
-    { suit = Orange, rank = Seven, points = 1 }
-
-
-redNine : Card
-redNine =
-    { suit = Red, rank = Nine, points = 1 }
-
-
-yellowNine : Card
-yellowNine =
-    { suit = Yellow, rank = Nine, points = 1 }
-
-
-jack : Card
-jack =
-    { suit = Wild, rank = Jack, points = 2 }
-
-
-queen : Card
-queen =
-    { suit = Wild, rank = Queen, points = 3 }
-
-
-king : Card
-king =
-    { suit = Wild, rank = King, points = 5 }
-
-
 all =
     describe "Haggis"
         [ test "new card has correct suit" <|
@@ -136,4 +71,103 @@ all =
         , test "four distinct odd cards, with 2-3 suits, is a not bomb" <|
             \() ->
                 Expect.equal (bomb [ blueThree, redFive, redSeven, yellowNine ]) Nothing
+        , test "consecutive cards are all consecutive" <|
+            \() ->
+                Expect.equal (allMaybeConsecutive [ Just blueTwo, Just blueThree, Just blueFour ]) True
+        , test "nonconsecutive cards are not all consecutive" <|
+            \() ->
+                Expect.equal (allMaybeConsecutive [ Just blueTwo, Just blueThree, Just redFive ]) True
+        , test "An empty set of cards are not all consecutive" <|
+            \() ->
+                Expect.equal (allMaybeConsecutive []) False
+        , test "A single card is all consecutive" <|
+            \() ->
+                Expect.equal (allMaybeConsecutive [ Just blueTwo ]) True
+        , test "three consecutive singles is a sequence" <|
+            \() ->
+                Expect.equal (sequence [ blueTwo, blueThree, blueFour ]) (Just SingleRun)
+        , test "three nonconsecutive singles is not a sequence" <|
+            \() ->
+                Expect.equal (sequence [ blueTwo, blueThree, redThree ]) Nothing
+        , test "two consecutive singles is not a sequence" <|
+            \() ->
+                Expect.equal (sequence [ blueTwo, blueThree ]) Nothing
+        , test "two consecutive doubles is a sequence" <|
+            \() ->
+                Expect.equal (sequence [ blueTwo, greenTwo, blueThree, greenThree ]) (Just DoubleRun)
         ]
+
+
+blueTwo : Card
+blueTwo =
+    { suit = Blue, rank = Two, points = 0 }
+
+
+greenTwo : Card
+greenTwo =
+    { suit = Green, rank = Two, points = 0 }
+
+
+blueThree : Card
+blueThree =
+    { suit = Blue, rank = Three, points = 1 }
+
+
+greenThree : Card
+greenThree =
+    { suit = Green, rank = Three, points = 1 }
+
+
+redThree : Card
+redThree =
+    { suit = Red, rank = Three, points = 1 }
+
+
+blueFour : Card
+blueFour =
+    { suit = Blue, rank = Four, points = 1 }
+
+
+redFive : Card
+redFive =
+    { suit = Red, rank = Five, points = 1 }
+
+
+greenFive : Card
+greenFive =
+    { suit = Green, rank = Five, points = 1 }
+
+
+redSeven : Card
+redSeven =
+    { suit = Red, rank = Seven, points = 1 }
+
+
+orangeSeven : Card
+orangeSeven =
+    { suit = Orange, rank = Seven, points = 1 }
+
+
+redNine : Card
+redNine =
+    { suit = Red, rank = Nine, points = 1 }
+
+
+yellowNine : Card
+yellowNine =
+    { suit = Yellow, rank = Nine, points = 1 }
+
+
+jack : Card
+jack =
+    { suit = Wild, rank = Jack, points = 2 }
+
+
+queen : Card
+queen =
+    { suit = Wild, rank = Queen, points = 3 }
+
+
+king : Card
+king =
+    { suit = Wild, rank = King, points = 5 }

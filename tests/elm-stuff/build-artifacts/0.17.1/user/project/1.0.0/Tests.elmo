@@ -7,7 +7,9 @@ var _user$project$Tests$orangeSeven = {suit: _user$project$Haggis_Card$Orange, r
 var _user$project$Tests$redSeven = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Seven, points: 1};
 var _user$project$Tests$greenFive = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Five, points: 1};
 var _user$project$Tests$redFive = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Five, points: 1};
+var _user$project$Tests$blueFour = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Four, points: 1};
 var _user$project$Tests$redThree = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Three, points: 1};
+var _user$project$Tests$greenThree = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Three, points: 1};
 var _user$project$Tests$blueThree = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Three, points: 1};
 var _user$project$Tests$greenTwo = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Two, points: 0};
 var _user$project$Tests$blueTwo = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Two, points: 0};
@@ -243,5 +245,111 @@ var _user$project$Tests$all = A2(
 						_elm_lang$core$Native_List.fromArray(
 							[_user$project$Tests$blueThree, _user$project$Tests$redFive, _user$project$Tests$redSeven, _user$project$Tests$yellowNine])),
 					_elm_lang$core$Maybe$Nothing);
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'consecutive cards are all consecutive',
+			function (_p42) {
+				var _p43 = _p42;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$allMaybeConsecutive(
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$core$Maybe$Just(_user$project$Tests$blueTwo),
+								_elm_lang$core$Maybe$Just(_user$project$Tests$blueThree),
+								_elm_lang$core$Maybe$Just(_user$project$Tests$blueFour)
+							])),
+					true);
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'nonconsecutive cards are not all consecutive',
+			function (_p44) {
+				var _p45 = _p44;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$allMaybeConsecutive(
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$core$Maybe$Just(_user$project$Tests$blueTwo),
+								_elm_lang$core$Maybe$Just(_user$project$Tests$blueThree),
+								_elm_lang$core$Maybe$Just(_user$project$Tests$redFive)
+							])),
+					true);
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'An empty set of cards are not all consecutive',
+			function (_p46) {
+				var _p47 = _p46;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$allMaybeConsecutive(
+						_elm_lang$core$Native_List.fromArray(
+							[])),
+					false);
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'A single card is all consecutive',
+			function (_p48) {
+				var _p49 = _p48;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$allMaybeConsecutive(
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$core$Maybe$Just(_user$project$Tests$blueTwo)
+							])),
+					true);
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'three consecutive singles is a sequence',
+			function (_p50) {
+				var _p51 = _p50;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$sequence(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$blueTwo, _user$project$Tests$blueThree, _user$project$Tests$blueFour])),
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SingleRun));
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'three nonconsecutive singles is not a sequence',
+			function (_p52) {
+				var _p53 = _p52;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$sequence(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$blueTwo, _user$project$Tests$blueThree, _user$project$Tests$redThree])),
+					_elm_lang$core$Maybe$Nothing);
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'two consecutive singles is not a sequence',
+			function (_p54) {
+				var _p55 = _p54;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$sequence(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$blueTwo, _user$project$Tests$blueThree])),
+					_elm_lang$core$Maybe$Nothing);
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'two consecutive doubles is a sequence',
+			function (_p56) {
+				var _p57 = _p56;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$sequence(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo, _user$project$Tests$blueThree, _user$project$Tests$greenThree])),
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$DoubleRun));
 			})
 		]));
