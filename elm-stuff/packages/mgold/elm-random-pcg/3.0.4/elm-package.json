@@ -1,0 +1,17 @@
+{
+    "version": "3.0.4",
+    "summary": "A faster, more featureful, statistically better, & compatible random generator",
+    "repository": "https://github.com/mgold/elm-random-pcg.git",
+    "license": "BSD3",
+    "source-directories": [
+        "src"
+    ],
+    "exposed-modules": [
+        "Random.Pcg",
+        "Random.Pcg.Interop"
+    ],
+    "dependencies": {
+        "elm-lang/core": "4.0.0 <= v < 5.0.0"
+    },
+    "elm-version": "0.17.0 <= v < 0.18.0"
+}

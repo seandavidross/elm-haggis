@@ -1,0 +1,48 @@
+var _user$project$Main$no_element = _elm_lang$core$Native_List.fromArray(
+	[]);
+var _user$project$Main$no_attributes = _elm_lang$core$Native_List.fromArray(
+	[]);
+var _user$project$Main$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_user$project$Main$no_attributes,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$style(
+						_elm_lang$core$Native_List.fromArray(
+							[
+								{ctor: '_Tuple2', _0: 'background-color', _1: 'orange'},
+								{ctor: '_Tuple2', _0: 'width', _1: '80px'},
+								{ctor: '_Tuple2', _0: 'height', _1: '80px'},
+								{ctor: '_Tuple2', _0: 'border-radius', _1: '6px'},
+								{ctor: '_Tuple2', _0: 'margin', _1: '4px'}
+							]))
+					]),
+				_user$project$Main$no_element),
+				A2(_elm_lang$html$Html$hr, _user$project$Main$no_attributes, _user$project$Main$no_element),
+				A2(
+				_elm_lang$html$Html$pre,
+				_user$project$Main$no_attributes,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(
+						_elm_lang$core$Basics$toString(model))
+					]))
+			]));
+};
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		return model;
+	});
+var _user$project$Main$initialize = {is_on: true};
+var _user$project$Main$main = {
+	main: _elm_lang$html$Html_App$beginnerProgram(
+		{model: _user$project$Main$initialize, update: _user$project$Main$update, view: _user$project$Main$view})
+};
+var _user$project$Main$Model = function (a) {
+	return {is_on: a};
+};

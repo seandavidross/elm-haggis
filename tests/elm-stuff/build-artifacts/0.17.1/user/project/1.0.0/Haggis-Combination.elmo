@@ -1,0 +1,200 @@
+var _user$project$Haggis_Combination$dropDuplicates$ = F2(
+	function (existing, remaining) {
+		dropDuplicates$:
+		while (true) {
+			var _p0 = remaining;
+			if (_p0.ctor === '[]') {
+				return _elm_lang$core$Native_List.fromArray(
+					[]);
+			} else {
+				var _p2 = _p0._1;
+				var _p1 = _p0._0;
+				if (A2(_elm_lang$core$List$member, _p1, existing)) {
+					var _v1 = existing,
+						_v2 = _p2;
+					existing = _v1;
+					remaining = _v2;
+					continue dropDuplicates$;
+				} else {
+					return A2(
+						_elm_lang$core$List_ops['::'],
+						_p1,
+						A2(
+							_user$project$Haggis_Combination$dropDuplicates$,
+							A2(_elm_lang$core$List_ops['::'], _p1, existing),
+							_p2));
+				}
+			}
+		}
+	});
+var _user$project$Haggis_Combination$dropDuplicates = function (suits) {
+	return A2(
+		_user$project$Haggis_Combination$dropDuplicates$,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		suits);
+};
+var _user$project$Haggis_Combination$hasFourSuits = function (cards) {
+	var numberOfSuits = _elm_lang$core$List$length(
+		_user$project$Haggis_Combination$dropDuplicates(
+			A2(_elm_lang$core$List$map, _user$project$Haggis_Card$suit, cards)));
+	return _elm_lang$core$Native_Utils.eq(numberOfSuits, 4);
+};
+var _user$project$Haggis_Combination$hasSameSuit = F2(
+	function (card, card$) {
+		return _elm_lang$core$Native_Utils.eq(card.suit, card$.suit);
+	});
+var _user$project$Haggis_Combination$allSameSuit = function (cards) {
+	var _p3 = cards;
+	if (_p3.ctor === '[]') {
+		return false;
+	} else {
+		return A2(
+			_elm_lang$core$List$all,
+			_user$project$Haggis_Combination$hasSameSuit(_p3._0),
+			_p3._1);
+	}
+};
+var _user$project$Haggis_Combination$isSoloWildCard = function (wildCards) {
+	return _elm_lang$core$Native_Utils.eq(
+		_elm_lang$core$List$length(wildCards),
+		1);
+};
+var _user$project$Haggis_Combination$allSameRank = function (cards) {
+	var _p4 = cards;
+	if (_p4.ctor === '[]') {
+		return false;
+	} else {
+		return A2(
+			_elm_lang$core$List$all,
+			_user$project$Haggis_Card$equal(_p4._0),
+			_p4._1);
+	}
+};
+var _user$project$Haggis_Combination$Bomb = {ctor: 'Bomb'};
+var _user$project$Haggis_Combination$Sequence = {ctor: 'Sequence'};
+var _user$project$Haggis_Combination$Set = {ctor: 'Set'};
+var _user$project$Haggis_Combination$Octuple = {ctor: 'Octuple'};
+var _user$project$Haggis_Combination$Septuple = {ctor: 'Septuple'};
+var _user$project$Haggis_Combination$Sextuple = {ctor: 'Sextuple'};
+var _user$project$Haggis_Combination$Quintuple = {ctor: 'Quintuple'};
+var _user$project$Haggis_Combination$Quadruple = {ctor: 'Quadruple'};
+var _user$project$Haggis_Combination$Triple = {ctor: 'Triple'};
+var _user$project$Haggis_Combination$Double = {ctor: 'Double'};
+var _user$project$Haggis_Combination$Single = {ctor: 'Single'};
+var _user$project$Haggis_Combination$set = function (cards) {
+	var numberOfCards = _elm_lang$core$List$length(cards);
+	var _p5 = A2(_elm_lang$core$List$partition, _user$project$Haggis_Card$isSpotCard, cards);
+	var spotCards = _p5._0;
+	var wildCards = _p5._1;
+	if (_user$project$Haggis_Combination$allSameRank(spotCards)) {
+		var _p6 = numberOfCards;
+		switch (_p6) {
+			case 1:
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Single);
+			case 2:
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Double);
+			case 3:
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Triple);
+			case 4:
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Quadruple);
+			case 5:
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Quintuple);
+			case 6:
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Sextuple);
+			case 7:
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Septuple);
+			case 8:
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Octuple);
+			default:
+				return _elm_lang$core$Maybe$Nothing;
+		}
+	} else {
+		if (_user$project$Haggis_Combination$isSoloWildCard(wildCards) && _elm_lang$core$Native_Utils.eq(numberOfCards, 1)) {
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Single);
+		} else {
+			return _elm_lang$core$Maybe$Nothing;
+		}
+	}
+};
+var _user$project$Haggis_Combination$OctupleRun = {ctor: 'OctupleRun'};
+var _user$project$Haggis_Combination$SeptupleRun = {ctor: 'SeptupleRun'};
+var _user$project$Haggis_Combination$SextupleRun = {ctor: 'SextupleRun'};
+var _user$project$Haggis_Combination$QuintupleRun = {ctor: 'QuintupleRun'};
+var _user$project$Haggis_Combination$QuadrupleRun = {ctor: 'QuadrupleRun'};
+var _user$project$Haggis_Combination$TripleRun = {ctor: 'TripleRun'};
+var _user$project$Haggis_Combination$DoubleRun = {ctor: 'DoubleRun'};
+var _user$project$Haggis_Combination$SingleRun = {ctor: 'SingleRun'};
+var _user$project$Haggis_Combination$Suited = {ctor: 'Suited'};
+var _user$project$Haggis_Combination$JQK = {ctor: 'JQK'};
+var _user$project$Haggis_Combination$QK = {ctor: 'QK'};
+var _user$project$Haggis_Combination$JK = {ctor: 'JK'};
+var _user$project$Haggis_Combination$JQ = {ctor: 'JQ'};
+var _user$project$Haggis_Combination$Rainbow = {ctor: 'Rainbow'};
+var _user$project$Haggis_Combination$bomb = function (cards) {
+	var _p7 = A2(_elm_lang$core$List$sortBy, _user$project$Haggis_Card$rank, cards);
+	_v6_3:
+	do {
+		if ((_p7.ctor === '::') && (_p7._1.ctor === '::')) {
+			if (_p7._1._1.ctor === '[]') {
+				var _p8 = {ctor: '_Tuple2', _0: _p7._0.rank, _1: _p7._1._0.rank};
+				_v7_3:
+				do {
+					if (_p8.ctor === '_Tuple2') {
+						switch (_p8._0.ctor) {
+							case 'Jack':
+								switch (_p8._1.ctor) {
+									case 'Queen':
+										return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$JQ);
+									case 'King':
+										return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$JK);
+									default:
+										break _v7_3;
+								}
+							case 'Queen':
+								if (_p8._1.ctor === 'King') {
+									return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$QK);
+								} else {
+									break _v7_3;
+								}
+							default:
+								break _v7_3;
+						}
+					} else {
+						break _v7_3;
+					}
+				} while(false);
+				return _elm_lang$core$Maybe$Nothing;
+			} else {
+				if (_p7._1._1._1.ctor === '[]') {
+					var _p9 = {ctor: '_Tuple3', _0: _p7._0.rank, _1: _p7._1._0.rank, _2: _p7._1._1._0.rank};
+					if ((((_p9.ctor === '_Tuple3') && (_p9._0.ctor === 'Jack')) && (_p9._1.ctor === 'Queen')) && (_p9._2.ctor === 'King')) {
+						return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$JQK);
+					} else {
+						return _elm_lang$core$Maybe$Nothing;
+					}
+				} else {
+					if (_p7._1._1._1._1.ctor === '[]') {
+						var _p10 = A2(
+							_elm_lang$core$List$map,
+							function (_) {
+								return _.rank;
+							},
+							_elm_lang$core$Native_List.fromArray(
+								[_p7._0, _p7._1._0, _p7._1._1._0, _p7._1._1._1._0]));
+						if (((((((((_p10.ctor === '::') && (_p10._0.ctor === 'Three')) && (_p10._1.ctor === '::')) && (_p10._1._0.ctor === 'Five')) && (_p10._1._1.ctor === '::')) && (_p10._1._1._0.ctor === 'Seven')) && (_p10._1._1._1.ctor === '::')) && (_p10._1._1._1._0.ctor === 'Nine')) && (_p10._1._1._1._1.ctor === '[]')) {
+							return _user$project$Haggis_Combination$allSameSuit(cards) ? _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Suited) : (_user$project$Haggis_Combination$hasFourSuits(cards) ? _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Rainbow) : _elm_lang$core$Maybe$Nothing);
+						} else {
+							return _elm_lang$core$Maybe$Nothing;
+						}
+					} else {
+						break _v6_3;
+					}
+				}
+			}
+		} else {
+			break _v6_3;
+		}
+	} while(false);
+	return _elm_lang$core$Maybe$Nothing;
+};

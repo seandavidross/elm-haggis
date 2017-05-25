@@ -1,0 +1,63 @@
+var _user$project$Haggis_Card$rank = function (c) {
+	var _p0 = c.rank;
+	switch (_p0.ctor) {
+		case 'Two':
+			return 2;
+		case 'Three':
+			return 3;
+		case 'Four':
+			return 4;
+		case 'Five':
+			return 5;
+		case 'Six':
+			return 6;
+		case 'Seven':
+			return 7;
+		case 'Eight':
+			return 8;
+		case 'Nine':
+			return 9;
+		case 'Ten':
+			return 10;
+		case 'Jack':
+			return 11;
+		case 'Queen':
+			return 12;
+		default:
+			return 13;
+	}
+};
+var _user$project$Haggis_Card$equal = F2(
+	function (c1, c2) {
+		return _elm_lang$core$Native_Utils.eq(
+			_user$project$Haggis_Card$rank(c1),
+			_user$project$Haggis_Card$rank(c2));
+	});
+var _user$project$Haggis_Card$suit = function (card) {
+	return card.suit;
+};
+var _user$project$Haggis_Card$Card = F3(
+	function (a, b, c) {
+		return {suit: a, rank: b, points: c};
+	});
+var _user$project$Haggis_Card$Wild = {ctor: 'Wild'};
+var _user$project$Haggis_Card$isSpotCard = function (card) {
+	return !_elm_lang$core$Native_Utils.eq(card.suit, _user$project$Haggis_Card$Wild);
+};
+var _user$project$Haggis_Card$Blue = {ctor: 'Blue'};
+var _user$project$Haggis_Card$Green = {ctor: 'Green'};
+var _user$project$Haggis_Card$Yellow = {ctor: 'Yellow'};
+var _user$project$Haggis_Card$Orange = {ctor: 'Orange'};
+var _user$project$Haggis_Card$Red = {ctor: 'Red'};
+var _user$project$Haggis_Card$King = {ctor: 'King'};
+var _user$project$Haggis_Card$Queen = {ctor: 'Queen'};
+var _user$project$Haggis_Card$Jack = {ctor: 'Jack'};
+var _user$project$Haggis_Card$Ten = {ctor: 'Ten'};
+var _user$project$Haggis_Card$Nine = {ctor: 'Nine'};
+var _user$project$Haggis_Card$Eight = {ctor: 'Eight'};
+var _user$project$Haggis_Card$Seven = {ctor: 'Seven'};
+var _user$project$Haggis_Card$Six = {ctor: 'Six'};
+var _user$project$Haggis_Card$Five = {ctor: 'Five'};
+var _user$project$Haggis_Card$Four = {ctor: 'Four'};
+var _user$project$Haggis_Card$Three = {ctor: 'Three'};
+var _user$project$Haggis_Card$Two = {ctor: 'Two'};

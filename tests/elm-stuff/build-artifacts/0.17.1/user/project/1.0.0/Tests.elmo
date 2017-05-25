@@ -1,0 +1,247 @@
+var _user$project$Tests$king = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$King, points: 5};
+var _user$project$Tests$queen = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$Queen, points: 3};
+var _user$project$Tests$jack = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$Jack, points: 2};
+var _user$project$Tests$yellowNine = {suit: _user$project$Haggis_Card$Yellow, rank: _user$project$Haggis_Card$Nine, points: 1};
+var _user$project$Tests$redNine = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Nine, points: 1};
+var _user$project$Tests$orangeSeven = {suit: _user$project$Haggis_Card$Orange, rank: _user$project$Haggis_Card$Seven, points: 1};
+var _user$project$Tests$redSeven = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Seven, points: 1};
+var _user$project$Tests$greenFive = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Five, points: 1};
+var _user$project$Tests$redFive = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Five, points: 1};
+var _user$project$Tests$redThree = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Three, points: 1};
+var _user$project$Tests$blueThree = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Three, points: 1};
+var _user$project$Tests$greenTwo = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Two, points: 0};
+var _user$project$Tests$blueTwo = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Two, points: 0};
+var _user$project$Tests$all = A2(
+	_elm_community$elm_test$Test$describe,
+	'Haggis',
+	_elm_lang$core$Native_List.fromArray(
+		[
+			A2(
+			_elm_community$elm_test$Test$test,
+			'new card has correct suit',
+			function (_p0) {
+				var _p1 = _p0;
+				return A2(_elm_community$elm_test$Expect$equal, _user$project$Tests$blueTwo.suit, _user$project$Haggis_Card$Blue);
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'new card has correct rank',
+			function (_p2) {
+				var _p3 = _p2;
+				return A2(_elm_community$elm_test$Expect$equal, _user$project$Tests$blueTwo.rank, _user$project$Haggis_Card$Two);
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'new card has correct points',
+			function (_p4) {
+				var _p5 = _p4;
+				return A2(_elm_community$elm_test$Expect$equal, _user$project$Tests$redSeven.points, 1);
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'card with lower rank less than card with higher rank',
+			function (_p6) {
+				var _p7 = _p6;
+				return A2(
+					_elm_community$elm_test$Expect$lessThan,
+					_user$project$Haggis_Card$rank(_user$project$Tests$redSeven),
+					_user$project$Haggis_Card$rank(_user$project$Tests$blueTwo));
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'two cards with the same rank are equal',
+			function (_p8) {
+				var _p9 = _p8;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Card$rank(_user$project$Tests$blueTwo),
+					_user$project$Haggis_Card$rank(_user$project$Tests$greenTwo));
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'non-matching single cards do not match',
+			function (_p10) {
+				var _p11 = _p10;
+				return A2(_elm_community$elm_test$Expect$notEqual, _user$project$Tests$blueTwo, _user$project$Tests$redSeven);
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'one card is a single',
+			function (_p12) {
+				var _p13 = _p12;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$set(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$redSeven])),
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Single));
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'two cards of matching rank are a double',
+			function (_p14) {
+				var _p15 = _p14;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$set(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo])),
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Double));
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'two cards with unmatched ranks are not a combination',
+			function (_p16) {
+				var _p17 = _p16;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$set(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$blueTwo, _user$project$Tests$redSeven])),
+					_elm_lang$core$Maybe$Nothing);
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'two matched number cards with one wild is a triple',
+			function (_p18) {
+				var _p19 = _p18;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$set(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo, _user$project$Tests$jack])),
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Triple));
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'two wild cards is NOT a double',
+			function (_p20) {
+				var _p21 = _p20;
+				return A2(
+					_elm_community$elm_test$Expect$notEqual,
+					_user$project$Haggis_Combination$set(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$jack, _user$project$Tests$queen])),
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Double));
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'one wild card is a single',
+			function (_p22) {
+				var _p23 = _p22;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$set(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$jack])),
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Single));
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'two matched spot cards plus three wilds is a Quintuple',
+			function (_p24) {
+				var _p25 = _p24;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$set(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo, _user$project$Tests$jack, _user$project$Tests$queen, _user$project$Tests$king])),
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Quintuple));
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'one wild card is not a bomb',
+			function (_p26) {
+				var _p27 = _p26;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$bomb(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$king])),
+					_elm_lang$core$Maybe$Nothing);
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'two wild cards is a bomb',
+			function (_p28) {
+				var _p29 = _p28;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$bomb(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$queen, _user$project$Tests$king])),
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$QK));
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'three wild cards is a bomb',
+			function (_p30) {
+				var _p31 = _p30;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$bomb(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$jack, _user$project$Tests$queen, _user$project$Tests$king])),
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$JQK));
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'four distinct, same-suited odd cards is a bomb',
+			function (_p32) {
+				var _p33 = _p32;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$bomb(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$redThree, _user$project$Tests$redFive, _user$project$Tests$redSeven, _user$project$Tests$redNine])),
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Suited));
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'A suited bomb is a suited bomb regardless of card order',
+			function (_p34) {
+				var _p35 = _p34;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$bomb(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$redFive, _user$project$Tests$redNine, _user$project$Tests$redThree, _user$project$Tests$redSeven])),
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Suited));
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'four distinct odd cards, with distinct suits, is a bomb',
+			function (_p36) {
+				var _p37 = _p36;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$bomb(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$blueThree, _user$project$Tests$greenFive, _user$project$Tests$redSeven, _user$project$Tests$yellowNine])),
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Rainbow));
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'four distinct odd cards, with 2-3 suits, does not have 4 suits',
+			function (_p38) {
+				var _p39 = _p38;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$hasFourSuits(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$blueThree, _user$project$Tests$redFive, _user$project$Tests$redSeven, _user$project$Tests$yellowNine])),
+					false);
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'four distinct odd cards, with 2-3 suits, is a not bomb',
+			function (_p40) {
+				var _p41 = _p40;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$bomb(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$blueThree, _user$project$Tests$redFive, _user$project$Tests$redSeven, _user$project$Tests$yellowNine])),
+					_elm_lang$core$Maybe$Nothing);
+			})
+		]));
