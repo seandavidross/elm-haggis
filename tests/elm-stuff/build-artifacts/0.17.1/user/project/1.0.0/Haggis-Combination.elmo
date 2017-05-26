@@ -284,13 +284,15 @@ var _user$project$Haggis_Combination$bomb = function (cards) {
 	do {
 		if ((_p15.ctor === '::') && (_p15._1.ctor === '::')) {
 			if (_p15._1._1.ctor === '[]') {
-				var _p16 = {ctor: '_Tuple2', _0: _p15._0.rank, _1: _p15._1._0.rank};
+				var _p16 = _user$project$Haggis_Combination$collectRanks(
+					_elm_lang$core$Native_List.fromArray(
+						[_p15._0, _p15._1._0]));
 				_v14_3:
 				do {
-					if (_p16.ctor === '_Tuple2') {
+					if (((_p16.ctor === '::') && (_p16._1.ctor === '::')) && (_p16._1._1.ctor === '[]')) {
 						switch (_p16._0.ctor) {
 							case 'Jack':
-								switch (_p16._1.ctor) {
+								switch (_p16._1._0.ctor) {
 									case 'Queen':
 										return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$JQ);
 									case 'King':
@@ -299,7 +301,7 @@ var _user$project$Haggis_Combination$bomb = function (cards) {
 										break _v14_3;
 								}
 							case 'Queen':
-								if (_p16._1.ctor === 'King') {
+								if (_p16._1._0.ctor === 'King') {
 									return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$QK);
 								} else {
 									break _v14_3;
@@ -314,8 +316,10 @@ var _user$project$Haggis_Combination$bomb = function (cards) {
 				return _elm_lang$core$Maybe$Nothing;
 			} else {
 				if (_p15._1._1._1.ctor === '[]') {
-					var _p17 = {ctor: '_Tuple3', _0: _p15._0.rank, _1: _p15._1._0.rank, _2: _p15._1._1._0.rank};
-					if ((((_p17.ctor === '_Tuple3') && (_p17._0.ctor === 'Jack')) && (_p17._1.ctor === 'Queen')) && (_p17._2.ctor === 'King')) {
+					var _p17 = _user$project$Haggis_Combination$collectRanks(
+						_elm_lang$core$Native_List.fromArray(
+							[_p15._0, _p15._1._0, _p15._1._1._0]));
+					if (((((((_p17.ctor === '::') && (_p17._0.ctor === 'Jack')) && (_p17._1.ctor === '::')) && (_p17._1._0.ctor === 'Queen')) && (_p17._1._1.ctor === '::')) && (_p17._1._1._0.ctor === 'King')) && (_p17._1._1._1.ctor === '[]')) {
 						return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$JQK);
 					} else {
 						return _elm_lang$core$Maybe$Nothing;

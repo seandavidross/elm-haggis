@@ -117,22 +117,22 @@ bomb : Cards -> Maybe Bomb
 bomb cards =
     case sorted cards of
         [ wild, wild' ] ->
-            case ( wild.rank, wild'.rank ) of
-                ( Jack, Queen ) ->
+            case collectRanks [ wild, wild' ] of
+                [ Jack, Queen ] ->
                     Just JQ
 
-                ( Jack, King ) ->
+                [ Jack, King ] ->
                     Just JK
 
-                ( Queen, King ) ->
+                [ Queen, King ] ->
                     Just QK
 
                 otherwise ->
                     Nothing
 
         [ j, q, k ] ->
-            case ( j.rank, q.rank, k.rank ) of
-                ( Jack, Queen, King ) ->
+            case collectRanks [ j, q, k ] of
+                [ Jack, Queen, King ] ->
                     Just JQK
 
                 otherwise ->
