@@ -57,15 +57,20 @@ type Bomb
 set : List Card -> Maybe Set
 set cards =
     let
-        ( spotCards, wildCards ) =
-            List.partition (isSpotCard) cards
+        ( spotcards, wildcards ) =
+            partition cards
     in
-        if allSameRank spotCards then
+        if allSameRank spotcards then
             makeSet cards
-        else if count wildCards == 1 && count cards == 1 then
+        else if count wildcards == 1 && count cards == 1 then
             Just Single
         else
             Nothing
+
+
+partition : List Card -> ( List Card, List Card )
+partition =
+    List.partition (isSpotCard)
 
 
 allSameRank : List Card -> Bool
@@ -242,13 +247,41 @@ dropDuplicates' existing remaining =
 sequence : List Card -> Maybe Sequence
 sequence cards =
     let
+        ( spotcards, wildcards ) =
+            partition cards
+
         sets =
             collectSets cards
+
+        --redistribute wildcards (collectSets spotcards)
     in
         if count cards >= 3 && canFormSequence sets then
             makeSequence sets
         else
             Nothing
+
+
+{-| Placeholder implementation until I'm ready to provide the necessary implementation
+
+Roughly, we need something that does this:
+
+[[c1], [c2, c2'], [w, w', w'']] -> [[c1, w1, w1'], [c2, c2', w2'']]
+
+[[c1, c1'], [c2, c2'], [w, w']] -> [[c1, c1', w1], [c2, c2', w2']]
+
+[[c1, c1'], [w, w']] -> [[c1, c1'], [w2, w2']]
+
+[[c1], [w, w', w''']] -> [[c1, w1], [w2', w2'']]
+
+where cN is a card with rank N and wN is the rank the wild card takes on after distibution
+
+NOTE
+[[w, w', w''']] is not a run of singles (it can only ever be a bomb)
+
+-}
+redistribute : List Card -> List (List Card) -> List (List Card)
+redistribute wildcards sets =
+    List.append sets [ wildcards ]
 
 
 collectSets : List Card -> List (List Card)
