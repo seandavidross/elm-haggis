@@ -7,9 +7,17 @@ Would it be worthwhile to make points' type be 'Point value'?
 
 type alias Card =
     { suit : Suit
-    , rank : Rank
-    , points : Int
+    , rank : Rank Ordinal
+    , points : Points Int
     }
+
+
+type alias Ordinal =
+    Int
+
+
+type Points
+    = Points Int
 
 
 type alias Cards =
@@ -29,19 +37,19 @@ type Suit
 Might want to try 'type Rank ordinal' so that when we say 'Two 2' we have
 both the rank's denomination (Two) and its order relative to other ranks.
 -}
-type Rank
-    = Two
-    | Three
-    | Four
-    | Five
-    | Six
-    | Seven
-    | Eight
-    | Nine
-    | Ten
-    | Jack
-    | Queen
-    | King
+type Rank order
+    = Two order
+    | Three order
+    | Four order
+    | Five order
+    | Six order
+    | Seven order
+    | Eight order
+    | Nine order
+    | Ten order
+    | Jack order
+    | Queen order
+    | King order
 
 
 suit : Card -> Suit
@@ -53,44 +61,13 @@ suit card =
 Probably need to handle changing wild card ranks
 to fit the combination in which they are played...
 -}
-rank : Card -> Int
-rank c =
-    case c.rank of
-        Two ->
-            2
+rank : Card -> Ordinal
+rank card =
+    rank' card.rank
 
-        Three ->
-            3
 
-        Four ->
-            4
-
-        Five ->
-            5
-
-        Six ->
-            6
-
-        Seven ->
-            7
-
-        Eight ->
-            8
-
-        Nine ->
-            9
-
-        Ten ->
-            10
-
-        Jack ->
-            11
-
-        Queen ->
-            12
-
-        King ->
-            13
+rank' (Rank order) =
+    order
 
 
 equal : Card -> Card -> Bool
