@@ -1,3 +1,6 @@
+var _user$project$Haggis_Combination$sizeOfSet = function (set) {
+	return _elm_lang$core$List$length(set);
+};
 var _user$project$Haggis_Combination$allRanksConsecutive = function (cards) {
 	var _p0 = cards;
 	if (_p0.ctor === '[]') {
@@ -213,8 +216,7 @@ var _user$project$Haggis_Combination$SingleRun = {ctor: 'SingleRun'};
 var _user$project$Haggis_Combination$makeSequence = function (sets) {
 	var _p13 = sets;
 	if (_p13.ctor === '::') {
-		var sizeOfSets = _elm_lang$core$List$length(_p13._0);
-		var _p14 = sizeOfSets;
+		var _p14 = _user$project$Haggis_Combination$sizeOfSet(_p13._0);
 		switch (_p14) {
 			case 1:
 				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SingleRun);

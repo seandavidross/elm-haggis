@@ -272,38 +272,39 @@ allRanksConsecutive cards =
 makeSequence : List Cards -> Maybe Sequence
 makeSequence sets =
     case sets of
-        first :: rest ->
-            let
-                sizeOfSets =
-                    List.length first
-            in
-                case sizeOfSets of
-                    1 ->
-                        Just SingleRun
+        set :: _ ->
+            case sizeOfSet set of
+                1 ->
+                    Just SingleRun
 
-                    2 ->
-                        Just DoubleRun
+                2 ->
+                    Just DoubleRun
 
-                    3 ->
-                        Just TripleRun
+                3 ->
+                    Just TripleRun
 
-                    4 ->
-                        Just QuadrupleRun
+                4 ->
+                    Just QuadrupleRun
 
-                    5 ->
-                        Just QuintupleRun
+                5 ->
+                    Just QuintupleRun
 
-                    6 ->
-                        Just SextupleRun
+                6 ->
+                    Just SextupleRun
 
-                    7 ->
-                        Just SeptupleRun
+                7 ->
+                    Just SeptupleRun
 
-                    8 ->
-                        Just OctupleRun
+                8 ->
+                    Just OctupleRun
 
-                    otherwise ->
-                        Nothing
+                otherwise ->
+                    Nothing
 
         otherwise ->
             Nothing
+
+
+sizeOfSet : List Card -> Int
+sizeOfSet set =
+    List.length set
