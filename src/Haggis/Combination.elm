@@ -235,7 +235,9 @@ sequence cards =
 
 canMakeSequence : List (List Card) -> Bool
 canMakeSequence sets =
-    allSetsSameSize sets && allSetsSameSuits sets && allSetsConsecutive sets
+    allSetsSameSize sets
+        && allSetsSameSuits sets
+        && allSetsConsecutive sets
 
 
 allSetsSameSize : List (List Card) -> Bool
