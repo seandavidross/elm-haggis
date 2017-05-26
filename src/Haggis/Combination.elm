@@ -168,11 +168,11 @@ collectRanks cards =
 allSameSuit : Cards -> Bool
 allSameSuit cards =
     case cards of
-        [] ->
-            False
-
         first :: rest ->
             List.all (hasSameSuit first) rest
+
+        otherwise ->
+            False
 
 
 hasSameSuit : Card -> Card -> Bool

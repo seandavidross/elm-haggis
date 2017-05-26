@@ -122,13 +122,13 @@ var _user$project$Haggis_Combination$hasSameSuit = F2(
 	});
 var _user$project$Haggis_Combination$allSameSuit = function (cards) {
 	var _p8 = cards;
-	if (_p8.ctor === '[]') {
-		return false;
-	} else {
+	if (_p8.ctor === '::') {
 		return A2(
 			_elm_lang$core$List$all,
 			_user$project$Haggis_Combination$hasSameSuit(_p8._0),
 			_p8._1);
+	} else {
+		return false;
 	}
 };
 var _user$project$Haggis_Combination$collectRanks = function (cards) {
