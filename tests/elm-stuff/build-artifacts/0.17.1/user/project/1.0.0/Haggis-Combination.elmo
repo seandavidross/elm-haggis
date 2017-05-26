@@ -211,6 +211,9 @@ var _user$project$Haggis_Combination$isSoloWildCard = function (wildCards) {
 		_elm_lang$core$List$length(wildCards),
 		1);
 };
+var _user$project$Haggis_Combination$count = function (cards) {
+	return _elm_lang$core$List$length(cards);
+};
 var _user$project$Haggis_Combination$allSameRank = function (cards) {
 	var _p16 = cards;
 	if (_p16.ctor === '[]') {
@@ -234,12 +237,11 @@ var _user$project$Haggis_Combination$Triple = {ctor: 'Triple'};
 var _user$project$Haggis_Combination$Double = {ctor: 'Double'};
 var _user$project$Haggis_Combination$Single = {ctor: 'Single'};
 var _user$project$Haggis_Combination$set = function (cards) {
-	var numberOfCards = _elm_lang$core$List$length(cards);
 	var _p17 = A2(_elm_lang$core$List$partition, _user$project$Haggis_Card$isSpotCard, cards);
 	var spotCards = _p17._0;
 	var wildCards = _p17._1;
 	if (_user$project$Haggis_Combination$allSameRank(spotCards)) {
-		var _p18 = numberOfCards;
+		var _p18 = _user$project$Haggis_Combination$count(cards);
 		switch (_p18) {
 			case 1:
 				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Single);
@@ -261,7 +263,9 @@ var _user$project$Haggis_Combination$set = function (cards) {
 				return _elm_lang$core$Maybe$Nothing;
 		}
 	} else {
-		if (_user$project$Haggis_Combination$isSoloWildCard(wildCards) && _elm_lang$core$Native_Utils.eq(numberOfCards, 1)) {
+		if (_user$project$Haggis_Combination$isSoloWildCard(wildCards) && _elm_lang$core$Native_Utils.eq(
+			_user$project$Haggis_Combination$count(cards),
+			1)) {
 			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Single);
 		} else {
 			return _elm_lang$core$Maybe$Nothing;

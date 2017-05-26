@@ -46,12 +46,9 @@ set cards =
     let
         ( spotCards, wildCards ) =
             List.partition (isSpotCard) cards
-
-        numberOfCards =
-            List.length cards
     in
         if allSameRank spotCards then
-            case numberOfCards of
+            case count cards of
                 1 ->
                     Just Single
 
@@ -78,7 +75,7 @@ set cards =
 
                 otherwise ->
                     Nothing
-        else if isSoloWildCard wildCards && numberOfCards == 1 then
+        else if isSoloWildCard wildCards && count cards == 1 then
             Just Single
         else
             Nothing
@@ -92,6 +89,11 @@ allSameRank cards =
 
         first :: rest ->
             List.all (equal first) rest
+
+
+count : Cards -> Int
+count cards =
+    List.length cards
 
 
 isSoloWildCard : Cards -> Bool
