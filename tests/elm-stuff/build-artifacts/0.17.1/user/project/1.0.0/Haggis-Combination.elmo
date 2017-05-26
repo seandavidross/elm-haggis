@@ -18,9 +18,9 @@ var _user$project$Haggis_Combination$allRanksConsecutive = function (cards) {
 			var _p2 = {ctor: '_Tuple2', _0: _p0._0, _1: _p0._1._0};
 			if (((_p2.ctor === '_Tuple2') && (_p2._0.ctor === 'Just')) && (_p2._1.ctor === 'Just')) {
 				var _p3 = _p2._1._0;
-				return (_elm_lang$core$Native_Utils.cmp(
-					_user$project$Haggis_Card$rank(_p2._0._0),
-					_user$project$Haggis_Card$rank(_p3) + 1) < 0) && _user$project$Haggis_Combination$allRanksConsecutive(
+				return _elm_lang$core$Native_Utils.eq(
+					_user$project$Haggis_Card$rank(_p2._0._0) + 1,
+					_user$project$Haggis_Card$rank(_p3)) && _user$project$Haggis_Combination$allRanksConsecutive(
 					A2(
 						_elm_lang$core$List_ops['::'],
 						_user$project$Haggis_Combination$maybe(_p3),

@@ -316,7 +316,7 @@ allRanksConsecutive cards =
         c :: c' :: rest ->
             case ( c, c' ) of
                 ( Just c, Just c' ) ->
-                    (rank c < (rank c' + 1))
+                    ((rank c + 1) == rank c')
                         && allRanksConsecutive (maybe c' :: rest)
 
                 otherwise ->
