@@ -1,6 +1,65 @@
+var _user$project$Haggis_Card$compareSuits = F2(
+	function (s, s$) {
+		var _p0 = s;
+		switch (_p0.ctor) {
+			case 'Red':
+				var _p1 = s$;
+				if (_p1.ctor === 'Red') {
+					return _elm_lang$core$Basics$EQ;
+				} else {
+					return _elm_lang$core$Basics$LT;
+				}
+			case 'Orange':
+				var _p2 = s$;
+				switch (_p2.ctor) {
+					case 'Red':
+						return _elm_lang$core$Basics$GT;
+					case 'Orange':
+						return _elm_lang$core$Basics$EQ;
+					default:
+						return _elm_lang$core$Basics$LT;
+				}
+			case 'Yellow':
+				var _p3 = s$;
+				switch (_p3.ctor) {
+					case 'Red':
+						return _elm_lang$core$Basics$GT;
+					case 'Orange':
+						return _elm_lang$core$Basics$GT;
+					case 'Yellow':
+						return _elm_lang$core$Basics$EQ;
+					default:
+						return _elm_lang$core$Basics$LT;
+				}
+			case 'Green':
+				var _p4 = s$;
+				switch (_p4.ctor) {
+					case 'Wild':
+						return _elm_lang$core$Basics$LT;
+					case 'Blue':
+						return _elm_lang$core$Basics$LT;
+					case 'Green':
+						return _elm_lang$core$Basics$EQ;
+					default:
+						return _elm_lang$core$Basics$GT;
+				}
+			case 'Blue':
+				var _p5 = s$;
+				switch (_p5.ctor) {
+					case 'Wild':
+						return _elm_lang$core$Basics$LT;
+					case 'Blue':
+						return _elm_lang$core$Basics$EQ;
+					default:
+						return _elm_lang$core$Basics$GT;
+				}
+			default:
+				return _elm_lang$core$Basics$GT;
+		}
+	});
 var _user$project$Haggis_Card$rank = function (c) {
-	var _p0 = c.rank;
-	switch (_p0.ctor) {
+	var _p6 = c.rank;
+	switch (_p6.ctor) {
 		case 'Two':
 			return 2;
 		case 'Three':

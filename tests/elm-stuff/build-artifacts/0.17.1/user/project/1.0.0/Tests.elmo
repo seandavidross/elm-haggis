@@ -224,21 +224,9 @@ var _user$project$Tests$all = A2(
 			}),
 			A2(
 			_elm_community$elm_test$Test$test,
-			'four distinct odd cards, with 2-3 suits, does not have 4 suits',
+			'four distinct odd cards, with 2-3 suits, is a not bomb',
 			function (_p38) {
 				var _p39 = _p38;
-				return A2(
-					_elm_community$elm_test$Expect$equal,
-					_user$project$Haggis_Combination$hasFourSuits(
-						_elm_lang$core$Native_List.fromArray(
-							[_user$project$Tests$blueThree, _user$project$Tests$redFive, _user$project$Tests$redSeven, _user$project$Tests$yellowNine])),
-					false);
-			}),
-			A2(
-			_elm_community$elm_test$Test$test,
-			'four distinct odd cards, with 2-3 suits, is a not bomb',
-			function (_p40) {
-				var _p41 = _p40;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$bomb(
@@ -248,67 +236,9 @@ var _user$project$Tests$all = A2(
 			}),
 			A2(
 			_elm_community$elm_test$Test$test,
-			'consecutive cards are all consecutive',
-			function (_p42) {
-				var _p43 = _p42;
-				return A2(
-					_elm_community$elm_test$Expect$equal,
-					_user$project$Haggis_Combination$allRanksConsecutive(
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$core$Maybe$Just(_user$project$Tests$blueTwo),
-								_elm_lang$core$Maybe$Just(_user$project$Tests$blueThree),
-								_elm_lang$core$Maybe$Just(_user$project$Tests$blueFour)
-							])),
-					true);
-			}),
-			A2(
-			_elm_community$elm_test$Test$test,
-			'nonconsecutive cards are not all consecutive',
-			function (_p44) {
-				var _p45 = _p44;
-				return A2(
-					_elm_community$elm_test$Expect$equal,
-					_user$project$Haggis_Combination$allRanksConsecutive(
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$core$Maybe$Just(_user$project$Tests$blueTwo),
-								_elm_lang$core$Maybe$Just(_user$project$Tests$blueThree),
-								_elm_lang$core$Maybe$Just(_user$project$Tests$redFive)
-							])),
-					true);
-			}),
-			A2(
-			_elm_community$elm_test$Test$test,
-			'An empty set of cards are not all consecutive',
-			function (_p46) {
-				var _p47 = _p46;
-				return A2(
-					_elm_community$elm_test$Expect$equal,
-					_user$project$Haggis_Combination$allRanksConsecutive(
-						_elm_lang$core$Native_List.fromArray(
-							[])),
-					false);
-			}),
-			A2(
-			_elm_community$elm_test$Test$test,
-			'A single card is all consecutive',
-			function (_p48) {
-				var _p49 = _p48;
-				return A2(
-					_elm_community$elm_test$Expect$equal,
-					_user$project$Haggis_Combination$allRanksConsecutive(
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$core$Maybe$Just(_user$project$Tests$blueTwo)
-							])),
-					true);
-			}),
-			A2(
-			_elm_community$elm_test$Test$test,
 			'three consecutive singles is a sequence',
-			function (_p50) {
-				var _p51 = _p50;
+			function (_p40) {
+				var _p41 = _p40;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$sequence(
@@ -319,8 +249,8 @@ var _user$project$Tests$all = A2(
 			A2(
 			_elm_community$elm_test$Test$test,
 			'three nonconsecutive singles is not a sequence',
-			function (_p52) {
-				var _p53 = _p52;
+			function (_p42) {
+				var _p43 = _p42;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$sequence(
@@ -331,8 +261,8 @@ var _user$project$Tests$all = A2(
 			A2(
 			_elm_community$elm_test$Test$test,
 			'two consecutive singles is not a sequence',
-			function (_p54) {
-				var _p55 = _p54;
+			function (_p44) {
+				var _p45 = _p44;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$sequence(
@@ -343,8 +273,8 @@ var _user$project$Tests$all = A2(
 			A2(
 			_elm_community$elm_test$Test$test,
 			'two consecutive doubles is a sequence',
-			function (_p56) {
-				var _p57 = _p56;
+			function (_p46) {
+				var _p47 = _p46;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$sequence(
@@ -355,26 +285,13 @@ var _user$project$Tests$all = A2(
 			A2(
 			_elm_community$elm_test$Test$test,
 			'card order should not affect sequence identification',
-			function (_p58) {
-				var _p59 = _p58;
+			function (_p48) {
+				var _p49 = _p48;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$sequence(
 						_elm_lang$core$Native_List.fromArray(
 							[_user$project$Tests$greenTwo, _user$project$Tests$blueThree, _user$project$Tests$greenThree, _user$project$Tests$blueTwo])),
 					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$DoubleRun));
-			}),
-			A2(
-			_elm_community$elm_test$Test$test,
-			'suits collected in correct order',
-			function (_p60) {
-				var _p61 = _p60;
-				return A2(
-					_elm_community$elm_test$Expect$equal,
-					_user$project$Haggis_Combination$collectSuits(
-						_elm_lang$core$Native_List.fromArray(
-							[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo])),
-					_elm_lang$core$Native_List.fromArray(
-						[_user$project$Haggis_Card$Green, _user$project$Haggis_Card$Blue]));
 			})
 		]));

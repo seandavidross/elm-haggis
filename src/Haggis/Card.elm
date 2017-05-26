@@ -89,3 +89,68 @@ equal c1 c2 =
 isSpotCard : Card -> Bool
 isSpotCard card =
     card.suit /= Wild
+
+
+compareSuits : Suit -> Suit -> Basics.Order
+compareSuits s s' =
+    case s of
+        Red ->
+            case s' of
+                Red ->
+                    EQ
+
+                otherwise ->
+                    LT
+
+        Orange ->
+            case s' of
+                Red ->
+                    GT
+
+                Orange ->
+                    EQ
+
+                otherwise ->
+                    LT
+
+        Yellow ->
+            case s' of
+                Red ->
+                    GT
+
+                Orange ->
+                    GT
+
+                Yellow ->
+                    EQ
+
+                otherwise ->
+                    LT
+
+        Green ->
+            case s' of
+                Wild ->
+                    LT
+
+                Blue ->
+                    LT
+
+                Green ->
+                    EQ
+
+                otherwise ->
+                    GT
+
+        Blue ->
+            case s' of
+                Wild ->
+                    LT
+
+                Blue ->
+                    EQ
+
+                otherwise ->
+                    GT
+
+        Wild ->
+            GT

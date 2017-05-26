@@ -1,4 +1,13 @@
-module Haggis.Combination exposing (..)
+module Haggis.Combination
+    exposing
+        ( Combination(..)
+        , Set(..)
+        , Sequence(..)
+        , Bomb(..)
+        , set
+        , sequence
+        , bomb
+        )
 
 import Haggis.Card exposing (..)
 import List.Extra exposing (..)
@@ -39,6 +48,10 @@ type Bomb
     | QK
     | JQK
     | Suited
+
+
+
+-- SET
 
 
 set : Cards -> Maybe Set
@@ -94,6 +107,10 @@ allSameRank cards =
 count : Cards -> Int
 count cards =
     List.length cards
+
+
+
+-- BOMB
 
 
 bomb : Cards -> Maybe Bomb
@@ -200,6 +217,7 @@ dropDuplicates' existing remaining =
 
 
 
+-- SEQUENCE
 -- TODO still need to handle Wild cards...
 
 
@@ -256,71 +274,6 @@ sortSuits suits =
     List.sortWith (compareSuits) suits
 
 
-compareSuits : Suit -> Suit -> Basics.Order
-compareSuits s s' =
-    case s of
-        Red ->
-            case s' of
-                Red ->
-                    EQ
-
-                otherwise ->
-                    LT
-
-        Orange ->
-            case s' of
-                Red ->
-                    GT
-
-                Orange ->
-                    EQ
-
-                otherwise ->
-                    LT
-
-        Yellow ->
-            case s' of
-                Red ->
-                    GT
-
-                Orange ->
-                    GT
-
-                Yellow ->
-                    EQ
-
-                otherwise ->
-                    LT
-
-        Green ->
-            case s' of
-                Wild ->
-                    LT
-
-                Blue ->
-                    LT
-
-                Green ->
-                    EQ
-
-                otherwise ->
-                    GT
-
-        Blue ->
-            case s' of
-                Wild ->
-                    LT
-
-                Blue ->
-                    EQ
-
-                otherwise ->
-                    GT
-
-        Wild ->
-            GT
-
-
 allSetsConsecutive : List (List Card) -> Bool
 allSetsConsecutive sets =
     let
@@ -347,10 +300,16 @@ allRanksConsecutive cards =
         c :: c' :: rest ->
             case ( c, c' ) of
                 ( Just c, Just c' ) ->
-                    rank c < (rank c' + 1) && allRanksConsecutive ((Maybe.map identity (Just c')) :: rest)
+                    (rank c < (rank c' + 1))
+                        && allRanksConsecutive (maybe c' :: rest)
 
                 otherwise ->
                     False
+
+
+maybe : Card -> Maybe Card
+maybe card =
+    Maybe.map identity (Just card)
 
 
 makeSequence : List Cards -> Maybe Sequence

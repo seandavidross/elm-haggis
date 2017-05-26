@@ -65,24 +65,9 @@ all =
         , test "four distinct odd cards, with distinct suits, is a bomb" <|
             \() ->
                 Expect.equal (bomb [ blueThree, greenFive, redSeven, yellowNine ]) (Just Rainbow)
-        , test "four distinct odd cards, with 2-3 suits, does not have 4 suits" <|
-            \() ->
-                Expect.equal (hasFourSuits [ blueThree, redFive, redSeven, yellowNine ]) False
         , test "four distinct odd cards, with 2-3 suits, is a not bomb" <|
             \() ->
                 Expect.equal (bomb [ blueThree, redFive, redSeven, yellowNine ]) Nothing
-        , test "consecutive cards are all consecutive" <|
-            \() ->
-                Expect.equal (allRanksConsecutive [ Just blueTwo, Just blueThree, Just blueFour ]) True
-        , test "nonconsecutive cards are not all consecutive" <|
-            \() ->
-                Expect.equal (allRanksConsecutive [ Just blueTwo, Just blueThree, Just redFive ]) True
-        , test "An empty set of cards are not all consecutive" <|
-            \() ->
-                Expect.equal (allRanksConsecutive []) False
-        , test "A single card is all consecutive" <|
-            \() ->
-                Expect.equal (allRanksConsecutive [ Just blueTwo ]) True
         , test "three consecutive singles is a sequence" <|
             \() ->
                 Expect.equal (sequence [ blueTwo, blueThree, blueFour ]) (Just SingleRun)
@@ -98,9 +83,6 @@ all =
         , test "card order should not affect sequence identification" <|
             \() ->
                 Expect.equal (sequence [ greenTwo, blueThree, greenThree, blueTwo ]) (Just DoubleRun)
-        , test "suits collected in correct order" <|
-            \() ->
-                Expect.equal (collectSuits [ blueTwo, greenTwo ]) [ Green, Blue ]
         ]
 
 
