@@ -98,7 +98,7 @@ count cards =
 
 isSoloWildCard : Cards -> Bool
 isSoloWildCard wildCards =
-    List.length wildCards == 1
+    count wildCards == 1
 
 
 bomb : Cards -> Maybe Bomb
@@ -127,7 +127,7 @@ bomb cards =
                     Nothing
 
         [ three, five, seven, nine ] ->
-            case List.map .rank [ three, five, seven, nine ] of
+            case collectRanks [ three, five, seven, nine ] of
                 [ Three, Five, Seven, Nine ] ->
                     if allSameSuit cards then
                         Just Suited
@@ -146,6 +146,11 @@ bomb cards =
 sorted : Cards -> Cards
 sorted cards =
     List.sortBy rank cards
+
+
+collectRanks : Cards -> List Rank
+collectRanks cards =
+    List.map .rank cards
 
 
 allSameSuit : Cards -> Bool
@@ -209,7 +214,7 @@ sequence cards =
         sets =
             List.Extra.groupWhile (equal) (sorted cards)
     in
-        if List.length cards >= 3 && canMakeSequence sets then
+        if count cards >= 3 && canMakeSequence sets then
             makeSequence sets
         else
             Nothing
@@ -224,7 +229,7 @@ allSetsSameSize : List (List Card) -> Bool
 allSetsSameSize sets =
     case sets of
         first :: rest ->
-            List.all (\s -> List.length s == sizeOfSet first) rest
+            List.all (\s -> count s == sizeOfSet first) rest
 
         otherwise ->
             False
@@ -391,4 +396,4 @@ makeSequence sets =
 
 sizeOfSet : List Card -> Int
 sizeOfSet set =
-    List.length set
+    count set
