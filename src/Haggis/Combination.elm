@@ -237,7 +237,7 @@ sequence cards =
         sets =
             collectSets cards
     in
-        if count cards >= 3 && canMakeSequence sets then
+        if count cards >= 3 && canFormSequence sets then
             makeSequence sets
         else
             Nothing
@@ -248,8 +248,8 @@ collectSets cards =
     List.Extra.groupWhile (equal) (sorted cards)
 
 
-canMakeSequence : List (List Card) -> Bool
-canMakeSequence sets =
+canFormSequence : List (List Card) -> Bool
+canFormSequence sets =
     allSetsSameSize sets
         && allSetsSameSuits sets
         && allSetsConsecutive sets

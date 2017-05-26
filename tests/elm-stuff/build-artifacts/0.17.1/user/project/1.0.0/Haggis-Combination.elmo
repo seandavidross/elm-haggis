@@ -167,7 +167,7 @@ var _user$project$Haggis_Combination$allSetsSameSize = function (sets) {
 		return false;
 	}
 };
-var _user$project$Haggis_Combination$canMakeSequence = function (sets) {
+var _user$project$Haggis_Combination$canFormSequence = function (sets) {
 	return _user$project$Haggis_Combination$allSetsSameSize(sets) && (_user$project$Haggis_Combination$allSetsSameSuits(sets) && _user$project$Haggis_Combination$allSetsConsecutive(sets));
 };
 var _user$project$Haggis_Combination$allSameRank = function (cards) {
@@ -265,7 +265,7 @@ var _user$project$Haggis_Combination$sequence = function (cards) {
 	var sets = _user$project$Haggis_Combination$collectSets(cards);
 	return ((_elm_lang$core$Native_Utils.cmp(
 		_user$project$Haggis_Combination$count(cards),
-		3) > -1) && _user$project$Haggis_Combination$canMakeSequence(sets)) ? _user$project$Haggis_Combination$makeSequence(sets) : _elm_lang$core$Maybe$Nothing;
+		3) > -1) && _user$project$Haggis_Combination$canFormSequence(sets)) ? _user$project$Haggis_Combination$makeSequence(sets) : _elm_lang$core$Maybe$Nothing;
 };
 var _user$project$Haggis_Combination$Suited = {ctor: 'Suited'};
 var _user$project$Haggis_Combination$JQK = {ctor: 'JQK'};
