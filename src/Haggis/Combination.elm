@@ -197,6 +197,10 @@ dropDuplicates' existing remaining =
                 first :: dropDuplicates' (first :: existing) rest
 
 
+
+-- TODO still need to handle Wild cards...
+
+
 sequence : Cards -> Maybe Sequence
 sequence cards =
     let

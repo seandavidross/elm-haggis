@@ -2,7 +2,6 @@ module Tests exposing (..)
 
 import Haggis.Card exposing (..)
 import Haggis.Combination exposing (..)
-import List.Extra exposing (..)
 import Test exposing (..)
 import Expect exposing (..)
 
@@ -102,11 +101,6 @@ all =
         , test "suits collected in correct order" <|
             \() ->
                 Expect.equal (collectSuits [ blueTwo, greenTwo ]) [ Green, Blue ]
-        , test "cards correctly grouped by rank" <|
-            \() ->
-                Expect.equal
-                    (List.Extra.groupWhileTransitively (Haggis.Card.equal) (List.sortBy rank [ greenTwo, blueThree, greenThree, blueTwo ]))
-                    [ [ greenTwo, blueTwo ], [ blueThree, greenThree ] ]
         ]
 
 

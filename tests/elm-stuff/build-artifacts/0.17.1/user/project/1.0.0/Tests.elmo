@@ -376,28 +376,5 @@ var _user$project$Tests$all = A2(
 							[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo])),
 					_elm_lang$core$Native_List.fromArray(
 						[_user$project$Haggis_Card$Green, _user$project$Haggis_Card$Blue]));
-			}),
-			A2(
-			_elm_community$elm_test$Test$test,
-			'cards correctly grouped by rank',
-			function (_p62) {
-				var _p63 = _p62;
-				return A2(
-					_elm_community$elm_test$Expect$equal,
-					A2(
-						_elm_community$elm_list_extra$List_Extra$groupWhileTransitively,
-						_user$project$Haggis_Card$equal,
-						A2(
-							_elm_lang$core$List$sortBy,
-							_user$project$Haggis_Card$rank,
-							_elm_lang$core$Native_List.fromArray(
-								[_user$project$Tests$greenTwo, _user$project$Tests$blueThree, _user$project$Tests$greenThree, _user$project$Tests$blueTwo]))),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$core$Native_List.fromArray(
-							[_user$project$Tests$greenTwo, _user$project$Tests$blueTwo]),
-							_elm_lang$core$Native_List.fromArray(
-							[_user$project$Tests$blueThree, _user$project$Tests$greenThree])
-						]));
 			})
 		]));
