@@ -75,7 +75,7 @@ set cards =
 
                 otherwise ->
                     Nothing
-        else if isSoloWildCard wildCards && count cards == 1 then
+        else if count wildCards == 1 && count cards == 1 then
             Just Single
         else
             Nothing
@@ -94,11 +94,6 @@ allSameRank cards =
 count : Cards -> Int
 count cards =
     List.length cards
-
-
-isSoloWildCard : Cards -> Bool
-isSoloWildCard wildCards =
-    count wildCards == 1
 
 
 bomb : Cards -> Maybe Bomb

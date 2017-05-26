@@ -196,11 +196,6 @@ var _user$project$Haggis_Combination$sorted = function (cards) {
 var _user$project$Haggis_Combination$count = function (cards) {
 	return _elm_lang$core$List$length(cards);
 };
-var _user$project$Haggis_Combination$isSoloWildCard = function (wildCards) {
-	return _elm_lang$core$Native_Utils.eq(
-		_user$project$Haggis_Combination$count(wildCards),
-		1);
-};
 var _user$project$Haggis_Combination$sizeOfSet = function (set) {
 	return _user$project$Haggis_Combination$count(set);
 };
@@ -271,7 +266,9 @@ var _user$project$Haggis_Combination$set = function (cards) {
 				return _elm_lang$core$Maybe$Nothing;
 		}
 	} else {
-		if (_user$project$Haggis_Combination$isSoloWildCard(wildCards) && _elm_lang$core$Native_Utils.eq(
+		if (_elm_lang$core$Native_Utils.eq(
+			_user$project$Haggis_Combination$count(wildCards),
+			1) && _elm_lang$core$Native_Utils.eq(
 			_user$project$Haggis_Combination$count(cards),
 			1)) {
 			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Single);
