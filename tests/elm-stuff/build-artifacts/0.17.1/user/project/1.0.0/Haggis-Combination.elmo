@@ -151,6 +151,7 @@ var _user$project$Haggis_Combination$collectSets = function (cards) {
 var _user$project$Haggis_Combination$count = function (cards) {
 	return _elm_lang$core$List$length(cards);
 };
+var _user$project$Haggis_Combination$size = _user$project$Haggis_Combination$count;
 var _user$project$Haggis_Combination$allSetsSameSize = function (sets) {
 	var _p9 = sets;
 	if (_p9.ctor === '::') {
@@ -158,8 +159,8 @@ var _user$project$Haggis_Combination$allSetsSameSize = function (sets) {
 			_elm_lang$core$List$all,
 			function (s) {
 				return _elm_lang$core$Native_Utils.eq(
-					_user$project$Haggis_Combination$count(s),
-					_user$project$Haggis_Combination$count(_p9._0));
+					_user$project$Haggis_Combination$size(s),
+					_user$project$Haggis_Combination$size(_p9._0));
 			},
 			_p9._1);
 	} else {
@@ -169,7 +170,6 @@ var _user$project$Haggis_Combination$allSetsSameSize = function (sets) {
 var _user$project$Haggis_Combination$canMakeSequence = function (sets) {
 	return _user$project$Haggis_Combination$allSetsSameSize(sets) && (_user$project$Haggis_Combination$allSetsSameSuits(sets) && _user$project$Haggis_Combination$allSetsConsecutive(sets));
 };
-var _user$project$Haggis_Combination$size = _user$project$Haggis_Combination$count;
 var _user$project$Haggis_Combination$allSameRank = function (cards) {
 	var _p10 = cards;
 	if (_p10.ctor === '[]') {

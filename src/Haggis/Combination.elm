@@ -249,10 +249,15 @@ allSetsSameSize : List (List Card) -> Bool
 allSetsSameSize sets =
     case sets of
         first :: rest ->
-            List.all (\s -> count s == count first) rest
+            List.all (\s -> size s == size first) rest
 
         otherwise ->
             False
+
+
+size : Cards -> Int
+size =
+    count
 
 
 allSetsSameSuits : List (List Card) -> Bool
@@ -355,8 +360,3 @@ makeSequence sets =
 
         otherwise ->
             Nothing
-
-
-size : Cards -> Int
-size =
-    count
