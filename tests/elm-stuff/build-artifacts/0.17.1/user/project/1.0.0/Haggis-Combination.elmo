@@ -192,43 +192,38 @@ var _user$project$Haggis_Combination$FourOfAKind = {ctor: 'FourOfAKind'};
 var _user$project$Haggis_Combination$Triple = {ctor: 'Triple'};
 var _user$project$Haggis_Combination$Pair = {ctor: 'Pair'};
 var _user$project$Haggis_Combination$Single = {ctor: 'Single'};
-var _user$project$Haggis_Combination$set = function (cards) {
-	var _p11 = A2(_elm_lang$core$List$partition, _user$project$Haggis_Card$isSpotCard, cards);
-	var spotCards = _p11._0;
-	var wildCards = _p11._1;
-	if (_user$project$Haggis_Combination$allSameRank(spotCards)) {
-		var _p12 = _user$project$Haggis_Combination$count(cards);
-		switch (_p12) {
-			case 1:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Single);
-			case 2:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Pair);
-			case 3:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Triple);
-			case 4:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$FourOfAKind);
-			case 5:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$FiveOfAKind);
-			case 6:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SixOfAKind);
-			case 7:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SevenOfAKind);
-			case 8:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$EightOfAKind);
-			default:
-				return _elm_lang$core$Maybe$Nothing;
-		}
-	} else {
-		if (_elm_lang$core$Native_Utils.eq(
-			_user$project$Haggis_Combination$count(wildCards),
-			1) && _elm_lang$core$Native_Utils.eq(
-			_user$project$Haggis_Combination$count(cards),
-			1)) {
+var _user$project$Haggis_Combination$makeSet = function (cards) {
+	var _p11 = _user$project$Haggis_Combination$count(cards);
+	switch (_p11) {
+		case 1:
 			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Single);
-		} else {
+		case 2:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Pair);
+		case 3:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Triple);
+		case 4:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$FourOfAKind);
+		case 5:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$FiveOfAKind);
+		case 6:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SixOfAKind);
+		case 7:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SevenOfAKind);
+		case 8:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$EightOfAKind);
+		default:
 			return _elm_lang$core$Maybe$Nothing;
-		}
 	}
+};
+var _user$project$Haggis_Combination$set = function (cards) {
+	var _p12 = A2(_elm_lang$core$List$partition, _user$project$Haggis_Card$isSpotCard, cards);
+	var spotCards = _p12._0;
+	var wildCards = _p12._1;
+	return _user$project$Haggis_Combination$allSameRank(spotCards) ? _user$project$Haggis_Combination$makeSet(cards) : ((_elm_lang$core$Native_Utils.eq(
+		_user$project$Haggis_Combination$count(wildCards),
+		1) && _elm_lang$core$Native_Utils.eq(
+		_user$project$Haggis_Combination$count(cards),
+		1)) ? _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Single) : _elm_lang$core$Maybe$Nothing);
 };
 var _user$project$Haggis_Combination$RunOfEightOfAKinds = {ctor: 'RunOfEightOfAKinds'};
 var _user$project$Haggis_Combination$RunOfSevenOfAKinds = {ctor: 'RunOfSevenOfAKinds'};

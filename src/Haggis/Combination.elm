@@ -61,33 +61,7 @@ set cards =
             List.partition (isSpotCard) cards
     in
         if allSameRank spotCards then
-            case count cards of
-                1 ->
-                    Just Single
-
-                2 ->
-                    Just Pair
-
-                3 ->
-                    Just Triple
-
-                4 ->
-                    Just FourOfAKind
-
-                5 ->
-                    Just FiveOfAKind
-
-                6 ->
-                    Just SixOfAKind
-
-                7 ->
-                    Just SevenOfAKind
-
-                8 ->
-                    Just EightOfAKind
-
-                otherwise ->
-                    Nothing
+            makeSet cards
         else if count wildCards == 1 && count cards == 1 then
             Just Single
         else
@@ -104,9 +78,45 @@ allSameRank cards =
             List.all (equal first) rest
 
 
+makeSet : Cards -> Maybe Set
+makeSet cards =
+    case count cards of
+        1 ->
+            Just Single
+
+        2 ->
+            Just Pair
+
+        3 ->
+            Just Triple
+
+        4 ->
+            Just FourOfAKind
+
+        5 ->
+            Just FiveOfAKind
+
+        6 ->
+            Just SixOfAKind
+
+        7 ->
+            Just SevenOfAKind
+
+        8 ->
+            Just EightOfAKind
+
+        otherwise ->
+            Nothing
+
+
 count : Cards -> Int
 count cards =
     List.length cards
+
+
+size : Cards -> Int
+size =
+    count
 
 
 
@@ -253,11 +263,6 @@ allSetsSameSize sets =
 
         otherwise ->
             False
-
-
-size : Cards -> Int
-size =
-    count
 
 
 allSetsSameSuits : List (List Card) -> Bool
