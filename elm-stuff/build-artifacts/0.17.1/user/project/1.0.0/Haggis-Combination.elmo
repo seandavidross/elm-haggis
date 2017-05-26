@@ -33,14 +33,17 @@ var _user$project$Haggis_Combination$allRanksConsecutive = function (cards) {
 		return false;
 	}
 };
-var _user$project$Haggis_Combination$allSetsConsecutive = function (sets) {
-	var ranks = A2(
+var _user$project$Haggis_Combination$collectOneofEachRank = function (sets) {
+	return A2(
 		_elm_lang$core$List$map,
 		function (s) {
 			return _elm_lang$core$List$head(s);
 		},
 		sets);
-	return _user$project$Haggis_Combination$allRanksConsecutive(ranks);
+};
+var _user$project$Haggis_Combination$allSetsConsecutive = function (sets) {
+	return _user$project$Haggis_Combination$allRanksConsecutive(
+		_user$project$Haggis_Combination$collectOneofEachRank(sets));
 };
 var _user$project$Haggis_Combination$sortSuits = function (suits) {
 	return A2(_elm_lang$core$List$sortWith, _user$project$Haggis_Card$compareSuits, suits);

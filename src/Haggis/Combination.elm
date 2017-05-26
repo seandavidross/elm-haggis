@@ -278,11 +278,12 @@ sortSuits suits =
 
 allSetsConsecutive : List (List Card) -> Bool
 allSetsConsecutive sets =
-    let
-        ranks =
-            List.map (\s -> List.head s) sets
-    in
-        allRanksConsecutive ranks
+    allRanksConsecutive (collectOneofEachRank sets)
+
+
+collectOneofEachRank : List (List Card) -> List (Maybe Card)
+collectOneofEachRank sets =
+    List.map (\s -> List.head s) sets
 
 
 allRanksConsecutive : List (Maybe Card) -> Bool
