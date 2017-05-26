@@ -101,7 +101,7 @@ isSoloWildCard wildCards =
 
 bomb : Cards -> Maybe Bomb
 bomb cards =
-    case List.sortBy rank cards of
+    case sorted cards of
         [ wild, wild' ] ->
             case ( wild.rank, wild'.rank ) of
                 ( Jack, Queen ) ->
@@ -139,6 +139,11 @@ bomb cards =
 
         otherwise ->
             Nothing
+
+
+sorted : Cards -> Cards
+sorted cards =
+    List.sortBy rank cards
 
 
 allSameSuit : Cards -> Bool
@@ -196,7 +201,7 @@ sequence : Cards -> Maybe Sequence
 sequence cards =
     let
         sets =
-            List.Extra.groupWhileTransitively (equal) cards
+            List.Extra.groupWhile (equal) (sorted cards)
     in
         if List.length cards >= 3 && canMakeSequence sets then
             makeSequence sets
@@ -213,11 +218,7 @@ allSetsSameSize : List (List Card) -> Bool
 allSetsSameSize sets =
     case sets of
         first :: rest ->
-            let
-                sizeOfSets =
-                    List.length first
-            in
-                List.all (\s -> List.length s == sizeOfSets) rest
+            List.all (\s -> List.length s == sizeOfSet first) rest
 
         otherwise ->
             False
@@ -227,7 +228,7 @@ allSetsSameSuits : List (List Card) -> Bool
 allSetsSameSuits sets =
     let
         suitGroups =
-            List.map (\s -> List.map .suit s) sets
+            List.map (collectSuits) sets
     in
         case suitGroups of
             first :: rest ->
@@ -235,6 +236,83 @@ allSetsSameSuits sets =
 
             otherwise ->
                 False
+
+
+collectSuits : Cards -> List Suit
+collectSuits set =
+    set
+        |> List.map .suit
+        |> sortSuits
+
+
+sortSuits : List Suit -> List Suit
+sortSuits suits =
+    List.sortWith (compareSuits) suits
+
+
+compareSuits : Suit -> Suit -> Basics.Order
+compareSuits s s' =
+    case s of
+        Red ->
+            case s' of
+                Red ->
+                    EQ
+
+                otherwise ->
+                    LT
+
+        Orange ->
+            case s' of
+                Red ->
+                    GT
+
+                Orange ->
+                    EQ
+
+                otherwise ->
+                    LT
+
+        Yellow ->
+            case s' of
+                Red ->
+                    GT
+
+                Orange ->
+                    GT
+
+                Yellow ->
+                    EQ
+
+                otherwise ->
+                    LT
+
+        Green ->
+            case s' of
+                Wild ->
+                    LT
+
+                Blue ->
+                    LT
+
+                Green ->
+                    EQ
+
+                otherwise ->
+                    GT
+
+        Blue ->
+            case s' of
+                Wild ->
+                    LT
+
+                Blue ->
+                    EQ
+
+                otherwise ->
+                    GT
+
+        Wild ->
+            GT
 
 
 allSetsConsecutive : List (List Card) -> Bool
