@@ -1,6 +1,6 @@
 module Haggis.Card exposing (..)
 
-{-| TODO
+{-| NOTE
 Would it be worthwhile to make points' type be 'Point value'?
 -}
 
@@ -25,9 +25,15 @@ type Suit
     | Wild
 
 
-{-| TODO
+{-| NOTE
 Might want to try 'type Rank ordinal' so that when we say 'Two 2' we have
 both the rank's denomination (Two) and its order relative to other ranks.
+
+NOTE
+Tried Rank ordinal, couldn't figure out how to get the ordinal value out
+of a card's rank. Rather than fight with that, I'm moving forward with
+what is already working
+
 -}
 type Rank
     = Two
