@@ -12,10 +12,6 @@ type alias Card =
     }
 
 
-type alias Cards =
-    List Card
-
-
 type Suit
     = Red
     | Orange

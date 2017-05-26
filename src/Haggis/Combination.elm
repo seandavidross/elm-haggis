@@ -54,7 +54,7 @@ type Bomb
 -- SET
 
 
-set : Cards -> Maybe Set
+set : List Card -> Maybe Set
 set cards =
     let
         ( spotCards, wildCards ) =
@@ -68,7 +68,7 @@ set cards =
             Nothing
 
 
-allSameRank : Cards -> Bool
+allSameRank : List Card -> Bool
 allSameRank cards =
     case cards of
         [] ->
@@ -78,7 +78,7 @@ allSameRank cards =
             List.all (equal first) rest
 
 
-makeSet : Cards -> Maybe Set
+makeSet : List Card -> Maybe Set
 makeSet cards =
     case count cards of
         1 ->
@@ -109,12 +109,12 @@ makeSet cards =
             Nothing
 
 
-count : Cards -> Int
+count : List Card -> Int
 count cards =
     List.length cards
 
 
-size : Cards -> Int
+size : List Card -> Int
 size =
     count
 
@@ -123,7 +123,11 @@ size =
 -- BOMB
 
 
-bomb : Cards -> Maybe Bomb
+{-| NOTE
+I need to figure out how to do proper pattern matching against records;
+I'm pretty sure I'm doing unnecessary work by calling collectRanks()...
+-}
+bomb : List Card -> Maybe Bomb
 bomb cards =
     case sorted cards of
         [ wild, wild' ] ->
@@ -165,17 +169,17 @@ bomb cards =
             Nothing
 
 
-sorted : Cards -> Cards
+sorted : List Card -> List Card
 sorted cards =
     List.sortBy rank cards
 
 
-collectRanks : Cards -> List Rank
+collectRanks : List Card -> List Rank
 collectRanks cards =
     List.map .rank cards
 
 
-allSameSuit : Cards -> Bool
+allSameSuit : List Card -> Bool
 allSameSuit cards =
     case cards of
         first :: rest ->
@@ -190,7 +194,7 @@ hasSameSuit card card' =
     card.suit == card'.suit
 
 
-hasFourSuits : Cards -> Bool
+hasFourSuits : List Card -> Bool
 hasFourSuits cards =
     let
         numberOfSuits =
@@ -231,7 +235,7 @@ dropDuplicates' existing remaining =
 -- TODO still need to handle Wild cards...
 
 
-sequence : Cards -> Maybe Sequence
+sequence : List Card -> Maybe Sequence
 sequence cards =
     let
         sets =
@@ -275,12 +279,12 @@ allSetsSameSuits sets =
             False
 
 
-collectSuitGroups : List Cards -> List (List Suit)
+collectSuitGroups : List (List Card) -> List (List Suit)
 collectSuitGroups sets =
     List.map (collectSuits) sets
 
 
-collectSuits : Cards -> List Suit
+collectSuits : List Card -> List Suit
 collectSuits set =
     set
         |> List.map .suit
@@ -331,7 +335,7 @@ maybe card =
     Maybe.map identity (Just card)
 
 
-makeSequence : List Cards -> Maybe Sequence
+makeSequence : List (List Card) -> Maybe Sequence
 makeSequence sets =
     case sets of
         set :: _ ->
