@@ -190,9 +190,21 @@ var _user$project$Tests$all = A2(
 			}),
 			A2(
 			_elm_community$elm_test$Test$test,
-			'three wild cards is a bomb',
+			'two wild cards is a bomb, order does not matter',
 			function (_p32) {
 				var _p33 = _p32;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$bomb(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$king, _user$project$Tests$jack])),
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$JK));
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'three wild cards is a bomb',
+			function (_p34) {
+				var _p35 = _p34;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$bomb(
@@ -203,8 +215,8 @@ var _user$project$Tests$all = A2(
 			A2(
 			_elm_community$elm_test$Test$test,
 			'four distinct, same-suited odd cards is a bomb',
-			function (_p34) {
-				var _p35 = _p34;
+			function (_p36) {
+				var _p37 = _p36;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$bomb(
@@ -215,8 +227,8 @@ var _user$project$Tests$all = A2(
 			A2(
 			_elm_community$elm_test$Test$test,
 			'A suited bomb is a suited bomb regardless of card order',
-			function (_p36) {
-				var _p37 = _p36;
+			function (_p38) {
+				var _p39 = _p38;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$bomb(
@@ -227,8 +239,8 @@ var _user$project$Tests$all = A2(
 			A2(
 			_elm_community$elm_test$Test$test,
 			'four distinct odd cards, with distinct suits, is a bomb',
-			function (_p38) {
-				var _p39 = _p38;
+			function (_p40) {
+				var _p41 = _p40;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$bomb(
@@ -239,8 +251,8 @@ var _user$project$Tests$all = A2(
 			A2(
 			_elm_community$elm_test$Test$test,
 			'four distinct odd cards, with 2-3 suits, is a not bomb',
-			function (_p40) {
-				var _p41 = _p40;
+			function (_p42) {
+				var _p43 = _p42;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$bomb(
@@ -251,8 +263,8 @@ var _user$project$Tests$all = A2(
 			A2(
 			_elm_community$elm_test$Test$test,
 			'three consecutive singles is a sequence',
-			function (_p42) {
-				var _p43 = _p42;
+			function (_p44) {
+				var _p45 = _p44;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$sequence(
@@ -263,8 +275,8 @@ var _user$project$Tests$all = A2(
 			A2(
 			_elm_community$elm_test$Test$test,
 			'three nonconsecutive singles is not a sequence',
-			function (_p44) {
-				var _p45 = _p44;
+			function (_p46) {
+				var _p47 = _p46;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$sequence(
@@ -275,8 +287,8 @@ var _user$project$Tests$all = A2(
 			A2(
 			_elm_community$elm_test$Test$test,
 			'two consecutive singles is not a sequence',
-			function (_p46) {
-				var _p47 = _p46;
+			function (_p48) {
+				var _p49 = _p48;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$sequence(
@@ -287,8 +299,8 @@ var _user$project$Tests$all = A2(
 			A2(
 			_elm_community$elm_test$Test$test,
 			'two consecutive pairs is a sequence',
-			function (_p48) {
-				var _p49 = _p48;
+			function (_p50) {
+				var _p51 = _p50;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$sequence(
@@ -299,8 +311,8 @@ var _user$project$Tests$all = A2(
 			A2(
 			_elm_community$elm_test$Test$test,
 			'card order should not affect sequence identification',
-			function (_p50) {
-				var _p51 = _p50;
+			function (_p52) {
+				var _p53 = _p52;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$sequence(
@@ -311,8 +323,8 @@ var _user$project$Tests$all = A2(
 			A2(
 			_elm_community$elm_test$Test$test,
 			'wild card should sub for missing card in run of pairs',
-			function (_p52) {
-				var _p53 = _p52;
+			function (_p54) {
+				var _p55 = _p54;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$sequence(
@@ -323,8 +335,8 @@ var _user$project$Tests$all = A2(
 			A2(
 			_elm_community$elm_test$Test$test,
 			'a pair of tens plus two wilds is a run of pairs (T-T-J-J)',
-			function (_p54) {
-				var _p55 = _p54;
+			function (_p56) {
+				var _p57 = _p56;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
 					_user$project$Haggis_Combination$sequence(

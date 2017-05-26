@@ -56,6 +56,9 @@ all =
         , test "two wild cards is a bomb" <|
             \() ->
                 Expect.equal (bomb [ queen, king ]) (Just QK)
+        , test "two wild cards is a bomb, order does not matter" <|
+            \() ->
+                Expect.equal (bomb [ king, jack ]) (Just JK)
         , test "three wild cards is a bomb" <|
             \() ->
                 Expect.equal (bomb [ jack, queen, king ]) (Just JQK)
