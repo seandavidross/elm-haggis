@@ -80,7 +80,7 @@ var _user$project$Tests$all = A2(
 			}),
 			A2(
 			_elm_community$elm_test$Test$test,
-			'two cards of matching rank are a double',
+			'two cards of matching rank are a pair',
 			function (_p14) {
 				var _p15 = _p14;
 				return A2(
@@ -116,7 +116,7 @@ var _user$project$Tests$all = A2(
 			}),
 			A2(
 			_elm_community$elm_test$Test$test,
-			'two wild cards is NOT a double',
+			'two wild cards is NOT a pair',
 			function (_p20) {
 				var _p21 = _p20;
 				return A2(
@@ -140,7 +140,7 @@ var _user$project$Tests$all = A2(
 			}),
 			A2(
 			_elm_community$elm_test$Test$test,
-			'two matched spot cards plus three wilds is a FiveOfAKind',
+			'two matched spot cards plus three wilds is a five-of-a-kind',
 			function (_p24) {
 				var _p25 = _p24;
 				return A2(
@@ -272,7 +272,7 @@ var _user$project$Tests$all = A2(
 			}),
 			A2(
 			_elm_community$elm_test$Test$test,
-			'two consecutive doubles is a sequence',
+			'two consecutive pairs is a sequence',
 			function (_p46) {
 				var _p47 = _p46;
 				return A2(
@@ -292,6 +292,18 @@ var _user$project$Tests$all = A2(
 					_user$project$Haggis_Combination$sequence(
 						_elm_lang$core$Native_List.fromArray(
 							[_user$project$Tests$greenTwo, _user$project$Tests$blueThree, _user$project$Tests$greenThree, _user$project$Tests$blueTwo])),
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs));
+			}),
+			A2(
+			_elm_community$elm_test$Test$test,
+			'wild card should sub for missing card in run of pairs',
+			function (_p50) {
+				var _p51 = _p50;
+				return A2(
+					_elm_community$elm_test$Expect$equal,
+					_user$project$Haggis_Combination$sequence(
+						_elm_lang$core$Native_List.fromArray(
+							[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo, _user$project$Tests$jack, _user$project$Tests$greenThree])),
 					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs));
 			})
 		]));

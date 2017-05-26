@@ -29,7 +29,7 @@ all =
         , test "one card is a single" <|
             \() ->
                 Expect.equal (set [ redSeven ]) (Just Single)
-        , test "two cards of matching rank are a double" <|
+        , test "two cards of matching rank are a pair" <|
             \() ->
                 Expect.equal (set [ blueTwo, greenTwo ]) (Just Pair)
         , test "two cards with unmatched ranks are not a combination" <|
@@ -38,13 +38,13 @@ all =
         , test "two matched number cards with one wild is a triple" <|
             \() ->
                 Expect.equal (set [ blueTwo, greenTwo, jack ]) (Just Triple)
-        , test "two wild cards is NOT a double" <|
+        , test "two wild cards is NOT a pair" <|
             \() ->
                 Expect.notEqual (set [ jack, queen ]) (Just Pair)
         , test "one wild card is a single" <|
             \() ->
                 Expect.equal (set [ jack ]) (Just Single)
-        , test "two matched spot cards plus three wilds is a FiveOfAKind" <|
+        , test "two matched spot cards plus three wilds is a five-of-a-kind" <|
             \() ->
                 Expect.equal (set [ blueTwo, greenTwo, jack, queen, king ]) (Just FiveOfAKind)
         , test "one wild card is not a bomb" <|
@@ -77,12 +77,15 @@ all =
         , test "two consecutive singles is not a sequence" <|
             \() ->
                 Expect.equal (sequence [ blueTwo, blueThree ]) Nothing
-        , test "two consecutive doubles is a sequence" <|
+        , test "two consecutive pairs is a sequence" <|
             \() ->
                 Expect.equal (sequence [ blueTwo, greenTwo, blueThree, greenThree ]) (Just RunOfPairs)
         , test "card order should not affect sequence identification" <|
             \() ->
                 Expect.equal (sequence [ greenTwo, blueThree, greenThree, blueTwo ]) (Just RunOfPairs)
+        , test "wild card should sub for missing card in run of pairs" <|
+            \() ->
+                Expect.equal (sequence [ blueTwo, greenTwo, jack, greenThree ]) (Just RunOfPairs)
         ]
 
 
