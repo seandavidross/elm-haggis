@@ -225,12 +225,17 @@ sequence : Cards -> Maybe Sequence
 sequence cards =
     let
         sets =
-            List.Extra.groupWhile (equal) (sorted cards)
+            collectSets cards
     in
         if count cards >= 3 && canMakeSequence sets then
             makeSequence sets
         else
             Nothing
+
+
+collectSets : List Card -> List (List Card)
+collectSets cards =
+    List.Extra.groupWhile (equal) (sorted cards)
 
 
 canMakeSequence : List (List Card) -> Bool
@@ -252,16 +257,17 @@ allSetsSameSize sets =
 
 allSetsSameSuits : List (List Card) -> Bool
 allSetsSameSuits sets =
-    let
-        suitGroups =
-            List.map (collectSuits) sets
-    in
-        case suitGroups of
-            first :: rest ->
-                List.all ((==) first) rest
+    case collectSuitGroups sets of
+        suitGroup :: rest ->
+            List.all ((==) suitGroup) rest
 
-            otherwise ->
-                False
+        otherwise ->
+            False
+
+
+collectSuitGroups : List Cards -> List (List Suit)
+collectSuitGroups sets =
+    List.map (collectSuits) sets
 
 
 collectSuits : Cards -> List Suit

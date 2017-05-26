@@ -57,9 +57,11 @@ var _user$project$Haggis_Combination$collectSuits = function (set) {
 			},
 			set));
 };
+var _user$project$Haggis_Combination$collectSuitGroups = function (sets) {
+	return A2(_elm_lang$core$List$map, _user$project$Haggis_Combination$collectSuits, sets);
+};
 var _user$project$Haggis_Combination$allSetsSameSuits = function (sets) {
-	var suitGroups = A2(_elm_lang$core$List$map, _user$project$Haggis_Combination$collectSuits, sets);
-	var _p4 = suitGroups;
+	var _p4 = _user$project$Haggis_Combination$collectSuitGroups(sets);
 	if (_p4.ctor === '::') {
 		return A2(
 			_elm_lang$core$List$all,
@@ -139,6 +141,12 @@ var _user$project$Haggis_Combination$collectRanks = function (cards) {
 };
 var _user$project$Haggis_Combination$sorted = function (cards) {
 	return A2(_elm_lang$core$List$sortBy, _user$project$Haggis_Card$rank, cards);
+};
+var _user$project$Haggis_Combination$collectSets = function (cards) {
+	return A2(
+		_elm_community$elm_list_extra$List_Extra$groupWhile,
+		_user$project$Haggis_Card$equal,
+		_user$project$Haggis_Combination$sorted(cards));
 };
 var _user$project$Haggis_Combination$count = function (cards) {
 	return _elm_lang$core$List$length(cards);
@@ -259,10 +267,7 @@ var _user$project$Haggis_Combination$makeSequence = function (sets) {
 	}
 };
 var _user$project$Haggis_Combination$sequence = function (cards) {
-	var sets = A2(
-		_elm_community$elm_list_extra$List_Extra$groupWhile,
-		_user$project$Haggis_Card$equal,
-		_user$project$Haggis_Combination$sorted(cards));
+	var sets = _user$project$Haggis_Combination$collectSets(cards);
 	return ((_elm_lang$core$Native_Utils.cmp(
 		_user$project$Haggis_Combination$count(cards),
 		3) > -1) && _user$project$Haggis_Combination$canMakeSequence(sets)) ? _user$project$Haggis_Combination$makeSequence(sets) : _elm_lang$core$Maybe$Nothing;
