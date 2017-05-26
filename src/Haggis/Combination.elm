@@ -109,11 +109,15 @@ makeSet cards =
             Nothing
 
 
+{-| Convenience alias for List.length
+-}
 count : List Card -> Int
-count cards =
-    List.length cards
+count =
+    List.length
 
 
+{-| Context-relevant alias for count()
+-}
 size : List Card -> Int
 size =
     count
@@ -170,13 +174,13 @@ bomb cards =
 
 
 sorted : List Card -> List Card
-sorted cards =
-    List.sortBy rank cards
+sorted =
+    List.sortBy rank
 
 
 collectRanks : List Card -> List Rank
-collectRanks cards =
-    List.map .rank cards
+collectRanks =
+    List.map .rank
 
 
 allSameSuit : List Card -> Bool
@@ -280,8 +284,8 @@ allSetsSameSuits sets =
 
 
 collectSuitGroups : List (List Card) -> List (List Suit)
-collectSuitGroups sets =
-    List.map (collectSuits) sets
+collectSuitGroups =
+    List.map (collectSuits)
 
 
 collectSuits : List Card -> List Suit
@@ -292,8 +296,8 @@ collectSuits set =
 
 
 sortSuits : List Suit -> List Suit
-sortSuits suits =
-    List.sortWith (compareSuits) suits
+sortSuits =
+    List.sortWith (compareSuits)
 
 
 allSetsConsecutive : List (List Card) -> Bool
@@ -302,8 +306,8 @@ allSetsConsecutive sets =
 
 
 collectOneofEachRank : List (List Card) -> List (Maybe Card)
-collectOneofEachRank sets =
-    List.map (\s -> List.head s) sets
+collectOneofEachRank =
+    List.map (\s -> List.head s)
 
 
 allRanksConsecutive : List (Maybe Card) -> Bool

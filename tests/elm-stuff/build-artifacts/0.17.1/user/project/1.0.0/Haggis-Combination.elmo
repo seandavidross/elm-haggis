@@ -33,21 +33,15 @@ var _user$project$Haggis_Combination$allRanksConsecutive = function (cards) {
 		return false;
 	}
 };
-var _user$project$Haggis_Combination$collectOneofEachRank = function (sets) {
-	return A2(
-		_elm_lang$core$List$map,
-		function (s) {
-			return _elm_lang$core$List$head(s);
-		},
-		sets);
-};
+var _user$project$Haggis_Combination$collectOneofEachRank = _elm_lang$core$List$map(
+	function (s) {
+		return _elm_lang$core$List$head(s);
+	});
 var _user$project$Haggis_Combination$allSetsConsecutive = function (sets) {
 	return _user$project$Haggis_Combination$allRanksConsecutive(
 		_user$project$Haggis_Combination$collectOneofEachRank(sets));
 };
-var _user$project$Haggis_Combination$sortSuits = function (suits) {
-	return A2(_elm_lang$core$List$sortWith, _user$project$Haggis_Card$compareSuits, suits);
-};
+var _user$project$Haggis_Combination$sortSuits = _elm_lang$core$List$sortWith(_user$project$Haggis_Card$compareSuits);
 var _user$project$Haggis_Combination$collectSuits = function (set) {
 	return _user$project$Haggis_Combination$sortSuits(
 		A2(
@@ -57,9 +51,7 @@ var _user$project$Haggis_Combination$collectSuits = function (set) {
 			},
 			set));
 };
-var _user$project$Haggis_Combination$collectSuitGroups = function (sets) {
-	return A2(_elm_lang$core$List$map, _user$project$Haggis_Combination$collectSuits, sets);
-};
+var _user$project$Haggis_Combination$collectSuitGroups = _elm_lang$core$List$map(_user$project$Haggis_Combination$collectSuits);
 var _user$project$Haggis_Combination$allSetsSameSuits = function (sets) {
 	var _p4 = _user$project$Haggis_Combination$collectSuitGroups(sets);
 	if (_p4.ctor === '::') {
@@ -131,26 +123,18 @@ var _user$project$Haggis_Combination$allSameSuit = function (cards) {
 		return false;
 	}
 };
-var _user$project$Haggis_Combination$collectRanks = function (cards) {
-	return A2(
-		_elm_lang$core$List$map,
-		function (_) {
-			return _.rank;
-		},
-		cards);
-};
-var _user$project$Haggis_Combination$sorted = function (cards) {
-	return A2(_elm_lang$core$List$sortBy, _user$project$Haggis_Card$rank, cards);
-};
+var _user$project$Haggis_Combination$collectRanks = _elm_lang$core$List$map(
+	function (_) {
+		return _.rank;
+	});
+var _user$project$Haggis_Combination$sorted = _elm_lang$core$List$sortBy(_user$project$Haggis_Card$rank);
 var _user$project$Haggis_Combination$collectSets = function (cards) {
 	return A2(
 		_elm_community$elm_list_extra$List_Extra$groupWhile,
 		_user$project$Haggis_Card$equal,
 		_user$project$Haggis_Combination$sorted(cards));
 };
-var _user$project$Haggis_Combination$count = function (cards) {
-	return _elm_lang$core$List$length(cards);
-};
+var _user$project$Haggis_Combination$count = _elm_lang$core$List$length;
 var _user$project$Haggis_Combination$size = _user$project$Haggis_Combination$count;
 var _user$project$Haggis_Combination$allSetsSameSize = function (sets) {
 	var _p9 = sets;
