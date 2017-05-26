@@ -6,9 +6,7 @@ var _user$project$Haggis_Combination$maybe = function (card) {
 };
 var _user$project$Haggis_Combination$allRanksConsecutive = function (cards) {
 	var _p0 = cards;
-	if (_p0.ctor === '[]') {
-		return false;
-	} else {
+	if (_p0.ctor === '::') {
 		if (_p0._1.ctor === '[]') {
 			var _p1 = _p0._0;
 			if (_p1.ctor === 'Just') {
@@ -31,6 +29,8 @@ var _user$project$Haggis_Combination$allRanksConsecutive = function (cards) {
 				return false;
 			}
 		}
+	} else {
+		return false;
 	}
 };
 var _user$project$Haggis_Combination$allSetsConsecutive = function (sets) {
