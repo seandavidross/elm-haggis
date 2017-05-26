@@ -21,24 +21,24 @@ type Combination
 
 type Set
     = Single
-    | Double
+    | Pair
     | Triple
-    | Quadruple
-    | Quintuple
-    | Sextuple
-    | Septuple
-    | Octuple
+    | FourOfAKind
+    | FiveOfAKind
+    | SixOfAKind
+    | SevenOfAKind
+    | EightOfAKind
 
 
 type Sequence
-    = SingleRun
-    | DoubleRun
-    | TripleRun
-    | QuadrupleRun
-    | QuintupleRun
-    | SextupleRun
-    | SeptupleRun
-    | OctupleRun
+    = RunOfSingles
+    | RunOfPairs
+    | RunOfTriples
+    | RunOfFourOfAKinds
+    | RunOfFiveOfAKinds
+    | RunOfSixOfAKinds
+    | RunOfSevenOfAKinds
+    | RunOfEightOfAKinds
 
 
 type Bomb
@@ -66,25 +66,25 @@ set cards =
                     Just Single
 
                 2 ->
-                    Just Double
+                    Just Pair
 
                 3 ->
                     Just Triple
 
                 4 ->
-                    Just Quadruple
+                    Just FourOfAKind
 
                 5 ->
-                    Just Quintuple
+                    Just FiveOfAKind
 
                 6 ->
-                    Just Sextuple
+                    Just SixOfAKind
 
                 7 ->
-                    Just Septuple
+                    Just SevenOfAKind
 
                 8 ->
-                    Just Octuple
+                    Just EightOfAKind
 
                 otherwise ->
                     Nothing
@@ -332,28 +332,28 @@ makeSequence sets =
         set :: _ ->
             case size set of
                 1 ->
-                    Just SingleRun
+                    Just RunOfSingles
 
                 2 ->
-                    Just DoubleRun
+                    Just RunOfPairs
 
                 3 ->
-                    Just TripleRun
+                    Just RunOfTriples
 
                 4 ->
-                    Just QuadrupleRun
+                    Just RunOfFourOfAKinds
 
                 5 ->
-                    Just QuintupleRun
+                    Just RunOfFiveOfAKinds
 
                 6 ->
-                    Just SextupleRun
+                    Just RunOfSixOfAKinds
 
                 7 ->
-                    Just SeptupleRun
+                    Just RunOfSevenOfAKinds
 
                 8 ->
-                    Just OctupleRun
+                    Just RunOfEightOfAKinds
 
                 otherwise ->
                     Nothing

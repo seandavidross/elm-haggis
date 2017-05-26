@@ -88,7 +88,7 @@ var _user$project$Tests$all = A2(
 					_user$project$Haggis_Combination$set(
 						_elm_lang$core$Native_List.fromArray(
 							[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo])),
-					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Double));
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Pair));
 			}),
 			A2(
 			_elm_community$elm_test$Test$test,
@@ -124,7 +124,7 @@ var _user$project$Tests$all = A2(
 					_user$project$Haggis_Combination$set(
 						_elm_lang$core$Native_List.fromArray(
 							[_user$project$Tests$jack, _user$project$Tests$queen])),
-					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Double));
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Pair));
 			}),
 			A2(
 			_elm_community$elm_test$Test$test,
@@ -140,7 +140,7 @@ var _user$project$Tests$all = A2(
 			}),
 			A2(
 			_elm_community$elm_test$Test$test,
-			'two matched spot cards plus three wilds is a Quintuple',
+			'two matched spot cards plus three wilds is a FiveOfAKind',
 			function (_p24) {
 				var _p25 = _p24;
 				return A2(
@@ -148,7 +148,7 @@ var _user$project$Tests$all = A2(
 					_user$project$Haggis_Combination$set(
 						_elm_lang$core$Native_List.fromArray(
 							[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo, _user$project$Tests$jack, _user$project$Tests$queen, _user$project$Tests$king])),
-					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Quintuple));
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$FiveOfAKind));
 			}),
 			A2(
 			_elm_community$elm_test$Test$test,
@@ -244,7 +244,7 @@ var _user$project$Tests$all = A2(
 					_user$project$Haggis_Combination$sequence(
 						_elm_lang$core$Native_List.fromArray(
 							[_user$project$Tests$blueTwo, _user$project$Tests$blueThree, _user$project$Tests$blueFour])),
-					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SingleRun));
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles));
 			}),
 			A2(
 			_elm_community$elm_test$Test$test,
@@ -280,7 +280,7 @@ var _user$project$Tests$all = A2(
 					_user$project$Haggis_Combination$sequence(
 						_elm_lang$core$Native_List.fromArray(
 							[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo, _user$project$Tests$blueThree, _user$project$Tests$greenThree])),
-					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$DoubleRun));
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs));
 			}),
 			A2(
 			_elm_community$elm_test$Test$test,
@@ -292,6 +292,6 @@ var _user$project$Tests$all = A2(
 					_user$project$Haggis_Combination$sequence(
 						_elm_lang$core$Native_List.fromArray(
 							[_user$project$Tests$greenTwo, _user$project$Tests$blueThree, _user$project$Tests$greenThree, _user$project$Tests$blueTwo])),
-					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$DoubleRun));
+					_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs));
 			})
 		]));

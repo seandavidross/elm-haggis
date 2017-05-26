@@ -184,13 +184,13 @@ var _user$project$Haggis_Combination$allSameRank = function (cards) {
 var _user$project$Haggis_Combination$Bomb = {ctor: 'Bomb'};
 var _user$project$Haggis_Combination$Sequence = {ctor: 'Sequence'};
 var _user$project$Haggis_Combination$Set = {ctor: 'Set'};
-var _user$project$Haggis_Combination$Octuple = {ctor: 'Octuple'};
-var _user$project$Haggis_Combination$Septuple = {ctor: 'Septuple'};
-var _user$project$Haggis_Combination$Sextuple = {ctor: 'Sextuple'};
-var _user$project$Haggis_Combination$Quintuple = {ctor: 'Quintuple'};
-var _user$project$Haggis_Combination$Quadruple = {ctor: 'Quadruple'};
+var _user$project$Haggis_Combination$EightOfAKind = {ctor: 'EightOfAKind'};
+var _user$project$Haggis_Combination$SevenOfAKind = {ctor: 'SevenOfAKind'};
+var _user$project$Haggis_Combination$SixOfAKind = {ctor: 'SixOfAKind'};
+var _user$project$Haggis_Combination$FiveOfAKind = {ctor: 'FiveOfAKind'};
+var _user$project$Haggis_Combination$FourOfAKind = {ctor: 'FourOfAKind'};
 var _user$project$Haggis_Combination$Triple = {ctor: 'Triple'};
-var _user$project$Haggis_Combination$Double = {ctor: 'Double'};
+var _user$project$Haggis_Combination$Pair = {ctor: 'Pair'};
 var _user$project$Haggis_Combination$Single = {ctor: 'Single'};
 var _user$project$Haggis_Combination$set = function (cards) {
 	var _p11 = A2(_elm_lang$core$List$partition, _user$project$Haggis_Card$isSpotCard, cards);
@@ -202,19 +202,19 @@ var _user$project$Haggis_Combination$set = function (cards) {
 			case 1:
 				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Single);
 			case 2:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Double);
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Pair);
 			case 3:
 				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Triple);
 			case 4:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Quadruple);
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$FourOfAKind);
 			case 5:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Quintuple);
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$FiveOfAKind);
 			case 6:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Sextuple);
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SixOfAKind);
 			case 7:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Septuple);
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SevenOfAKind);
 			case 8:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Octuple);
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$EightOfAKind);
 			default:
 				return _elm_lang$core$Maybe$Nothing;
 		}
@@ -230,35 +230,35 @@ var _user$project$Haggis_Combination$set = function (cards) {
 		}
 	}
 };
-var _user$project$Haggis_Combination$OctupleRun = {ctor: 'OctupleRun'};
-var _user$project$Haggis_Combination$SeptupleRun = {ctor: 'SeptupleRun'};
-var _user$project$Haggis_Combination$SextupleRun = {ctor: 'SextupleRun'};
-var _user$project$Haggis_Combination$QuintupleRun = {ctor: 'QuintupleRun'};
-var _user$project$Haggis_Combination$QuadrupleRun = {ctor: 'QuadrupleRun'};
-var _user$project$Haggis_Combination$TripleRun = {ctor: 'TripleRun'};
-var _user$project$Haggis_Combination$DoubleRun = {ctor: 'DoubleRun'};
-var _user$project$Haggis_Combination$SingleRun = {ctor: 'SingleRun'};
+var _user$project$Haggis_Combination$RunOfEightOfAKinds = {ctor: 'RunOfEightOfAKinds'};
+var _user$project$Haggis_Combination$RunOfSevenOfAKinds = {ctor: 'RunOfSevenOfAKinds'};
+var _user$project$Haggis_Combination$RunOfSixOfAKinds = {ctor: 'RunOfSixOfAKinds'};
+var _user$project$Haggis_Combination$RunOfFiveOfAKinds = {ctor: 'RunOfFiveOfAKinds'};
+var _user$project$Haggis_Combination$RunOfFourOfAKinds = {ctor: 'RunOfFourOfAKinds'};
+var _user$project$Haggis_Combination$RunOfTriples = {ctor: 'RunOfTriples'};
+var _user$project$Haggis_Combination$RunOfPairs = {ctor: 'RunOfPairs'};
+var _user$project$Haggis_Combination$RunOfSingles = {ctor: 'RunOfSingles'};
 var _user$project$Haggis_Combination$makeSequence = function (sets) {
 	var _p13 = sets;
 	if (_p13.ctor === '::') {
 		var _p14 = _user$project$Haggis_Combination$size(_p13._0);
 		switch (_p14) {
 			case 1:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SingleRun);
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles);
 			case 2:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$DoubleRun);
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs);
 			case 3:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$TripleRun);
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfTriples);
 			case 4:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$QuadrupleRun);
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfFourOfAKinds);
 			case 5:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$QuintupleRun);
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfFiveOfAKinds);
 			case 6:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SextupleRun);
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSixOfAKinds);
 			case 7:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SeptupleRun);
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSevenOfAKinds);
 			case 8:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$OctupleRun);
+				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfEightOfAKinds);
 			default:
 				return _elm_lang$core$Maybe$Nothing;
 		}

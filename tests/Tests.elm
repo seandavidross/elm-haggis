@@ -31,7 +31,7 @@ all =
                 Expect.equal (set [ redSeven ]) (Just Single)
         , test "two cards of matching rank are a double" <|
             \() ->
-                Expect.equal (set [ blueTwo, greenTwo ]) (Just Double)
+                Expect.equal (set [ blueTwo, greenTwo ]) (Just Pair)
         , test "two cards with unmatched ranks are not a combination" <|
             \() ->
                 Expect.equal (set [ blueTwo, redSeven ]) Nothing
@@ -40,13 +40,13 @@ all =
                 Expect.equal (set [ blueTwo, greenTwo, jack ]) (Just Triple)
         , test "two wild cards is NOT a double" <|
             \() ->
-                Expect.notEqual (set [ jack, queen ]) (Just Double)
+                Expect.notEqual (set [ jack, queen ]) (Just Pair)
         , test "one wild card is a single" <|
             \() ->
                 Expect.equal (set [ jack ]) (Just Single)
-        , test "two matched spot cards plus three wilds is a Quintuple" <|
+        , test "two matched spot cards plus three wilds is a FiveOfAKind" <|
             \() ->
-                Expect.equal (set [ blueTwo, greenTwo, jack, queen, king ]) (Just Quintuple)
+                Expect.equal (set [ blueTwo, greenTwo, jack, queen, king ]) (Just FiveOfAKind)
         , test "one wild card is not a bomb" <|
             \() ->
                 Expect.equal (bomb [ king ]) Nothing
@@ -70,7 +70,7 @@ all =
                 Expect.equal (bomb [ blueThree, redFive, redSeven, yellowNine ]) Nothing
         , test "three consecutive singles is a sequence" <|
             \() ->
-                Expect.equal (sequence [ blueTwo, blueThree, blueFour ]) (Just SingleRun)
+                Expect.equal (sequence [ blueTwo, blueThree, blueFour ]) (Just RunOfSingles)
         , test "three nonconsecutive singles is not a sequence" <|
             \() ->
                 Expect.equal (sequence [ blueTwo, blueThree, redThree ]) Nothing
@@ -79,10 +79,10 @@ all =
                 Expect.equal (sequence [ blueTwo, blueThree ]) Nothing
         , test "two consecutive doubles is a sequence" <|
             \() ->
-                Expect.equal (sequence [ blueTwo, greenTwo, blueThree, greenThree ]) (Just DoubleRun)
+                Expect.equal (sequence [ blueTwo, greenTwo, blueThree, greenThree ]) (Just RunOfPairs)
         , test "card order should not affect sequence identification" <|
             \() ->
-                Expect.equal (sequence [ greenTwo, blueThree, greenThree, blueTwo ]) (Just DoubleRun)
+                Expect.equal (sequence [ greenTwo, blueThree, greenThree, blueTwo ]) (Just RunOfPairs)
         ]
 
 
