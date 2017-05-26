@@ -1,4 +1,4 @@
-var _user$project$Haggis_Combination$allMaybeConsecutive = function (cards) {
+var _user$project$Haggis_Combination$allRanksConsecutive = function (cards) {
 	var _p0 = cards;
 	if (_p0.ctor === '[]') {
 		return false;
@@ -16,7 +16,7 @@ var _user$project$Haggis_Combination$allMaybeConsecutive = function (cards) {
 				var _p3 = _p2._1._0;
 				return (_elm_lang$core$Native_Utils.cmp(
 					_user$project$Haggis_Card$rank(_p2._0._0),
-					_user$project$Haggis_Card$rank(_p3) + 1) < 0) && _user$project$Haggis_Combination$allMaybeConsecutive(
+					_user$project$Haggis_Card$rank(_p3) + 1) < 0) && _user$project$Haggis_Combination$allRanksConsecutive(
 					A2(
 						_elm_lang$core$List_ops['::'],
 						A2(
@@ -37,7 +37,7 @@ var _user$project$Haggis_Combination$allSetsConsecutive = function (sets) {
 			return _elm_lang$core$List$head(s);
 		},
 		sets);
-	return _user$project$Haggis_Combination$allMaybeConsecutive(ranks);
+	return _user$project$Haggis_Combination$allRanksConsecutive(ranks);
 };
 var _user$project$Haggis_Combination$allSetsSameSuits = function (sets) {
 	var suitGroups = A2(
@@ -79,6 +79,9 @@ var _user$project$Haggis_Combination$allSetsSameSize = function (sets) {
 	} else {
 		return false;
 	}
+};
+var _user$project$Haggis_Combination$canMakeSequence = function (sets) {
+	return _user$project$Haggis_Combination$allSetsSameSize(sets) && (_user$project$Haggis_Combination$allSetsSameSuits(sets) && _user$project$Haggis_Combination$allSetsConsecutive(sets));
 };
 var _user$project$Haggis_Combination$dropDuplicates$ = F2(
 	function (existing, remaining) {
@@ -207,7 +210,7 @@ var _user$project$Haggis_Combination$QuadrupleRun = {ctor: 'QuadrupleRun'};
 var _user$project$Haggis_Combination$TripleRun = {ctor: 'TripleRun'};
 var _user$project$Haggis_Combination$DoubleRun = {ctor: 'DoubleRun'};
 var _user$project$Haggis_Combination$SingleRun = {ctor: 'SingleRun'};
-var _user$project$Haggis_Combination$makeSequenceFromSets = function (sets) {
+var _user$project$Haggis_Combination$makeSequence = function (sets) {
 	var _p13 = sets;
 	if (_p13.ctor === '::') {
 		var sizeOfSets = _elm_lang$core$List$length(_p13._0);
@@ -238,9 +241,9 @@ var _user$project$Haggis_Combination$makeSequenceFromSets = function (sets) {
 };
 var _user$project$Haggis_Combination$sequence = function (cards) {
 	var sets = A2(_elm_community$elm_list_extra$List_Extra$groupWhileTransitively, _user$project$Haggis_Card$equal, cards);
-	return (_elm_lang$core$Native_Utils.cmp(
+	return ((_elm_lang$core$Native_Utils.cmp(
 		_elm_lang$core$List$length(cards),
-		3) < 0) ? _elm_lang$core$Maybe$Nothing : ((_user$project$Haggis_Combination$allSetsSameSize(sets) && (_user$project$Haggis_Combination$allSetsSameSuits(sets) && _user$project$Haggis_Combination$allSetsConsecutive(sets))) ? _user$project$Haggis_Combination$makeSequenceFromSets(sets) : _elm_lang$core$Maybe$Nothing);
+		3) > -1) && _user$project$Haggis_Combination$canMakeSequence(sets)) ? _user$project$Haggis_Combination$makeSequence(sets) : _elm_lang$core$Maybe$Nothing;
 };
 var _user$project$Haggis_Combination$Suited = {ctor: 'Suited'};
 var _user$project$Haggis_Combination$JQK = {ctor: 'JQK'};

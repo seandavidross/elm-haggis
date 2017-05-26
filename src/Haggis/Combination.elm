@@ -198,12 +198,15 @@ sequence cards =
         sets =
             List.Extra.groupWhileTransitively (equal) cards
     in
-        if List.length cards < 3 then
-            Nothing
-        else if allSetsSameSize sets && allSetsSameSuits sets && allSetsConsecutive sets then
-            makeSequenceFromSets sets
+        if List.length cards >= 3 && canMakeSequence sets then
+            makeSequence sets
         else
             Nothing
+
+
+canMakeSequence : List (List Card) -> Bool
+canMakeSequence sets =
+    allSetsSameSize sets && allSetsSameSuits sets && allSetsConsecutive sets
 
 
 allSetsSameSize : List (List Card) -> Bool
@@ -240,11 +243,11 @@ allSetsConsecutive sets =
         ranks =
             List.map (\s -> List.head s) sets
     in
-        allMaybeConsecutive ranks
+        allRanksConsecutive ranks
 
 
-allMaybeConsecutive : List (Maybe Card) -> Bool
-allMaybeConsecutive cards =
+allRanksConsecutive : List (Maybe Card) -> Bool
+allRanksConsecutive cards =
     case cards of
         [] ->
             False
@@ -260,14 +263,14 @@ allMaybeConsecutive cards =
         c :: c' :: rest ->
             case ( c, c' ) of
                 ( Just c, Just c' ) ->
-                    rank c < (rank c' + 1) && allMaybeConsecutive ((Maybe.map identity (Just c')) :: rest)
+                    rank c < (rank c' + 1) && allRanksConsecutive ((Maybe.map identity (Just c')) :: rest)
 
                 otherwise ->
                     False
 
 
-makeSequenceFromSets : List Cards -> Maybe Sequence
-makeSequenceFromSets sets =
+makeSequence : List Cards -> Maybe Sequence
+makeSequence sets =
     case sets of
         first :: rest ->
             let

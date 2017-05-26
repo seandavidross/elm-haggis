@@ -73,16 +73,16 @@ all =
                 Expect.equal (bomb [ blueThree, redFive, redSeven, yellowNine ]) Nothing
         , test "consecutive cards are all consecutive" <|
             \() ->
-                Expect.equal (allMaybeConsecutive [ Just blueTwo, Just blueThree, Just blueFour ]) True
+                Expect.equal (allRanksConsecutive [ Just blueTwo, Just blueThree, Just blueFour ]) True
         , test "nonconsecutive cards are not all consecutive" <|
             \() ->
-                Expect.equal (allMaybeConsecutive [ Just blueTwo, Just blueThree, Just redFive ]) True
+                Expect.equal (allRanksConsecutive [ Just blueTwo, Just blueThree, Just redFive ]) True
         , test "An empty set of cards are not all consecutive" <|
             \() ->
-                Expect.equal (allMaybeConsecutive []) False
+                Expect.equal (allRanksConsecutive []) False
         , test "A single card is all consecutive" <|
             \() ->
-                Expect.equal (allMaybeConsecutive [ Just blueTwo ]) True
+                Expect.equal (allRanksConsecutive [ Just blueTwo ]) True
         , test "three consecutive singles is a sequence" <|
             \() ->
                 Expect.equal (sequence [ blueTwo, blueThree, blueFour ]) (Just SingleRun)

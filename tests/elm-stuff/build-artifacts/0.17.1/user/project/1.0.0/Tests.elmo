@@ -253,7 +253,7 @@ var _user$project$Tests$all = A2(
 				var _p43 = _p42;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
-					_user$project$Haggis_Combination$allMaybeConsecutive(
+					_user$project$Haggis_Combination$allRanksConsecutive(
 						_elm_lang$core$Native_List.fromArray(
 							[
 								_elm_lang$core$Maybe$Just(_user$project$Tests$blueTwo),
@@ -269,7 +269,7 @@ var _user$project$Tests$all = A2(
 				var _p45 = _p44;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
-					_user$project$Haggis_Combination$allMaybeConsecutive(
+					_user$project$Haggis_Combination$allRanksConsecutive(
 						_elm_lang$core$Native_List.fromArray(
 							[
 								_elm_lang$core$Maybe$Just(_user$project$Tests$blueTwo),
@@ -285,7 +285,7 @@ var _user$project$Tests$all = A2(
 				var _p47 = _p46;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
-					_user$project$Haggis_Combination$allMaybeConsecutive(
+					_user$project$Haggis_Combination$allRanksConsecutive(
 						_elm_lang$core$Native_List.fromArray(
 							[])),
 					false);
@@ -297,7 +297,7 @@ var _user$project$Tests$all = A2(
 				var _p49 = _p48;
 				return A2(
 					_elm_community$elm_test$Expect$equal,
-					_user$project$Haggis_Combination$allMaybeConsecutive(
+					_user$project$Haggis_Combination$allRanksConsecutive(
 						_elm_lang$core$Native_List.fromArray(
 							[
 								_elm_lang$core$Maybe$Just(_user$project$Tests$blueTwo)
