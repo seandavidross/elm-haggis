@@ -47,6 +47,9 @@ all =
         , test "two matched spot cards plus three wilds is a five-of-a-kind" <|
             \() ->
                 Expect.equal (set [ blueTwo, greenTwo, jack, queen, king ]) (Just FiveOfAKind)
+        , test "a pair of tens plus two wilds is a four-of-a-kind" <|
+            \() ->
+                Expect.equal (set [ blueTen, greenTen, jack, king ]) (Just FourOfAKind)
         , test "one wild card is not a bomb" <|
             \() ->
                 Expect.equal (bomb [ king ]) Nothing
@@ -86,6 +89,9 @@ all =
         , test "wild card should sub for missing card in run of pairs" <|
             \() ->
                 Expect.equal (sequence [ blueTwo, greenTwo, jack, greenThree ]) (Just RunOfPairs)
+        , test "a pair of tens plus two wilds is a run of pairs (T-T-J-J)" <|
+            \() ->
+                Expect.equal (sequence [ blueTen, greenTen, jack, king ]) (Just RunOfPairs)
         ]
 
 
@@ -147,6 +153,16 @@ redNine =
 yellowNine : Card
 yellowNine =
     { suit = Yellow, rank = Nine, points = 1 }
+
+
+blueTen : Card
+blueTen =
+    { suit = Blue, rank = Ten, points = 0 }
+
+
+greenTen : Card
+greenTen =
+    { suit = Green, rank = Ten, points = 0 }
 
 
 jack : Card
