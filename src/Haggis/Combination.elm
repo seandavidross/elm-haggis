@@ -10,6 +10,7 @@ module Haggis.Combination
         )
 
 import Haggis.Card exposing (..)
+import List exposing (..)
 import List.Extra exposing (..)
 
 
@@ -58,7 +59,7 @@ set : List Card -> Maybe Set
 set cards =
     let
         ( spotcards, wildcards ) =
-            partition cards
+            partition (isSpotCard) cards
     in
         if allSameRank spotcards then
             makeSet cards
@@ -68,11 +69,6 @@ set cards =
             Nothing
 
 
-partition : List Card -> ( List Card, List Card )
-partition =
-    List.partition (isSpotCard)
-
-
 allSameRank : List Card -> Bool
 allSameRank cards =
     case cards of
@@ -80,7 +76,7 @@ allSameRank cards =
             False
 
         first :: rest ->
-            List.all (equal first) rest
+            all (equal first) rest
 
 
 makeSet : List Card -> Maybe Set
@@ -248,15 +244,18 @@ sequence : List Card -> Maybe Sequence
 sequence cards =
     let
         ( spotcards, wildcards ) =
-            partition cards
+            partition (isSpotCard) cards
 
         sets =
             collectSets cards
 
-        --redistribute wildcards (collectSets spotcards)
+        --distribute wildcards (collectSets spotcards)
     in
-        if count cards >= 3 && canFormSequence sets then
+        if count spotcards == 0 || count cards < 3 then
+            Nothing
+        else if canFormSequence sets then
             makeSequence sets
+            -- List.map (makeSequence) sets
         else
             Nothing
 
@@ -265,22 +264,44 @@ sequence cards =
 
 Roughly, we need something that does this:
 
-[[c1], [c2, c2'], [w, w', w'']] -> [[c1, w1, w1'], [c2, c2', w2'']]
+-- there needs to be at least one spot card
+[[], [w]]
+-> [[w1]] -- Nothing
 
-[[c1, c1'], [c2, c2'], [w, w']] -> [[c1, c1', w1], [c2, c2', w2']]
+[[], [w, w']]
+-> [[w1, w1']] -- Nothing
 
-[[c1, c1'], [w, w']] -> [[c1, c1'], [w2, w2']]
+[[], [w, w', w''']]
+-> [[w1, w1', w''']] -- Nothing
 
-[[c1], [w, w', w''']] -> [[c1, w1], [w2', w2'']]
+[[c1], [w, w']]
+-> [[c1], [w2], [w3']] -- RunOfSingles
+
+-- it's possible for the wilds to form multiple sequence types
+[[c1], [w, w', w'']]
+-> [[c1], [w2], [w3'], [w4'']] -- RunOfSingles
+-> [[c1, w1], [w2', w2'']] -- RunOfPairs
+
+[[c1, c1'], [w, w']]
+-> [[c1, c1'], [w2, w2']] -- RunOfPairs
+
+-- the wilds need to be able to fill gaps in or extend the sequence
+[[c1], [c3], [w, w', w'']]
+-> [[c1], [w2], [c3], [w4'], [w5'']] -- RunOfSingles
+
+[[c1], [c2, c2'], [w, w', w'']]
+-> [[c1, w1], [c2, c2'][w3', w3'']][[c1, w1], [c2, c2']  [w3', w3'']] -- RunOfPairs
+-> [[c1, w1, w1'], [c2, c2', w2'']] -- RunOfTriples
+
+[[c1, c1'], [c2, c2'], [w, w']]
+-> [[c1, c1'], [c2, c2'], [w3, w3']] -- RunOfPairs
+-> [[c1, c1', w1], [c2, c2', w2']] -- RunOfTriples
 
 where cN is a card with rank N and wN is the rank the wild card takes on after distibution
 
-NOTE
-[[w, w', w''']] is not a run of singles (it can only ever be a bomb)
-
 -}
-redistribute : List Card -> List (List Card) -> List (List Card)
-redistribute wildcards sets =
+distribute : List Card -> List (List Card) -> List (List Card)
+distribute wildcards sets =
     List.append sets [ wildcards ]
 
 

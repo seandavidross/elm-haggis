@@ -66,7 +66,7 @@ var _user$project$Haggis_Combination$allSetsSameSuits = function (sets) {
 		return false;
 	}
 };
-var _user$project$Haggis_Combination$redistribute = F2(
+var _user$project$Haggis_Combination$distribute = F2(
 	function (wildcards, sets) {
 		return A2(
 			_elm_lang$core$List$append,
@@ -173,7 +173,6 @@ var _user$project$Haggis_Combination$allSameRank = function (cards) {
 			_p10._1);
 	}
 };
-var _user$project$Haggis_Combination$partition = _elm_lang$core$List$partition(_user$project$Haggis_Card$isSpotCard);
 var _user$project$Haggis_Combination$Bomb = {ctor: 'Bomb'};
 var _user$project$Haggis_Combination$Sequence = {ctor: 'Sequence'};
 var _user$project$Haggis_Combination$Set = {ctor: 'Set'};
@@ -209,7 +208,7 @@ var _user$project$Haggis_Combination$makeSet = function (cards) {
 	}
 };
 var _user$project$Haggis_Combination$set = function (cards) {
-	var _p12 = _user$project$Haggis_Combination$partition(cards);
+	var _p12 = A2(_elm_lang$core$List$partition, _user$project$Haggis_Card$isSpotCard, cards);
 	var spotcards = _p12._0;
 	var wildcards = _p12._1;
 	return _user$project$Haggis_Combination$allSameRank(spotcards) ? _user$project$Haggis_Combination$makeSet(cards) : ((_elm_lang$core$Native_Utils.eq(
@@ -256,12 +255,14 @@ var _user$project$Haggis_Combination$makeSequence = function (sets) {
 };
 var _user$project$Haggis_Combination$sequence = function (cards) {
 	var sets = _user$project$Haggis_Combination$collectSets(cards);
-	var _p15 = _user$project$Haggis_Combination$partition(cards);
+	var _p15 = A2(_elm_lang$core$List$partition, _user$project$Haggis_Card$isSpotCard, cards);
 	var spotcards = _p15._0;
 	var wildcards = _p15._1;
-	return ((_elm_lang$core$Native_Utils.cmp(
+	return (_elm_lang$core$Native_Utils.eq(
+		_user$project$Haggis_Combination$count(spotcards),
+		0) || (_elm_lang$core$Native_Utils.cmp(
 		_user$project$Haggis_Combination$count(cards),
-		3) > -1) && _user$project$Haggis_Combination$canFormSequence(sets)) ? _user$project$Haggis_Combination$makeSequence(sets) : _elm_lang$core$Maybe$Nothing;
+		3) < 0)) ? _elm_lang$core$Maybe$Nothing : (_user$project$Haggis_Combination$canFormSequence(sets) ? _user$project$Haggis_Combination$makeSequence(sets) : _elm_lang$core$Maybe$Nothing);
 };
 var _user$project$Haggis_Combination$Suited = {ctor: 'Suited'};
 var _user$project$Haggis_Combination$JQK = {ctor: 'JQK'};
