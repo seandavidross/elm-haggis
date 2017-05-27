@@ -1,9 +1,5 @@
 module Haggis.Card exposing (..)
 
-{-| NOTE
-Would it be worthwhile to make points' type be 'Point value'?
--}
-
 
 type alias Card =
     { suit : Suit
@@ -22,16 +18,6 @@ type Suit
     | Wild
 
 
-{-| NOTE
-Might want to try 'type Rank ordinal' so that when we say 'Two 2' we have
-both the rank's denomination (Two) and its order relative to other ranks.
-
-NOTE
-Tried Rank ordinal, couldn't figure out how to get the ordinal value out
-of a card's rank. Rather than fight with that, I'm moving forward with
-what is already working
-
--}
 type Rank
     = Two
     | Three
@@ -65,7 +51,7 @@ isSpotCard card =
     card.suit /= Wild
 
 
-{-| We need to be able to sort cards by rank or by suit (or both)
+{-| We need to be able to sort cards by rank (order) or by suit (or both)
 so, Suits need to be compareable. This seems like an instance
 where we could benefit from using Haskell-like typeclasses...
 -}
