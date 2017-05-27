@@ -66,6 +66,24 @@ var _user$project$Haggis_Combination$allSetsSameSuits = function (sets) {
 		return false;
 	}
 };
+var _user$project$Haggis_Combination$allSetsSameSize = function (sets) {
+	var _p5 = sets;
+	if (_p5.ctor === '::') {
+		return A2(
+			_elm_lang$core$List$all,
+			function (s) {
+				return _elm_lang$core$Native_Utils.eq(
+					_elm_lang$core$List$length(s),
+					_elm_lang$core$List$length(_p5._0));
+			},
+			_p5._1);
+	} else {
+		return false;
+	}
+};
+var _user$project$Haggis_Combination$canFormSequence = function (sets) {
+	return _user$project$Haggis_Combination$allSetsSameSize(sets) && (_user$project$Haggis_Combination$allSetsSameSuits(sets) && _user$project$Haggis_Combination$allSetsConsecutive(sets));
+};
 var _user$project$Haggis_Combination$distribute = F2(
 	function (wildcards, sets) {
 		return A2(
@@ -78,27 +96,27 @@ var _user$project$Haggis_Combination$dropDuplicates$ = F2(
 	function (existing, remaining) {
 		dropDuplicates$:
 		while (true) {
-			var _p5 = remaining;
-			if (_p5.ctor === '[]') {
+			var _p6 = remaining;
+			if (_p6.ctor === '[]') {
 				return _elm_lang$core$Native_List.fromArray(
 					[]);
 			} else {
-				var _p7 = _p5._1;
-				var _p6 = _p5._0;
-				if (A2(_elm_lang$core$List$member, _p6, existing)) {
-					var _v5 = existing,
-						_v6 = _p7;
-					existing = _v5;
-					remaining = _v6;
+				var _p8 = _p6._1;
+				var _p7 = _p6._0;
+				if (A2(_elm_lang$core$List$member, _p7, existing)) {
+					var _v6 = existing,
+						_v7 = _p8;
+					existing = _v6;
+					remaining = _v7;
 					continue dropDuplicates$;
 				} else {
 					return A2(
 						_elm_lang$core$List_ops['::'],
-						_p6,
+						_p7,
 						A2(
 							_user$project$Haggis_Combination$dropDuplicates$,
-							A2(_elm_lang$core$List_ops['::'], _p6, existing),
-							_p7));
+							A2(_elm_lang$core$List_ops['::'], _p7, existing),
+							_p8));
 				}
 			}
 		}
@@ -121,12 +139,12 @@ var _user$project$Haggis_Combination$hasSameSuit = F2(
 		return _elm_lang$core$Native_Utils.eq(card.suit, card$.suit);
 	});
 var _user$project$Haggis_Combination$allSameSuit = function (cards) {
-	var _p8 = cards;
-	if (_p8.ctor === '::') {
+	var _p9 = cards;
+	if (_p9.ctor === '::') {
 		return A2(
 			_elm_lang$core$List$all,
-			_user$project$Haggis_Combination$hasSameSuit(_p8._0),
-			_p8._1);
+			_user$project$Haggis_Combination$hasSameSuit(_p9._0),
+			_p9._1);
 	} else {
 		return false;
 	}
@@ -141,26 +159,6 @@ var _user$project$Haggis_Combination$collectSets = function (cards) {
 		_elm_community$elm_list_extra$List_Extra$groupWhile,
 		_user$project$Haggis_Card$equal,
 		_user$project$Haggis_Combination$sorted(cards));
-};
-var _user$project$Haggis_Combination$count = _elm_lang$core$List$length;
-var _user$project$Haggis_Combination$size = _user$project$Haggis_Combination$count;
-var _user$project$Haggis_Combination$allSetsSameSize = function (sets) {
-	var _p9 = sets;
-	if (_p9.ctor === '::') {
-		return A2(
-			_elm_lang$core$List$all,
-			function (s) {
-				return _elm_lang$core$Native_Utils.eq(
-					_user$project$Haggis_Combination$size(s),
-					_user$project$Haggis_Combination$size(_p9._0));
-			},
-			_p9._1);
-	} else {
-		return false;
-	}
-};
-var _user$project$Haggis_Combination$canFormSequence = function (sets) {
-	return _user$project$Haggis_Combination$allSetsSameSize(sets) && (_user$project$Haggis_Combination$allSetsSameSuits(sets) && _user$project$Haggis_Combination$allSetsConsecutive(sets));
 };
 var _user$project$Haggis_Combination$allSameRank = function (cards) {
 	var _p10 = cards;
@@ -185,7 +183,7 @@ var _user$project$Haggis_Combination$Triple = {ctor: 'Triple'};
 var _user$project$Haggis_Combination$Pair = {ctor: 'Pair'};
 var _user$project$Haggis_Combination$Single = {ctor: 'Single'};
 var _user$project$Haggis_Combination$makeSet = function (cards) {
-	var _p11 = _user$project$Haggis_Combination$count(cards);
+	var _p11 = _elm_lang$core$List$length(cards);
 	switch (_p11) {
 		case 1:
 			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Single);
@@ -212,9 +210,9 @@ var _user$project$Haggis_Combination$set = function (cards) {
 	var spotcards = _p12._0;
 	var wildcards = _p12._1;
 	return _user$project$Haggis_Combination$allSameRank(spotcards) ? _user$project$Haggis_Combination$makeSet(cards) : ((_elm_lang$core$Native_Utils.eq(
-		_user$project$Haggis_Combination$count(wildcards),
+		_elm_lang$core$List$length(wildcards),
 		1) && _elm_lang$core$Native_Utils.eq(
-		_user$project$Haggis_Combination$count(cards),
+		_elm_lang$core$List$length(cards),
 		1)) ? _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Single) : _elm_lang$core$Maybe$Nothing);
 };
 var _user$project$Haggis_Combination$RunOfEightOfAKinds = {ctor: 'RunOfEightOfAKinds'};
@@ -228,7 +226,7 @@ var _user$project$Haggis_Combination$RunOfSingles = {ctor: 'RunOfSingles'};
 var _user$project$Haggis_Combination$makeSequence = function (sets) {
 	var _p13 = sets;
 	if (_p13.ctor === '::') {
-		var _p14 = _user$project$Haggis_Combination$size(_p13._0);
+		var _p14 = _elm_lang$core$List$length(_p13._0);
 		switch (_p14) {
 			case 1:
 				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles);
@@ -259,9 +257,9 @@ var _user$project$Haggis_Combination$sequence = function (cards) {
 	var spotcards = _p15._0;
 	var wildcards = _p15._1;
 	return (_elm_lang$core$Native_Utils.eq(
-		_user$project$Haggis_Combination$count(spotcards),
+		_elm_lang$core$List$length(spotcards),
 		0) || (_elm_lang$core$Native_Utils.cmp(
-		_user$project$Haggis_Combination$count(cards),
+		_elm_lang$core$List$length(cards),
 		3) < 0)) ? _elm_lang$core$Maybe$Nothing : (_user$project$Haggis_Combination$canFormSequence(sets) ? _user$project$Haggis_Combination$makeSequence(sets) : _elm_lang$core$Maybe$Nothing);
 };
 var _user$project$Haggis_Combination$Suited = {ctor: 'Suited'};

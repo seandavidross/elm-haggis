@@ -63,7 +63,7 @@ set cards =
     in
         if allSameRank spotcards then
             makeSet cards
-        else if count wildcards == 1 && count cards == 1 then
+        else if length wildcards == 1 && length cards == 1 then
             Just Single
         else
             Nothing
@@ -81,7 +81,7 @@ allSameRank cards =
 
 makeSet : List Card -> Maybe Set
 makeSet cards =
-    case count cards of
+    case length cards of
         1 ->
             Just Single
 
@@ -108,20 +108,6 @@ makeSet cards =
 
         otherwise ->
             Nothing
-
-
-{-| Convenience alias for List.length
--}
-count : List Card -> Int
-count =
-    List.length
-
-
-{-| Context-relevant alias for count()
--}
-size : List Card -> Int
-size =
-    count
 
 
 
@@ -251,7 +237,7 @@ sequence cards =
 
         --distribute wildcards (collectSets spotcards)
     in
-        if count spotcards == 0 || count cards < 3 then
+        if length spotcards == 0 || length cards < 3 then
             Nothing
         else if canFormSequence sets then
             makeSequence sets
@@ -321,7 +307,7 @@ allSetsSameSize : List (List Card) -> Bool
 allSetsSameSize sets =
     case sets of
         first :: rest ->
-            List.all (\s -> size s == size first) rest
+            List.all (\s -> length s == length first) rest
 
         otherwise ->
             False
@@ -397,7 +383,7 @@ makeSequence : List (List Card) -> Maybe Sequence
 makeSequence sets =
     case sets of
         set :: _ ->
-            case size set of
+            case length set of
                 1 ->
                     Just RunOfSingles
 
