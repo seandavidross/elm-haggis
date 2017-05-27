@@ -172,12 +172,8 @@ hasFourSuits cards =
         numberOfSuits == 4
 
 
-
-{-
-   dropDuplicates is based on code from elm-community/elm-list-extras
+{-| dropDuplicates is based on code from elm-community/elm-list-extras
 -}
-
-
 dropDuplicates : List Suit -> List Suit
 dropDuplicates suits =
     dropDuplicates' [] suits
