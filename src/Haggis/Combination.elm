@@ -114,50 +114,35 @@ makeSet cards =
 -- BOMB
 
 
-{-| NOTE
-I need to figure out how to do proper pattern matching against records;
-I'm pretty sure I'm doing unnecessary work by calling map .rank()...
--}
 bomb : List Card -> Maybe Bomb
 bomb cards =
-    case sortBy (rank) cards of
-        [ wild, wild' ] ->
-            case map .rank [ wild, wild' ] of
-                [ Jack, Queen ] ->
-                    Just JQ
+    let
+        ranks =
+            cards |> sortBy (rank) |> map .rank
+    in
+        case ranks of
+            [ Jack, Queen ] ->
+                Just JQ
 
-                [ Jack, King ] ->
-                    Just JK
+            [ Jack, King ] ->
+                Just JK
 
-                [ Queen, King ] ->
-                    Just QK
+            [ Queen, King ] ->
+                Just QK
 
-                otherwise ->
+            [ Jack, Queen, King ] ->
+                Just JQK
+
+            [ Three, Five, Seven, Nine ] ->
+                if allSameSuit cards then
+                    Just Suited
+                else if hasFourSuits cards then
+                    Just Rainbow
+                else
                     Nothing
 
-        [ j, q, k ] ->
-            case map .rank [ j, q, k ] of
-                [ Jack, Queen, King ] ->
-                    Just JQK
-
-                otherwise ->
-                    Nothing
-
-        [ three, five, seven, nine ] ->
-            case map .rank [ three, five, seven, nine ] of
-                [ Three, Five, Seven, Nine ] ->
-                    if allSameSuit cards then
-                        Just Suited
-                    else if hasFourSuits cards then
-                        Just Rainbow
-                    else
-                        Nothing
-
-                otherwise ->
-                    Nothing
-
-        otherwise ->
-            Nothing
+            otherwise ->
+                Nothing
 
 
 allSameSuit : List Card -> Bool
