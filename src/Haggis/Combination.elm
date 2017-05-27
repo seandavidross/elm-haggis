@@ -310,17 +310,12 @@ allSetsSameSize sets =
 
 allSetsSameSuits : List (List Card) -> Bool
 allSetsSameSuits sets =
-    case collectSuitGroups sets of
+    case map (collectSuits) sets of
         suitGroup :: rest ->
             List.all ((==) suitGroup) rest
 
         otherwise ->
             False
-
-
-collectSuitGroups : List (List Card) -> List (List Suit)
-collectSuitGroups =
-    List.map (collectSuits)
 
 
 collectSuits : List Card -> List Suit
