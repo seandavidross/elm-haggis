@@ -116,13 +116,13 @@ makeSet cards =
 
 {-| NOTE
 I need to figure out how to do proper pattern matching against records;
-I'm pretty sure I'm doing unnecessary work by calling collectRanks()...
+I'm pretty sure I'm doing unnecessary work by calling map .rank()...
 -}
 bomb : List Card -> Maybe Bomb
 bomb cards =
     case sortBy (rank) cards of
         [ wild, wild' ] ->
-            case collectRanks [ wild, wild' ] of
+            case map .rank [ wild, wild' ] of
                 [ Jack, Queen ] ->
                     Just JQ
 
@@ -136,7 +136,7 @@ bomb cards =
                     Nothing
 
         [ j, q, k ] ->
-            case collectRanks [ j, q, k ] of
+            case map .rank [ j, q, k ] of
                 [ Jack, Queen, King ] ->
                     Just JQK
 
@@ -144,7 +144,7 @@ bomb cards =
                     Nothing
 
         [ three, five, seven, nine ] ->
-            case collectRanks [ three, five, seven, nine ] of
+            case map .rank [ three, five, seven, nine ] of
                 [ Three, Five, Seven, Nine ] ->
                     if allSameSuit cards then
                         Just Suited
@@ -160,16 +160,11 @@ bomb cards =
             Nothing
 
 
-collectRanks : List Card -> List Rank
-collectRanks =
-    List.map .rank
-
-
 allSameSuit : List Card -> Bool
 allSameSuit cards =
     case cards of
         first :: rest ->
-            List.all (hasSameSuit first) rest
+            all (hasSameSuit first) rest
 
         otherwise ->
             False
@@ -185,9 +180,9 @@ hasFourSuits cards =
     let
         numberOfSuits =
             cards
-                |> List.map suit
+                |> map suit
                 |> dropDuplicates
-                |> List.length
+                |> length
     in
         numberOfSuits == 4
 
@@ -283,7 +278,7 @@ where cN is a card with rank N and wN is the rank the wild card takes on after d
 -}
 distribute : List Card -> List (List Card) -> List (List Card)
 distribute wildcards sets =
-    List.append sets [ wildcards ]
+    append sets [ wildcards ]
 
 
 collectSets : List Card -> List (List Card)
@@ -302,7 +297,7 @@ allSetsSameSize : List (List Card) -> Bool
 allSetsSameSize sets =
     case sets of
         first :: rest ->
-            List.all (\s -> length s == length first) rest
+            all (\s -> length s == length first) rest
 
         otherwise ->
             False
@@ -311,8 +306,8 @@ allSetsSameSize sets =
 allSetsSameSuits : List (List Card) -> Bool
 allSetsSameSuits sets =
     case map (collectSuits) sets of
-        suitGroup :: rest ->
-            List.all ((==) suitGroup) rest
+        firstGroup :: suitGroups ->
+            all ((==) firstGroup) suitGroups
 
         otherwise ->
             False
@@ -332,7 +327,7 @@ allSetsConsecutive sets =
 
 collectOneofEachRank : List (List Card) -> List (Maybe Card)
 collectOneofEachRank =
-    List.map (\s -> List.head s)
+    map (\s -> head s)
 
 
 allRanksConsecutive : List (Maybe Card) -> Bool

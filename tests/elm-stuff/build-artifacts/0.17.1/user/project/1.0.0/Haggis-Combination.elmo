@@ -155,10 +155,6 @@ var _user$project$Haggis_Combination$allSameSuit = function (cards) {
 		return false;
 	}
 };
-var _user$project$Haggis_Combination$collectRanks = _elm_lang$core$List$map(
-	function (_) {
-		return _.rank;
-	});
 var _user$project$Haggis_Combination$allSameRank = function (cards) {
 	var _p10 = cards;
 	if (_p10.ctor === '[]') {
@@ -273,7 +269,11 @@ var _user$project$Haggis_Combination$bomb = function (cards) {
 	do {
 		if ((_p16.ctor === '::') && (_p16._1.ctor === '::')) {
 			if (_p16._1._1.ctor === '[]') {
-				var _p17 = _user$project$Haggis_Combination$collectRanks(
+				var _p17 = A2(
+					_elm_lang$core$List$map,
+					function (_) {
+						return _.rank;
+					},
 					_elm_lang$core$Native_List.fromArray(
 						[_p16._0, _p16._1._0]));
 				_v14_3:
@@ -305,7 +305,11 @@ var _user$project$Haggis_Combination$bomb = function (cards) {
 				return _elm_lang$core$Maybe$Nothing;
 			} else {
 				if (_p16._1._1._1.ctor === '[]') {
-					var _p18 = _user$project$Haggis_Combination$collectRanks(
+					var _p18 = A2(
+						_elm_lang$core$List$map,
+						function (_) {
+							return _.rank;
+						},
 						_elm_lang$core$Native_List.fromArray(
 							[_p16._0, _p16._1._0, _p16._1._1._0]));
 					if (((((((_p18.ctor === '::') && (_p18._0.ctor === 'Jack')) && (_p18._1.ctor === '::')) && (_p18._1._0.ctor === 'Queen')) && (_p18._1._1.ctor === '::')) && (_p18._1._1._0.ctor === 'King')) && (_p18._1._1._1.ctor === '[]')) {
@@ -315,7 +319,11 @@ var _user$project$Haggis_Combination$bomb = function (cards) {
 					}
 				} else {
 					if (_p16._1._1._1._1.ctor === '[]') {
-						var _p19 = _user$project$Haggis_Combination$collectRanks(
+						var _p19 = A2(
+							_elm_lang$core$List$map,
+							function (_) {
+								return _.rank;
+							},
 							_elm_lang$core$Native_List.fromArray(
 								[_p16._0, _p16._1._0, _p16._1._1._0, _p16._1._1._1._0]));
 						if (((((((((_p19.ctor === '::') && (_p19._0.ctor === 'Three')) && (_p19._1.ctor === '::')) && (_p19._1._0.ctor === 'Five')) && (_p19._1._1.ctor === '::')) && (_p19._1._1._0.ctor === 'Seven')) && (_p19._1._1._1.ctor === '::')) && (_p19._1._1._1._0.ctor === 'Nine')) && (_p19._1._1._1._1.ctor === '[]')) {
