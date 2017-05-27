@@ -92,11 +92,14 @@ var _user$project$Haggis_Combination$collectSets = function (cards) {
 };
 var _user$project$Haggis_Combination$distribute = F2(
 	function (wildcards, sets) {
-		return A2(
-			_elm_lang$core$List$append,
-			sets,
-			_elm_lang$core$Native_List.fromArray(
-				[wildcards]));
+		return _elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$core$List$append,
+				sets,
+				_elm_lang$core$Native_List.fromArray(
+					[wildcards]))
+			]);
 	});
 var _user$project$Haggis_Combination$dropDuplicates$ = F2(
 	function (existing, remaining) {
@@ -255,7 +258,12 @@ var _user$project$Haggis_Combination$sequence = function (cards) {
 		_elm_lang$core$List$length(spotcards),
 		0) || (_elm_lang$core$Native_Utils.cmp(
 		_elm_lang$core$List$length(cards),
-		3) < 0)) ? _elm_lang$core$Maybe$Nothing : (_user$project$Haggis_Combination$canFormSequence(sets) ? _user$project$Haggis_Combination$makeSequence(sets) : _elm_lang$core$Maybe$Nothing);
+		3) < 0)) ? _elm_lang$core$Native_List.fromArray(
+		[_elm_lang$core$Maybe$Nothing]) : (_user$project$Haggis_Combination$canFormSequence(sets) ? _elm_lang$core$Native_List.fromArray(
+		[
+			_user$project$Haggis_Combination$makeSequence(sets)
+		]) : _elm_lang$core$Native_List.fromArray(
+		[_elm_lang$core$Maybe$Nothing]));
 };
 var _user$project$Haggis_Combination$Suited = {ctor: 'Suited'};
 var _user$project$Haggis_Combination$JQK = {ctor: 'JQK'};

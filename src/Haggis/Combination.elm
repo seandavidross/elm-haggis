@@ -201,7 +201,7 @@ dropDuplicates' existing remaining =
 -- TODO still need to handle Wild cards...
 
 
-sequence : List Card -> Maybe Sequence
+sequence : List Card -> List (Maybe Sequence)
 sequence cards =
     let
         ( spotcards, wildcards ) =
@@ -213,57 +213,58 @@ sequence cards =
         --distribute wildcards (collectSets spotcards)
     in
         if length spotcards == 0 || length cards < 3 then
-            Nothing
+            [ Nothing ]
         else if canFormSequence sets then
-            makeSequence sets
+            [ makeSequence sets ]
             -- List.map (makeSequence) sets
         else
-            Nothing
+            [ Nothing ]
 
 
-{-| Placeholder implementation until I'm ready to provide the necessary implementation
+{-| To determine the possible sequences that can be formed using wildcards,
+we first need to distribute the wildcards evenly amongst the sets of spot cards.
+As we do so, we need to change the wildcard's suit to fit the grouping of suits
+in its set, and we need change the ordinal value of the wildcard's rank so that
+it matches the rank of the other cards in the set.
 
-Roughly, we need something that does this:
+EXAMPLES:
 
--- there needs to be at least one spot card
-[[], [w]]
--> [[w1]] -- Nothing
+Let c_N be a card with rank N and let j_N, q_N, k_N be a wild card's rank after
+being distibuted, then:
 
-[[], [w, w']]
--> [[w1, w1']] -- Nothing
+    distribute  [ j_11, q_12 ]   [ [ c_2 ] ]
 
-[[], [w, w', w''']]
--> [[w1, w1', w''']] -- Nothing
+returns a RunOfSingles
 
-[[c1], [w, w']]
--> [[c1], [w2], [w3']] -- RunOfSingles
+    [ [ c_2 ], [ j_3 ], [ q_4 ] ]
 
--- it's possible for the wilds to form multiple sequence types
-[[c1], [w, w', w'']]
--> [[c1], [w2], [w3'], [w4'']] -- RunOfSingles
--> [[c1, w1], [w2', w2'']] -- RunOfPairs
+But wildcards can be used to form more than one type of Sequence, so:
 
-[[c1, c1'], [w, w']]
--> [[c1, c1'], [w2, w2']] -- RunOfPairs
+    distribute  [ j_11, q_12, k_13 ]   [ [ c_2 ], [ c_3, c_3' ] ]
 
--- the wilds need to be able to fill gaps in or extend the sequence
-[[c1], [c3], [w, w', w'']]
--> [[c1], [w2], [c3], [w4'], [w5'']] -- RunOfSingles
+returns a RunOfPairs
 
-[[c1], [c2, c2'], [w, w', w'']]
--> [[c1, w1], [c2, c2'][w3', w3'']][[c1, w1], [c2, c2']  [w3', w3'']] -- RunOfPairs
--> [[c1, w1, w1'], [c2, c2', w2'']] -- RunOfTriples
+    [ [ c_2, j_2 ], [ c_3, c_3' ], [ q_4, k_4 ] ]
 
-[[c1, c1'], [c2, c2'], [w, w']]
--> [[c1, c1'], [c2, c2'], [w3, w3']] -- RunOfPairs
--> [[c1, c1', w1], [c2, c2', w2']] -- RunOfTriples
+*AND* a RunOfTriples
 
-where cN is a card with rank N and wN is the rank the wild card takes on after distibution
+    [ [ c_2, j_2, q_2 ], [ c_3, c_3', k_3 ] ]
+
+NOTE
+We need at least one spot card to form a Sequence:
+
+    distribute  [ j_11, q_12, k_13 ]    [ [] ]
+
+returns
+
+    [ [ j_11 ], [ q_12 ], [ k_13 ] ]
+
+but this is NOT a Sequence, it can only ever be a Bomb.
 
 -}
-distribute : List Card -> List (List Card) -> List (List Card)
+distribute : List Card -> List (List Card) -> List (List (List Card))
 distribute wildcards sets =
-    append sets [ wildcards ]
+    [ append sets [ wildcards ] ]
 
 
 collectSets : List Card -> List (List Card)
