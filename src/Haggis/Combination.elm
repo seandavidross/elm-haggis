@@ -318,6 +318,9 @@ collectOneofEachRank =
 allRanksConsecutive : List (Maybe Card) -> Bool
 allRanksConsecutive cards =
     case cards of
+        [] ->
+            False
+
         c :: [] ->
             case c of
                 Just c ->
@@ -334,9 +337,6 @@ allRanksConsecutive cards =
 
                 otherwise ->
                     False
-
-        otherwise ->
-            False
 
 
 maybe : Card -> Maybe Card
