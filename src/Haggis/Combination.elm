@@ -118,7 +118,7 @@ bomb : List Card -> Maybe Bomb
 bomb cards =
     let
         ranks =
-            cards |> sortBy (rank) |> map .rank
+            cards |> sortBy (.order) |> map .rank
     in
         case ranks of
             [ Jack, Queen ] ->
@@ -165,7 +165,7 @@ hasFourSuits cards =
     let
         numberOfSuits =
             cards
-                |> map suit
+                |> map .suit
                 |> dropDuplicates
                 |> length
     in
@@ -273,7 +273,7 @@ distribute wildcards sets =
 
 collectSets : List Card -> List (List Card)
 collectSets cards =
-    List.Extra.groupWhile (equal) (sortBy (rank) cards)
+    List.Extra.groupWhile (equal) (sortBy (.order) cards)
 
 
 canFormSequence : List (List Card) -> Bool
@@ -337,7 +337,7 @@ allRanksConsecutive cards =
         c :: c' :: rest ->
             case ( c, c' ) of
                 ( Just c, Just c' ) ->
-                    ((rank c + 1) == rank c')
+                    ((c.order + 1) == c'.order)
                         && allRanksConsecutive (maybe c' :: rest)
 
                 otherwise ->

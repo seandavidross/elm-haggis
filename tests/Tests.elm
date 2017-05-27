@@ -20,10 +20,10 @@ all =
                     Expect.equal redSeven.points 1
             , test "card with lower rank less than card with higher rank" <|
                 \() ->
-                    Expect.lessThan (rank redSeven) (rank blueTwo)
+                    Expect.lessThan redSeven.order blueTwo.order
             , test "two cards with the same rank are equal" <|
                 \() ->
-                    Expect.equal (rank blueTwo) (rank greenTwo)
+                    Expect.equal blueTwo.order greenTwo.order
             , test "non-matching single cards do not match" <|
                 \() ->
                     Expect.notEqual blueTwo redSeven
@@ -128,84 +128,84 @@ all =
 
 blueTwo : Card
 blueTwo =
-    { suit = Blue, rank = Two, points = 0 }
+    { suit = Blue, rank = Two, order = 2, points = 0 }
 
 
 greenTwo : Card
 greenTwo =
-    { suit = Green, rank = Two, points = 0 }
+    { suit = Green, rank = Two, order = 2, points = 0 }
 
 
 blueThree : Card
 blueThree =
-    { suit = Blue, rank = Three, points = 1 }
+    { suit = Blue, rank = Three, order = 3, points = 1 }
 
 
 greenThree : Card
 greenThree =
-    { suit = Green, rank = Three, points = 1 }
+    { suit = Green, rank = Three, order = 3, points = 1 }
 
 
 redThree : Card
 redThree =
-    { suit = Red, rank = Three, points = 1 }
+    { suit = Red, rank = Three, order = 3, points = 1 }
 
 
 blueFour : Card
 blueFour =
-    { suit = Blue, rank = Four, points = 1 }
+    { suit = Blue, rank = Four, order = 4, points = 1 }
 
 
 redFive : Card
 redFive =
-    { suit = Red, rank = Five, points = 1 }
+    { suit = Red, rank = Five, order = 5, points = 1 }
 
 
 greenFive : Card
 greenFive =
-    { suit = Green, rank = Five, points = 1 }
+    { suit = Green, rank = Five, order = 5, points = 1 }
 
 
 redSeven : Card
 redSeven =
-    { suit = Red, rank = Seven, points = 1 }
+    { suit = Red, rank = Seven, order = 7, points = 1 }
 
 
 orangeSeven : Card
 orangeSeven =
-    { suit = Orange, rank = Seven, points = 1 }
+    { suit = Orange, rank = Seven, order = 7, points = 1 }
 
 
 redNine : Card
 redNine =
-    { suit = Red, rank = Nine, points = 1 }
+    { suit = Red, rank = Nine, order = 9, points = 1 }
 
 
 yellowNine : Card
 yellowNine =
-    { suit = Yellow, rank = Nine, points = 1 }
+    { suit = Yellow, rank = Nine, order = 9, points = 1 }
 
 
 blueTen : Card
 blueTen =
-    { suit = Blue, rank = Ten, points = 0 }
+    { suit = Blue, rank = Ten, order = 10, points = 0 }
 
 
 greenTen : Card
 greenTen =
-    { suit = Green, rank = Ten, points = 0 }
+    { suit = Green, rank = Ten, order = 10, points = 0 }
 
 
 jack : Card
 jack =
-    { suit = Wild, rank = Jack, points = 2 }
+    { suit = Wild, rank = Jack, order = 11, points = 2 }
 
 
 queen : Card
 queen =
-    { suit = Wild, rank = Queen, points = 3 }
+    { suit = Wild, rank = Queen, order = 12, points = 3 }
 
 
 king : Card
 king =
-    { suit = Wild, rank = King, points = 5 }
+    { suit = Wild, rank = King, order = 13, points = 5 }

@@ -57,47 +57,13 @@ var _user$project$Haggis_Card$compareSuits = F2(
 				return _elm_lang$core$Basics$GT;
 		}
 	});
-var _user$project$Haggis_Card$rank = function (c) {
-	var _p6 = c.rank;
-	switch (_p6.ctor) {
-		case 'Two':
-			return 2;
-		case 'Three':
-			return 3;
-		case 'Four':
-			return 4;
-		case 'Five':
-			return 5;
-		case 'Six':
-			return 6;
-		case 'Seven':
-			return 7;
-		case 'Eight':
-			return 8;
-		case 'Nine':
-			return 9;
-		case 'Ten':
-			return 10;
-		case 'Jack':
-			return 11;
-		case 'Queen':
-			return 12;
-		default:
-			return 13;
-	}
-};
 var _user$project$Haggis_Card$equal = F2(
-	function (c1, c2) {
-		return _elm_lang$core$Native_Utils.eq(
-			_user$project$Haggis_Card$rank(c1),
-			_user$project$Haggis_Card$rank(c2));
+	function (card, card$) {
+		return _elm_lang$core$Native_Utils.eq(card.order, card$.order);
 	});
-var _user$project$Haggis_Card$suit = function (card) {
-	return card.suit;
-};
-var _user$project$Haggis_Card$Card = F3(
-	function (a, b, c) {
-		return {suit: a, rank: b, points: c};
+var _user$project$Haggis_Card$Card = F4(
+	function (a, b, c, d) {
+		return {suit: a, rank: b, order: c, points: d};
 	});
 var _user$project$Haggis_Card$Wild = {ctor: 'Wild'};
 var _user$project$Haggis_Card$isSpotCard = function (card) {

@@ -8,6 +8,7 @@ Would it be worthwhile to make points' type be 'Point value'?
 type alias Card =
     { suit : Suit
     , rank : Rank
+    , order : Ordinal
     , points : Int
     }
 
@@ -46,58 +47,13 @@ type Rank
     | King
 
 
-suit : Card -> Suit
-suit card =
-    card.suit
-
-
-{-| TODO
-Probably need to handle changing wild card ranks
-to fit the combination in which they are played...
--}
-rank : Card -> Int
-rank c =
-    case c.rank of
-        Two ->
-            2
-
-        Three ->
-            3
-
-        Four ->
-            4
-
-        Five ->
-            5
-
-        Six ->
-            6
-
-        Seven ->
-            7
-
-        Eight ->
-            8
-
-        Nine ->
-            9
-
-        Ten ->
-            10
-
-        Jack ->
-            11
-
-        Queen ->
-            12
-
-        King ->
-            13
+type alias Ordinal =
+    Int
 
 
 equal : Card -> Card -> Bool
-equal c1 c2 =
-    rank c1 == rank c2
+equal card card' =
+    card.order == card'.order
 
 
 {-| A "spot card" is a card game term for any card that is not

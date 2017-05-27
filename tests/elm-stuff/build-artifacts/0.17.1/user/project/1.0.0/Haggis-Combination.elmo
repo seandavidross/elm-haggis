@@ -20,9 +20,7 @@ var _user$project$Haggis_Combination$allRanksConsecutive = function (cards) {
 			var _p2 = {ctor: '_Tuple2', _0: _p0._0, _1: _p0._1._0};
 			if (((_p2.ctor === '_Tuple2') && (_p2._0.ctor === 'Just')) && (_p2._1.ctor === 'Just')) {
 				var _p3 = _p2._1._0;
-				return _elm_lang$core$Native_Utils.eq(
-					_user$project$Haggis_Card$rank(_p2._0._0) + 1,
-					_user$project$Haggis_Card$rank(_p3)) && _user$project$Haggis_Combination$allRanksConsecutive(
+				return _elm_lang$core$Native_Utils.eq(_p2._0._0.order + 1, _p3.order) && _user$project$Haggis_Combination$allRanksConsecutive(
 					A2(
 						_elm_lang$core$List_ops['::'],
 						_user$project$Haggis_Combination$maybe(_p3),
@@ -88,7 +86,12 @@ var _user$project$Haggis_Combination$collectSets = function (cards) {
 	return A2(
 		_elm_community$elm_list_extra$List_Extra$groupWhile,
 		_user$project$Haggis_Card$equal,
-		A2(_elm_lang$core$List$sortBy, _user$project$Haggis_Card$rank, cards));
+		A2(
+			_elm_lang$core$List$sortBy,
+			function (_) {
+				return _.order;
+			},
+			cards));
 };
 var _user$project$Haggis_Combination$distribute = F2(
 	function (wildcards, sets) {
@@ -140,7 +143,12 @@ var _user$project$Haggis_Combination$dropDuplicates = function (suits) {
 var _user$project$Haggis_Combination$hasFourSuits = function (cards) {
 	var numberOfSuits = _elm_lang$core$List$length(
 		_user$project$Haggis_Combination$dropDuplicates(
-			A2(_elm_lang$core$List$map, _user$project$Haggis_Card$suit, cards)));
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.suit;
+				},
+				cards)));
 	return _elm_lang$core$Native_Utils.eq(numberOfSuits, 4);
 };
 var _user$project$Haggis_Combination$hasSameSuit = F2(
@@ -277,7 +285,12 @@ var _user$project$Haggis_Combination$bomb = function (cards) {
 		function (_) {
 			return _.rank;
 		},
-		A2(_elm_lang$core$List$sortBy, _user$project$Haggis_Card$rank, cards));
+		A2(
+			_elm_lang$core$List$sortBy,
+			function (_) {
+				return _.order;
+			},
+			cards));
 	var _p16 = ranks;
 	_v13_5:
 	do {
