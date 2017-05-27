@@ -120,7 +120,7 @@ I'm pretty sure I'm doing unnecessary work by calling collectRanks()...
 -}
 bomb : List Card -> Maybe Bomb
 bomb cards =
-    case sorted cards of
+    case sortBy (rank) cards of
         [ wild, wild' ] ->
             case collectRanks [ wild, wild' ] of
                 [ Jack, Queen ] ->
@@ -158,11 +158,6 @@ bomb cards =
 
         otherwise ->
             Nothing
-
-
-sorted : List Card -> List Card
-sorted =
-    List.sortBy rank
 
 
 collectRanks : List Card -> List Rank
@@ -293,7 +288,7 @@ distribute wildcards sets =
 
 collectSets : List Card -> List (List Card)
 collectSets cards =
-    List.Extra.groupWhile (equal) (sorted cards)
+    List.Extra.groupWhile (equal) (sortBy (rank) cards)
 
 
 canFormSequence : List (List Card) -> Bool
@@ -331,13 +326,8 @@ collectSuitGroups =
 collectSuits : List Card -> List Suit
 collectSuits set =
     set
-        |> List.map .suit
-        |> sortSuits
-
-
-sortSuits : List Suit -> List Suit
-sortSuits =
-    List.sortWith (compareSuits)
+        |> map .suit
+        |> sortWith (compareSuits)
 
 
 allSetsConsecutive : List (List Card) -> Bool

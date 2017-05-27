@@ -41,9 +41,10 @@ var _user$project$Haggis_Combination$allSetsConsecutive = function (sets) {
 	return _user$project$Haggis_Combination$allRanksConsecutive(
 		_user$project$Haggis_Combination$collectOneofEachRank(sets));
 };
-var _user$project$Haggis_Combination$sortSuits = _elm_lang$core$List$sortWith(_user$project$Haggis_Card$compareSuits);
 var _user$project$Haggis_Combination$collectSuits = function (set) {
-	return _user$project$Haggis_Combination$sortSuits(
+	return A2(
+		_elm_lang$core$List$sortWith,
+		_user$project$Haggis_Card$compareSuits,
 		A2(
 			_elm_lang$core$List$map,
 			function (_) {
@@ -83,6 +84,12 @@ var _user$project$Haggis_Combination$allSetsSameSize = function (sets) {
 };
 var _user$project$Haggis_Combination$canFormSequence = function (sets) {
 	return _user$project$Haggis_Combination$allSetsSameSize(sets) && (_user$project$Haggis_Combination$allSetsSameSuits(sets) && _user$project$Haggis_Combination$allSetsConsecutive(sets));
+};
+var _user$project$Haggis_Combination$collectSets = function (cards) {
+	return A2(
+		_elm_community$elm_list_extra$List_Extra$groupWhile,
+		_user$project$Haggis_Card$equal,
+		A2(_elm_lang$core$List$sortBy, _user$project$Haggis_Card$rank, cards));
 };
 var _user$project$Haggis_Combination$distribute = F2(
 	function (wildcards, sets) {
@@ -153,13 +160,6 @@ var _user$project$Haggis_Combination$collectRanks = _elm_lang$core$List$map(
 	function (_) {
 		return _.rank;
 	});
-var _user$project$Haggis_Combination$sorted = _elm_lang$core$List$sortBy(_user$project$Haggis_Card$rank);
-var _user$project$Haggis_Combination$collectSets = function (cards) {
-	return A2(
-		_elm_community$elm_list_extra$List_Extra$groupWhile,
-		_user$project$Haggis_Card$equal,
-		_user$project$Haggis_Combination$sorted(cards));
-};
 var _user$project$Haggis_Combination$allSameRank = function (cards) {
 	var _p10 = cards;
 	if (_p10.ctor === '[]') {
@@ -269,7 +269,7 @@ var _user$project$Haggis_Combination$JK = {ctor: 'JK'};
 var _user$project$Haggis_Combination$JQ = {ctor: 'JQ'};
 var _user$project$Haggis_Combination$Rainbow = {ctor: 'Rainbow'};
 var _user$project$Haggis_Combination$bomb = function (cards) {
-	var _p16 = _user$project$Haggis_Combination$sorted(cards);
+	var _p16 = A2(_elm_lang$core$List$sortBy, _user$project$Haggis_Card$rank, cards);
 	_v13_3:
 	do {
 		if ((_p16.ctor === '::') && (_p16._1.ctor === '::')) {
