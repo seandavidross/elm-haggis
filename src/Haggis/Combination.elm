@@ -261,6 +261,10 @@ returns
 
 but this is NOT a Sequence, it can only ever be a Bomb.
 
+TODO
+The code below is only a placeholder that allows everything to compile.
+There are currently 6 failing tests that the real code need to make pass...
+
 -}
 distribute : List Card -> List (List Card) -> List (List (List Card))
 distribute wildcards sets =
