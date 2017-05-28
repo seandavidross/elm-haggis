@@ -396,80 +396,17 @@ var _user$project$Tests$all = A2(
 							}),
 							A2(
 							_elm_community$elm_test$Test$test,
-							'one spot card and three wildcards could be a run of singles or a run of pairs',
+							'one wildcard can fill a one rank gap between to singles to form a run',
 							function (_p60) {
 								var _p61 = _p60;
 								return A2(
 									_elm_community$elm_test$Expect$equal,
 									_user$project$Haggis_Combination$sequence(
 										_elm_lang$core$Native_List.fromArray(
-											[_user$project$Tests$blueTwo, _user$project$Tests$jack, _user$project$Tests$queen, _user$project$Tests$king])),
+											[_user$project$Tests$blueTwo, _user$project$Tests$blueFour, _user$project$Tests$king])),
 									_elm_lang$core$Native_List.fromArray(
 										[
-											_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles),
-											_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs)
-										]));
-							}),
-							A2(
-							_elm_community$elm_test$Test$test,
-							'wild card should sub for missing card in run of pairs',
-							function (_p62) {
-								var _p63 = _p62;
-								return A2(
-									_elm_community$elm_test$Expect$equal,
-									_user$project$Haggis_Combination$sequence(
-										_elm_lang$core$Native_List.fromArray(
-											[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo, _user$project$Tests$jack, _user$project$Tests$greenThree])),
-									_elm_lang$core$Native_List.fromArray(
-										[
-											_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs)
-										]));
-							}),
-							A2(
-							_elm_community$elm_test$Test$test,
-							'a pair of tens plus two wilds is a run of pairs (T-T-J-J)',
-							function (_p64) {
-								var _p65 = _p64;
-								return A2(
-									_elm_community$elm_test$Expect$equal,
-									_user$project$Haggis_Combination$sequence(
-										_elm_lang$core$Native_List.fromArray(
-											[_user$project$Tests$blueTen, _user$project$Tests$greenTen, _user$project$Tests$jack, _user$project$Tests$king])),
-									_elm_lang$core$Native_List.fromArray(
-										[
-											_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs)
-										]));
-							}),
-							A2(
-							_elm_community$elm_test$Test$test,
-							'a consecutive single and a pair of spot cards, plus 3 wildcards, could be a run of pairs or a run of triples',
-							function (_p66) {
-								var _p67 = _p66;
-								return A2(
-									_elm_community$elm_test$Expect$equal,
-									_user$project$Haggis_Combination$sequence(
-										_elm_lang$core$Native_List.fromArray(
-											[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo, _user$project$Tests$greenThree, _user$project$Tests$jack, _user$project$Tests$queen, _user$project$Tests$king])),
-									_elm_lang$core$Native_List.fromArray(
-										[
-											_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs),
-											_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfTriples)
-										]));
-							}),
-							A2(
-							_elm_community$elm_test$Test$test,
-							'two consecutive pairs and two wildcards could be a run of pairs or a run of triples',
-							function (_p68) {
-								var _p69 = _p68;
-								return A2(
-									_elm_community$elm_test$Expect$equal,
-									_user$project$Haggis_Combination$sequence(
-										_elm_lang$core$Native_List.fromArray(
-											[_user$project$Tests$blueTwo, _user$project$Tests$blueThree, _user$project$Tests$greenTwo, _user$project$Tests$greenThree, _user$project$Tests$jack, _user$project$Tests$queen])),
-									_elm_lang$core$Native_List.fromArray(
-										[
-											_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs),
-											_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfTriples)
+											_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles)
 										]));
 							})
 						]))

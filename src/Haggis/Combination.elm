@@ -31,6 +31,10 @@ type Set
     | EightOfAKind
 
 
+type alias ListOfSets =
+    List (List Card)
+
+
 type Sequence
     = RunOfSingles
     | RunOfPairs
@@ -203,18 +207,21 @@ sequence cards =
         ( spotcards, wildcards ) =
             partition (isSpotCard) cards
 
-        sets =
-            collectSets cards
-
-        --distribute wildcards (collectSets spotcards)
+        maybeSequences =
+            distribute wildcards (collectSets spotcards)
     in
         if length spotcards == 0 || length cards < 3 then
             [ Nothing ]
-        else if canFormSequence sets then
-            [ makeSequence sets ]
-            -- List.map (makeSequence) sets
         else
-            [ Nothing ]
+            map (tryToFormSequence) maybeSequences
+
+
+tryToFormSequence : ListOfSets -> Maybe Sequence
+tryToFormSequence maybeSequence =
+    if canFormSequence maybeSequence then
+        makeSequence maybeSequence
+    else
+        Nothing
 
 
 {-| To determine the possible sequences that can be formed using wildcards,
@@ -262,24 +269,123 @@ The code below is only a placeholder that allows everything to compile.
 There are currently 6 failing tests that the real code needs to make pass...
 
 -}
-distribute : List Card -> List (List Card) -> List (List (List Card))
+distribute : List Card -> ListOfSets -> List ListOfSets
 distribute wildcards sets =
-    [ append sets [ wildcards ] ]
+    -- let
+    --     longestSetSize =
+    --         sets
+    --             |> map (length)
+    --             |> maximum
+    --             |> Maybe.withDefault 0
+    -- in
+    case wildcards of
+        [] ->
+            [ sets ]
+
+        [ w ] ->
+            [ sets ]
+
+        --[ distributeOneWildCard w sets ]
+        [ w, w' ] ->
+            -- if longestSetSize == 2 then
+            --     [ insertWildSet wildcards sets ]
+            -- else
+            [ sets ]
+
+        [ w, w', w'' ] ->
+            -- if longestSetSize == 3 then
+            --     [ insertWildSet wildcards sets ]
+            -- else
+            -- [ sets
+            --     ++ [ [ { w | suit = Blue, order = 3 } ] ]
+            --     ++ [ [ { w' | suit = Blue, order = 4 } ] ]
+            --     ++ [ [ { w'' | suit = Blue, order = 5 } ] ]
+            -- , (case sets of
+            --     [] ->
+            --         sets
+            --
+            --     set :: rest ->
+            --         ((set ++ [ { w | order = 2 } ]) :: rest)
+            --             ++ [ [ { w' | suit = Blue, order = 3 }, { w'' | order = 3 } ] ]
+            --   )
+            -- ]
+            [ sets ]
+
+        otherwise ->
+            [ sets ]
 
 
-collectSets : List Card -> List (List Card)
+
+-- distributeOneWildCard : Card -> ListOfSets -> ListOfSets
+-- distributeOneWildCard wildcard sets =
+--     case sets of
+--         [] ->
+--             [ [ wildcard ] ]
+--
+--         [ s ] ->
+--             putWildAfterSet [ s ] wildcard
+--
+--         otherwise ->
+--             putWildAfterSet sets wildcard
+--
+--
+-- putWildAfterSet : List Card -> Card -> ListOfSets
+-- putWildAfterSet set wildcard =
+--     case set of
+--         spotcard :: rest ->
+--             [ spotcard :: rest ] ++ [ [ { wildcard | suit = spotcard.suit, order = spotcard.order } ] ]
+--
+-- addWildToShortestSet : ListOfSets -> Card -> ListOfSets
+-- addWildToShortestSet sets wildcard =
+--     let
+--         shortestToLongestSets =
+--             sortBy (length) sets
+--     in
+--         case shortestToLongestSets of
+--             first :: rest ->
+--                 (first ++ [ wildcard ]) :: rest
+--
+--             otherwise ->
+--                 [ [ wildcard ] ]
+--
+--
+-- How to find shortest set? How to add wild card to it?
+-- insertWildSet : List Card -> ListOfSets -> ListOfSets
+-- insertWildSet wildcards sets =
+--     case sets of
+--         [] ->
+--             [ wildcards ]
+--
+--         first :: rest ->
+--             insertWildSet' [ first ] wildcards rest
+--
+--
+-- insertWildSet' : ListOfSets -> List Card -> ListOfSets -> ListOfSets
+-- insertWildSet' lowerSets wildcards higherSets =
+--     case higherSets of
+--         [] ->
+--             lowerSets ++ [ wildcards ]
+--
+--         betweenSet :: rest ->
+--             if allSetsConsecutive higherSets then
+--                 lowerSets ++ [ wildcards ] ++ higherSets
+--             else
+--                 insertWildSet' (lowerSets ++ [ betweenSet ]) wildcards rest
+
+
+collectSets : List Card -> ListOfSets
 collectSets cards =
     List.Extra.groupWhile (equal) (sortBy (.order) cards)
 
 
-canFormSequence : List (List Card) -> Bool
+canFormSequence : ListOfSets -> Bool
 canFormSequence sets =
     allSetsSameSize sets
         && allSetsSameSuits sets
         && allSetsConsecutive sets
 
 
-allSetsSameSize : List (List Card) -> Bool
+allSetsSameSize : ListOfSets -> Bool
 allSetsSameSize sets =
     case sets of
         first :: rest ->
@@ -289,7 +395,7 @@ allSetsSameSize sets =
             False
 
 
-allSetsSameSuits : List (List Card) -> Bool
+allSetsSameSuits : ListOfSets -> Bool
 allSetsSameSuits sets =
     case map (collectSuits) sets of
         firstGroup :: suitGroups ->
@@ -306,12 +412,12 @@ collectSuits set =
         |> sortWith (compareSuits)
 
 
-allSetsConsecutive : List (List Card) -> Bool
+allSetsConsecutive : ListOfSets -> Bool
 allSetsConsecutive sets =
     allRanksConsecutive (collectOneofEachRank sets)
 
 
-collectOneofEachRank : List (List Card) -> List (Maybe Card)
+collectOneofEachRank : ListOfSets -> List (Maybe Card)
 collectOneofEachRank =
     map (\s -> head s)
 
@@ -345,7 +451,7 @@ maybe card =
     Maybe.map identity (Just card)
 
 
-makeSequence : List (List Card) -> Maybe Sequence
+makeSequence : ListOfSets -> Maybe Sequence
 makeSequence sets =
     case sets of
         set :: _ ->
