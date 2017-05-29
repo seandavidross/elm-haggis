@@ -421,6 +421,21 @@ var _user$project$Tests$all = A2(
 											[_user$project$Tests$greenTwo, _user$project$Tests$greenFive, _user$project$Tests$king])),
 									_elm_lang$core$Native_List.fromArray(
 										[_elm_lang$core$Maybe$Nothing]));
+							}),
+							A2(
+							_elm_community$elm_test$Test$test,
+							'two wildcards can fill a 2 rank gap between two singles to form a run',
+							function (_p64) {
+								var _p65 = _p64;
+								return A2(
+									_elm_community$elm_test$Expect$equal,
+									_user$project$Haggis_Combination$sequence(
+										_elm_lang$core$Native_List.fromArray(
+											[_user$project$Tests$greenTwo, _user$project$Tests$greenFive, _user$project$Tests$king, _user$project$Tests$jack])),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles)
+										]));
 							})
 						]))
 				]))
