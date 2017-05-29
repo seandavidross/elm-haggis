@@ -283,9 +283,9 @@ distribute wildcards sets =
             [ sets ]
 
         [ w ] ->
-            [ sets ]
+            [ distributeOneWildCard sets w ]
 
-        --[ distributeOneWildCard w sets ]
+        --[ sets ] ++ [ [ wildcards ] ]
         [ w, w' ] ->
             -- if longestSetSize == 2 then
             --     [ insertWildSet wildcards sets ]
@@ -315,9 +315,45 @@ distribute wildcards sets =
             [ sets ]
 
 
+distributeOneWildCard : ListOfSets -> Card -> ListOfSets
+distributeOneWildCard sets wildcard =
+    case sets of
+        [] ->
+            [ [ wildcard ] ]
 
--- distributeOneWildCard : Card -> ListOfSets -> ListOfSets
--- distributeOneWildCard wildcard sets =
+        s :: [] ->
+            let
+                one =
+                    head s
+            in
+                case one of
+                    Nothing ->
+                        [ [ wildcard ] ]
+
+                    Just one ->
+                        [ s ] ++ [ [ { wildcard | suit = one.suit, order = one.order + 1 } ] ]
+
+        s :: s' :: rest ->
+            let
+                one =
+                    head s
+
+                two =
+                    head s'
+            in
+                if allRanksConsecutive [ one, two ] then
+                    [ s, s' ] ++ distributeOneWildCard rest wildcard
+                else
+                    case one of
+                        Nothing ->
+                            [ [ wildcard ] ]
+
+                        Just one ->
+                            [ s, [ { wildcard | suit = one.suit, order = one.order + 1 } ], s' ] ++ rest
+
+
+
+--sets ++ [ [ wildcard ] ]
 --     case sets of
 --         [] ->
 --             [ [ wildcard ] ]
