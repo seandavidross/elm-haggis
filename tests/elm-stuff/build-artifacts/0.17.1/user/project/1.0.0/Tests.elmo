@@ -396,7 +396,7 @@ var _user$project$Tests$all = A2(
 							}),
 							A2(
 							_elm_community$elm_test$Test$test,
-							'one wildcard can fill a one rank gap between to singles to form a run',
+							'one wildcard can fill a one rank gap between two singles to form a run',
 							function (_p60) {
 								var _p61 = _p60;
 								return A2(
@@ -408,6 +408,19 @@ var _user$project$Tests$all = A2(
 										[
 											_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles)
 										]));
+							}),
+							A2(
+							_elm_community$elm_test$Test$test,
+							'one wildcard CANNOT fill a 2+ rank gap between two singles to form a run',
+							function (_p62) {
+								var _p63 = _p62;
+								return A2(
+									_elm_community$elm_test$Expect$equal,
+									_user$project$Haggis_Combination$sequence(
+										_elm_lang$core$Native_List.fromArray(
+											[_user$project$Tests$greenTwo, _user$project$Tests$greenFive, _user$project$Tests$king])),
+									_elm_lang$core$Native_List.fromArray(
+										[_elm_lang$core$Maybe$Nothing]));
 							})
 						]))
 				]))

@@ -106,9 +106,12 @@ all =
                 , test "one spot card and two wildcards is a run of singles" <|
                     \() ->
                         Expect.equal (sequence [ blueTwo, jack, king ]) [ Just RunOfSingles ]
-                , test "one wildcard can fill a one rank gap between to singles to form a run" <|
+                , test "one wildcard can fill a one rank gap between two singles to form a run" <|
                     \() ->
                         Expect.equal (sequence [ blueTwo, blueFour, king ]) [ Just RunOfSingles ]
+                , test "one wildcard CANNOT fill a 2+ rank gap between two singles to form a run" <|
+                    \() ->
+                        Expect.equal (sequence [ greenTwo, greenFive, king ]) [ Nothing ]
 
                 -- , test "one spot card and three wildcards could be a run of singles or a run of pairs" <|
                 --     \() ->
