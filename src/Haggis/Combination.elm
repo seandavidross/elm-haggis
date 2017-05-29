@@ -287,11 +287,10 @@ distribute wildcards sets =
 
         --[ sets ] ++ [ [ wildcards ] ]
         [ w, w' ] ->
-            -- if longestSetSize == 2 then
-            --     [ insertWildSet wildcards sets ]
-            -- else
-            [ sets ]
+            [ distributeOneWildCard (distributeOneWildCard sets w) w' ]
 
+        --     [ insertWildSet wildcards sets ]
+        -- else
         [ w, w', w'' ] ->
             -- if longestSetSize == 3 then
             --     [ insertWildSet wildcards sets ]
@@ -321,6 +320,7 @@ distributeOneWildCard sets wildcard =
         [] ->
             [ [ wildcard ] ]
 
+        --[ [ wildcard ] ]
         s :: [] ->
             let
                 one =
@@ -342,7 +342,22 @@ distributeOneWildCard sets wildcard =
                     head s'
             in
                 if allRanksConsecutive [ one, two ] then
-                    [ s, s' ] ++ distributeOneWildCard rest wildcard
+                    case rest of
+                        [] ->
+                            case two of
+                                Nothing ->
+                                    case one of
+                                        Nothing ->
+                                            [ [ wildcard ] ]
+
+                                        Just one ->
+                                            [ s, [ { wildcard | suit = one.suit, order = one.order + 1 } ] ]
+
+                                Just two ->
+                                    [ s, s', [ { wildcard | suit = two.suit, order = two.order + 1 } ] ]
+
+                        otherwise ->
+                            [ s, s' ] ++ distributeOneWildCard rest wildcard
                 else
                     case one of
                         Nothing ->
