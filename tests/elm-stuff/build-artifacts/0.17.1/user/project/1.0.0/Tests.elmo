@@ -411,52 +411,9 @@ var _user$project$Tests$all = A2(
 							}),
 							A2(
 							_elm_community$elm_test$Test$test,
-							'a ten and three wildcards distributes into a run of singles',
+							'one wildcard can fill a one rank gap between two singles to form a run',
 							function (_p62) {
 								var _p63 = _p62;
-								return A2(
-									_elm_community$elm_test$Expect$equal,
-									A2(
-										_user$project$Haggis_Combination$distribute,
-										_elm_lang$core$Native_List.fromArray(
-											[_user$project$Tests$jack, _user$project$Tests$queen, _user$project$Tests$king]),
-										_elm_lang$core$Native_List.fromArray(
-											[
-												_elm_lang$core$Native_List.fromArray(
-												[_user$project$Tests$blueTen])
-											])),
-									_elm_lang$core$Native_List.fromArray(
-										[
-											_elm_lang$core$Native_List.fromArray(
-											[
-												_elm_lang$core$Native_List.fromArray(
-												[_user$project$Tests$blueTen]),
-												_elm_lang$core$Native_List.fromArray(
-												[
-													_elm_lang$core$Native_Utils.update(
-													_user$project$Tests$jack,
-													{suit: _user$project$Haggis_Card$Blue})
-												]),
-												_elm_lang$core$Native_List.fromArray(
-												[
-													_elm_lang$core$Native_Utils.update(
-													_user$project$Tests$queen,
-													{suit: _user$project$Haggis_Card$Blue})
-												]),
-												_elm_lang$core$Native_List.fromArray(
-												[
-													_elm_lang$core$Native_Utils.update(
-													_user$project$Tests$king,
-													{suit: _user$project$Haggis_Card$Blue})
-												])
-											])
-										]));
-							}),
-							A2(
-							_elm_community$elm_test$Test$test,
-							'one wildcard can fill a one rank gap between two singles to form a run',
-							function (_p64) {
-								var _p65 = _p64;
 								return A2(
 									_elm_community$elm_test$Expect$equal,
 									_user$project$Haggis_Combination$sequence(
@@ -470,8 +427,8 @@ var _user$project$Tests$all = A2(
 							A2(
 							_elm_community$elm_test$Test$test,
 							'one wildcard CANNOT fill a 2+ rank gap between two singles to form a run',
-							function (_p66) {
-								var _p67 = _p66;
+							function (_p64) {
+								var _p65 = _p64;
 								return A2(
 									_elm_community$elm_test$Expect$equal,
 									_user$project$Haggis_Combination$sequence(
@@ -483,8 +440,8 @@ var _user$project$Tests$all = A2(
 							A2(
 							_elm_community$elm_test$Test$test,
 							'two wildcards can fill a 2 rank gap between two singles to form a run',
-							function (_p68) {
-								var _p69 = _p68;
+							function (_p66) {
+								var _p67 = _p66;
 								return A2(
 									_elm_community$elm_test$Expect$equal,
 									_user$project$Haggis_Combination$sequence(
