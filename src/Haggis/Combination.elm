@@ -329,63 +329,6 @@ distributeOneWildCard wildcard sets =
                     [ s, [ { wildcard | suit = one.suit, order = one.order + 1 } ], s' ] ++ rest
 
 
-
---sets ++ [ [ wildcard ] ]
---     case sets of
---         [] ->
---             [ [ wildcard ] ]
---
---         [ s ] ->
---             putWildAfterSet [ s ] wildcard
---
---         otherwise ->
---             putWildAfterSet sets wildcard
---
---
--- putWildAfterSet : List Card -> Card -> ListOfSets
--- putWildAfterSet set wildcard =
---     case set of
---         spotcard :: rest ->
---             [ spotcard :: rest ] ++ [ [ { wildcard | suit = spotcard.suit, order = spotcard.order } ] ]
---
--- addWildToShortestSet : ListOfSets -> Card -> ListOfSets
--- addWildToShortestSet sets wildcard =
---     let
---         shortestToLongestSets =
---             sortBy (length) sets
---     in
---         case shortestToLongestSets of
---             first :: rest ->
---                 (first ++ [ wildcard ]) :: rest
---
---             otherwise ->
---                 [ [ wildcard ] ]
---
---
--- How to find shortest set? How to add wild card to it?
--- insertWildSet : List Card -> ListOfSets -> ListOfSets
--- insertWildSet wildcards sets =
---     case sets of
---         [] ->
---             [ wildcards ]
---
---         first :: rest ->
---             insertWildSet' [ first ] wildcards rest
---
---
--- insertWildSet' : ListOfSets -> List Card -> ListOfSets -> ListOfSets
--- insertWildSet' lowerSets wildcards higherSets =
---     case higherSets of
---         [] ->
---             lowerSets ++ [ wildcards ]
---
---         betweenSet :: rest ->
---             if allSetsConsecutive higherSets then
---                 lowerSets ++ [ wildcards ] ++ higherSets
---             else
---                 insertWildSet' (lowerSets ++ [ betweenSet ]) wildcards rest
-
-
 collectSets : List Card -> ListOfSets
 collectSets cards =
     List.Extra.groupWhileTransitively (equal) (sortBy (.order) cards)
