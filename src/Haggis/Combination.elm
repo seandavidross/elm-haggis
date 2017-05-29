@@ -264,11 +264,6 @@ returns
 
 but this is NOT a Sequence, it can only ever be a Bomb.
 
-NOTE
-There must be a way to express the 3 wildcard branches so that I can call
-distributeOneWildCard for each wild, feeding previous calls' ListOfSets results.
-Is it by using foldl? Something to try later...
-
 -}
 distribute : List Card -> ListOfSets -> List ListOfSets
 distribute wildcards sets =
@@ -277,20 +272,25 @@ distribute wildcards sets =
             [ sets ]
 
         [ w ] ->
-            [ distributeOneWildCard sets w ]
+            [ distributeOneWildCard w sets ]
 
         [ w, w' ] ->
-            [ distributeOneWildCard (distributeOneWildCard sets w) w' ]
+            [ distributeOneWildCard w' <|
+                distributeOneWildCard w sets
+            ]
 
         [ w, w', w'' ] ->
-            [ distributeOneWildCard (distributeOneWildCard (distributeOneWildCard sets w) w') w'' ]
+            [ distributeOneWildCard w'' <|
+                distributeOneWildCard w' <|
+                    distributeOneWildCard w sets
+            ]
 
         otherwise ->
             [ sets ]
 
 
-distributeOneWildCard : ListOfSets -> Card -> ListOfSets
-distributeOneWildCard sets wildcard =
+distributeOneWildCard : Card -> ListOfSets -> ListOfSets
+distributeOneWildCard wildcard sets =
     case sets of
         [] ->
             [ [ wildcard ] ]
@@ -316,7 +316,7 @@ distributeOneWildCard sets wildcard =
                             [ s, s', [ { wildcard | suit = two.suit, order = two.order + 1 } ] ]
 
                         otherwise ->
-                            [ s, s' ] ++ distributeOneWildCard rest wildcard
+                            [ s, s' ] ++ distributeOneWildCard wildcard rest
                 else
                     [ s, [ { wildcard | suit = one.suit, order = one.order + 1 } ], s' ] ++ rest
 
