@@ -7,6 +7,7 @@ module Haggis.Combination
         , set
         , sequence
         , bomb
+        , distribute
         )
 
 import Haggis.Card exposing (..)
