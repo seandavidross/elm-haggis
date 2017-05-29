@@ -372,7 +372,8 @@ missingSuit : List Card -> List Card -> Suit
 missingSuit set set' =
     case sortBy (length) [ collectSuits set, collectSuits set' ] of
         [ shortSuits, longSuits ] ->
-            Maybe.withDefault Wild (List.Extra.find (\suit -> notMember suit shortSuits) longSuits)
+            Maybe.withDefault Wild
+                (List.Extra.find (\suit -> notMember suit shortSuits) longSuits)
 
         otherwise ->
             Wild
