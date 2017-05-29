@@ -271,13 +271,6 @@ There are currently 6 failing tests that the real code needs to make pass...
 -}
 distribute : List Card -> ListOfSets -> List ListOfSets
 distribute wildcards sets =
-    -- let
-    --     longestSetSize =
-    --         sets
-    --             |> map (length)
-    --             |> maximum
-    --             |> Maybe.withDefault 0
-    -- in
     case wildcards of
         [] ->
             [ sets ]
@@ -285,30 +278,11 @@ distribute wildcards sets =
         [ w ] ->
             [ distributeOneWildCard sets w ]
 
-        --[ sets ] ++ [ [ wildcards ] ]
         [ w, w' ] ->
             [ distributeOneWildCard (distributeOneWildCard sets w) w' ]
 
-        --     [ insertWildSet wildcards sets ]
-        -- else
         [ w, w', w'' ] ->
-            -- if longestSetSize == 3 then
-            --     [ insertWildSet wildcards sets ]
-            -- else
-            -- [ sets
-            --     ++ [ [ { w | suit = Blue, order = 3 } ] ]
-            --     ++ [ [ { w' | suit = Blue, order = 4 } ] ]
-            --     ++ [ [ { w'' | suit = Blue, order = 5 } ] ]
-            -- , (case sets of
-            --     [] ->
-            --         sets
-            --
-            --     set :: rest ->
-            --         ((set ++ [ { w | order = 2 } ]) :: rest)
-            --             ++ [ [ { w' | suit = Blue, order = 3 }, { w'' | order = 3 } ] ]
-            --   )
-            -- ]
-            [ sets ]
+            [ distributeOneWildCard (distributeOneWildCard (distributeOneWildCard sets w) w') w'' ]
 
         otherwise ->
             [ sets ]
@@ -320,51 +294,30 @@ distributeOneWildCard sets wildcard =
         [] ->
             [ [ wildcard ] ]
 
-        --[ [ wildcard ] ]
         s :: [] ->
             let
                 one =
-                    head s
+                    Maybe.withDefault wildcard (head s)
             in
-                case one of
-                    Nothing ->
-                        [ [ wildcard ] ]
-
-                    Just one ->
-                        [ s ] ++ [ [ { wildcard | suit = one.suit, order = one.order + 1 } ] ]
+                [ s ] ++ [ [ { wildcard | suit = one.suit, order = one.order + 1 } ] ]
 
         s :: s' :: rest ->
             let
                 one =
-                    head s
+                    Maybe.withDefault wildcard (head s)
 
                 two =
-                    head s'
+                    Maybe.withDefault wildcard (head s')
             in
-                if allRanksConsecutive [ one, two ] then
+                if allRanksConsecutive [ maybe one, maybe two ] then
                     case rest of
                         [] ->
-                            case two of
-                                Nothing ->
-                                    case one of
-                                        Nothing ->
-                                            [ [ wildcard ] ]
-
-                                        Just one ->
-                                            [ s, [ { wildcard | suit = one.suit, order = one.order + 1 } ] ]
-
-                                Just two ->
-                                    [ s, s', [ { wildcard | suit = two.suit, order = two.order + 1 } ] ]
+                            [ s, s', [ { wildcard | suit = two.suit, order = two.order + 1 } ] ]
 
                         otherwise ->
                             [ s, s' ] ++ distributeOneWildCard rest wildcard
                 else
-                    case one of
-                        Nothing ->
-                            [ [ wildcard ] ]
-
-                        Just one ->
-                            [ s, [ { wildcard | suit = one.suit, order = one.order + 1 } ], s' ] ++ rest
+                    [ s, [ { wildcard | suit = one.suit, order = one.order + 1 } ], s' ] ++ rest
 
 
 
