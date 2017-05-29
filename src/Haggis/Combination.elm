@@ -300,7 +300,7 @@ distributeOneWildCard wildcard sets =
                 one =
                     Maybe.withDefault wildcard (head s)
             in
-                [ s ] ++ [ [ { wildcard | suit = one.suit, order = one.order + 1 } ] ]
+                [ s, [ { wildcard | suit = one.suit, order = one.order + 1 } ] ]
 
         s :: s' :: rest ->
             let

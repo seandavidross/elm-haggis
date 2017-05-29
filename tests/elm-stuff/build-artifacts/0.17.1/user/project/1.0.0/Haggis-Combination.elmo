@@ -109,19 +109,16 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 					_elm_lang$core$Maybe$withDefault,
 					wildcard,
 					_elm_lang$core$List$head(_p7));
-				return A2(
-					_elm_lang$core$Basics_ops['++'],
-					_elm_lang$core$Native_List.fromArray(
-						[_p7]),
-					_elm_lang$core$Native_List.fromArray(
+				return _elm_lang$core$Native_List.fromArray(
+					[
+						_p7,
+						_elm_lang$core$Native_List.fromArray(
 						[
-							_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$core$Native_Utils.update(
-								wildcard,
-								{suit: one.suit, order: one.order + 1})
-							])
-						]));
+							_elm_lang$core$Native_Utils.update(
+							wildcard,
+							{suit: one.suit, order: one.order + 1})
+						])
+					]);
 			} else {
 				var _p11 = _p6._1._0;
 				var _p10 = _p6._0;
