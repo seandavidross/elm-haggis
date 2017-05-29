@@ -7,14 +7,11 @@ module Haggis.Combination
         , set
         , sequence
         , bomb
-          -- , distribute
-          -- , collectSets
         )
 
 import Haggis.Card exposing (..)
 import List exposing (..)
 import List.Extra exposing (..)
-import Debug exposing (..)
 
 
 type Combination
@@ -294,39 +291,49 @@ distribute wildcards sets =
 
 distributeOneWildCard : Card -> ListOfSets -> ListOfSets
 distributeOneWildCard wildcard sets =
-    case sets of
-        [] ->
-            [ [ wildcard ] ]
+    let
+        setWild suit order =
+            { wildcard | suit = suit, order = order }
+    in
+        case sets of
+            [] ->
+                [ [ wildcard ] ]
 
-        s :: [] ->
-            let
-                one =
-                    Maybe.withDefault wildcard (head s)
-            in
-                [ s, [ { wildcard | suit = one.suit, order = one.order + 1 } ] ]
+            s :: [] ->
+                let
+                    one =
+                        Maybe.withDefault wildcard (head s)
+                in
+                    [ s, [ setWild one.suit (one.order + 1) ] ]
 
-        s :: s' :: rest ->
-            let
-                one =
-                    Maybe.withDefault wildcard (head s)
+            s :: s' :: rest ->
+                let
+                    one =
+                        Maybe.withDefault wildcard (head s)
 
-                two =
-                    Maybe.withDefault wildcard (head s')
-            in
-                if allRanksConsecutive [ maybe one, maybe two ] then
-                    if length s == length s' then
-                        case rest of
-                            [] ->
-                                [ s, s', [ { wildcard | suit = two.suit, order = two.order + 1 } ] ]
+                    two =
+                        Maybe.withDefault wildcard (head s')
 
-                            otherwise ->
-                                [ s, s' ] ++ distributeOneWildCard wildcard rest
-                    else if length s < length s' then
-                        [ (append s [ { wildcard | suit = (missingSuit s s'), order = one.order } ]), s' ] ++ rest
+                    appendWild set suit order =
+                        (append set [ setWild suit order ])
+
+                    missingSuit' =
+                        missingSuit s s'
+                in
+                    if allRanksConsecutive [ maybe one, maybe two ] then
+                        if length s == length s' then
+                            case rest of
+                                [] ->
+                                    [ s, s', [ setWild two.suit (two.order + 1) ] ]
+
+                                otherwise ->
+                                    [ s, s' ] ++ distributeOneWildCard wildcard rest
+                        else if length s < length s' then
+                            [ appendWild s missingSuit' one.order, s' ] ++ rest
+                        else
+                            [ s, appendWild s' missingSuit' two.order ] ++ rest
                     else
-                        [ s, (append s' [ { wildcard | suit = (missingSuit s s'), order = two.order } ]) ] ++ rest
-                else
-                    [ s, [ { wildcard | suit = one.suit, order = one.order + 1 } ], s' ] ++ rest
+                        [ s, [ setWild one.suit (one.order + 1) ], s' ] ++ rest
 
 
 collectSets : List Card -> ListOfSets

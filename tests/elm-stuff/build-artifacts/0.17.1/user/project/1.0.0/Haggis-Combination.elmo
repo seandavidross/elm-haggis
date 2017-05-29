@@ -119,6 +119,12 @@ var _user$project$Haggis_Combination$collectSets = function (cards) {
 };
 var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 	function (wildcard, sets) {
+		var setWild = F2(
+			function (suit, order) {
+				return _elm_lang$core$Native_Utils.update(
+					wildcard,
+					{suit: suit, order: order});
+			});
 		var _p7 = sets;
 		if (_p7.ctor === '[]') {
 			return _elm_lang$core$Native_List.fromArray(
@@ -138,15 +144,24 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 						_p8,
 						_elm_lang$core$Native_List.fromArray(
 						[
-							_elm_lang$core$Native_Utils.update(
-							wildcard,
-							{suit: one.suit, order: one.order + 1})
+							A2(setWild, one.suit, one.order + 1)
 						])
 					]);
 			} else {
 				var _p12 = _p7._1._0;
 				var _p11 = _p7._0;
 				var _p10 = _p7._1._1;
+				var missingSuit$ = A2(_user$project$Haggis_Combination$missingSuit, _p11, _p12);
+				var appendWild = F3(
+					function (set, suit, order) {
+						return A2(
+							_elm_lang$core$List$append,
+							set,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									A2(setWild, suit, order)
+								]));
+					});
 				var two = A2(
 					_elm_lang$core$Maybe$withDefault,
 					wildcard,
@@ -172,9 +187,7 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 									_p12,
 									_elm_lang$core$Native_List.fromArray(
 									[
-										_elm_lang$core$Native_Utils.update(
-										wildcard,
-										{suit: two.suit, order: two.order + 1})
+										A2(setWild, two.suit, two.order + 1)
 									])
 								]);
 						} else {
@@ -192,18 +205,7 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 								_elm_lang$core$Basics_ops['++'],
 								_elm_lang$core$Native_List.fromArray(
 									[
-										A2(
-										_elm_lang$core$List$append,
-										_p11,
-										_elm_lang$core$Native_List.fromArray(
-											[
-												_elm_lang$core$Native_Utils.update(
-												wildcard,
-												{
-													suit: A2(_user$project$Haggis_Combination$missingSuit, _p11, _p12),
-													order: one.order
-												})
-											])),
+										A3(appendWild, _p11, missingSuit$, one.order),
 										_p12
 									]),
 								_p10);
@@ -213,18 +215,7 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 								_elm_lang$core$Native_List.fromArray(
 									[
 										_p11,
-										A2(
-										_elm_lang$core$List$append,
-										_p12,
-										_elm_lang$core$Native_List.fromArray(
-											[
-												_elm_lang$core$Native_Utils.update(
-												wildcard,
-												{
-													suit: A2(_user$project$Haggis_Combination$missingSuit, _p11, _p12),
-													order: two.order
-												})
-											]))
+										A3(appendWild, _p12, missingSuit$, two.order)
 									]),
 								_p10);
 						}
@@ -237,9 +228,7 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 								_p11,
 								_elm_lang$core$Native_List.fromArray(
 								[
-									_elm_lang$core$Native_Utils.update(
-									wildcard,
-									{suit: one.suit, order: one.order + 1})
+									A2(setWild, one.suit, one.order + 1)
 								]),
 								_p12
 							]),
