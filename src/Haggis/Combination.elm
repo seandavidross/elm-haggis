@@ -7,11 +7,14 @@ module Haggis.Combination
         , set
         , sequence
         , bomb
+          -- , distribute
+          -- , collectSets
         )
 
 import Haggis.Card exposing (..)
 import List exposing (..)
 import List.Extra exposing (..)
+import Debug exposing (..)
 
 
 type Combination
@@ -311,12 +314,17 @@ distributeOneWildCard wildcard sets =
                     Maybe.withDefault wildcard (head s')
             in
                 if allRanksConsecutive [ maybe one, maybe two ] then
-                    case rest of
-                        [] ->
-                            [ s, s', [ { wildcard | suit = two.suit, order = two.order + 1 } ] ]
+                    if length s == length s' then
+                        case rest of
+                            [] ->
+                                [ s, s', [ { wildcard | suit = two.suit, order = two.order + 1 } ] ]
 
-                        otherwise ->
-                            [ s, s' ] ++ distributeOneWildCard wildcard rest
+                            otherwise ->
+                                [ s, s' ] ++ distributeOneWildCard wildcard rest
+                    else if length s < length s' then
+                        [ (append s [ { wildcard | suit = (missingSuit s s'), order = one.order } ]), s' ] ++ rest
+                    else
+                        [ s, (append s' [ { wildcard | suit = (missingSuit s s'), order = two.order } ]) ] ++ rest
                 else
                     [ s, [ { wildcard | suit = one.suit, order = one.order + 1 } ], s' ] ++ rest
 
@@ -380,7 +388,7 @@ distributeOneWildCard wildcard sets =
 
 collectSets : List Card -> ListOfSets
 collectSets cards =
-    List.Extra.groupWhile (equal) (sortBy (.order) cards)
+    List.Extra.groupWhileTransitively (equal) (sortBy (.order) cards)
 
 
 canFormSequence : ListOfSets -> Bool
@@ -415,6 +423,16 @@ collectSuits set =
     set
         |> map .suit
         |> sortWith (compareSuits)
+
+
+missingSuit : List Card -> List Card -> Suit
+missingSuit set set' =
+    case sortBy (length) [ collectSuits set, collectSuits set' ] of
+        [ shortSuits, longSuits ] ->
+            Maybe.withDefault Wild (List.Extra.find (\suit -> notMember suit shortSuits) longSuits)
+
+        otherwise ->
+            Wild
 
 
 allSetsConsecutive : ListOfSets -> Bool

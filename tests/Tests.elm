@@ -119,12 +119,16 @@ all =
                     \() ->
                         Expect.equal (sequence [ greenTwo, greenFive, king, jack ]) [ Just RunOfSingles ]
 
+                -- , test "wild card should be distributed to sub for missing card in run of pairs" <|
+                --     \() ->
+                --         Expect.equal (distribute [ jack ] (collectSets [ blueTwo, greenTwo, greenThree ])) [ [ [ blueTwo, greenTwo ], [ greenThree, { suit = Blue, rank = Jack, order = 3, points = 2 } ] ] ]
                 -- , test "one spot card and three wildcards could be a run of singles or a run of pairs" <|
                 --     \() ->
                 --         Expect.equal (sequence [ blueTwo, jack, queen, king ]) [ Just RunOfSingles, Just RunOfPairs ]
-                -- , test "wild card should sub for missing card in run of pairs" <|
-                --     \() ->
-                --         Expect.equal (sequence [ blueTwo, greenTwo, jack, greenThree ]) [ Just RunOfPairs ]
+                , test "wild card should sub for missing card in run of pairs" <|
+                    \() ->
+                        Expect.equal (sequence [ blueTwo, greenTwo, jack, greenThree ]) [ Just RunOfPairs ]
+
                 -- , test "a pair of tens plus two wilds is a run of pairs (T-T-J-J)" <|
                 --     \() ->
                 --         Expect.equal (sequence [ blueTen, greenTen, jack, king ]) [ Just RunOfPairs ]
