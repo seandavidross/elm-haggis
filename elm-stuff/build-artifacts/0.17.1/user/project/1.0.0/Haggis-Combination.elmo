@@ -445,8 +445,6 @@ var _user$project$Haggis_Combination$set = function (cards) {
 		_elm_lang$core$List$length(cards),
 		1)) ? _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Single) : _elm_lang$core$Maybe$Nothing);
 };
-var _user$project$Haggis_Combination$RunOfEightOfAKinds = {ctor: 'RunOfEightOfAKinds'};
-var _user$project$Haggis_Combination$RunOfSevenOfAKinds = {ctor: 'RunOfSevenOfAKinds'};
 var _user$project$Haggis_Combination$RunOfSixOfAKinds = {ctor: 'RunOfSixOfAKinds'};
 var _user$project$Haggis_Combination$RunOfFiveOfAKinds = {ctor: 'RunOfFiveOfAKinds'};
 var _user$project$Haggis_Combination$RunOfFourOfAKinds = {ctor: 'RunOfFourOfAKinds'};
@@ -470,10 +468,6 @@ var _user$project$Haggis_Combination$makeSequence = function (sets) {
 				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfFiveOfAKinds);
 			case 6:
 				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSixOfAKinds);
-			case 7:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSevenOfAKinds);
-			case 8:
-				return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfEightOfAKinds);
 			default:
 				return _elm_lang$core$Maybe$Nothing;
 		}

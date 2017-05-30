@@ -44,8 +44,6 @@ type Sequence
     | RunOfFourOfAKinds
     | RunOfFiveOfAKinds
     | RunOfSixOfAKinds
-    | RunOfSevenOfAKinds
-    | RunOfEightOfAKinds
 
 
 type Bomb
@@ -458,12 +456,6 @@ makeSequence sets =
 
                 6 ->
                     Just RunOfSixOfAKinds
-
-                7 ->
-                    Just RunOfSevenOfAKinds
-
-                8 ->
-                    Just RunOfEightOfAKinds
 
                 otherwise ->
                     Nothing
