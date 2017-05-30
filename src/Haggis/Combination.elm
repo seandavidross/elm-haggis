@@ -324,9 +324,6 @@ distributeOneWildCard wildcard sets =
                             [ firstSet, [ designateWild firstCard.suit (firstCard.order + 1) ], secondSet ]
                 in
                     case rest of
-                        [] ->
-                            distributeWildAcrossFirstAndSecondSet
-
                         thirdSet :: [] ->
                             let
                                 thirdCard =
