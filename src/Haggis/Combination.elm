@@ -311,18 +311,21 @@ distributeOneWildCard wildcard sets =
 
                     addWildToSet order set =
                         (append set [ designateWild (missingSuit firstSet secondSet) order ])
+
+                    distributeWildAcrossFirstAndSecondSet =
+                        if allRanksConsecutive [ maybe firstCard, maybe secondCard ] then
+                            if length firstSet == length secondSet then
+                                [ firstSet, secondSet, [ designateWild secondCard.suit (secondCard.order + 1) ] ]
+                            else if length firstSet < length secondSet then
+                                [ (addWildToSet firstCard.order firstSet), secondSet ]
+                            else
+                                [ firstSet, (addWildToSet secondCard.order secondSet) ]
+                        else
+                            [ firstSet, [ designateWild firstCard.suit (firstCard.order + 1) ], secondSet ]
                 in
                     case rest of
                         [] ->
-                            if allRanksConsecutive [ maybe firstCard, maybe secondCard ] then
-                                if length firstSet == length secondSet then
-                                    [ firstSet, secondSet, [ designateWild secondCard.suit (secondCard.order + 1) ] ]
-                                else if length firstSet < length secondSet then
-                                    [ (addWildToSet firstCard.order firstSet), secondSet ]
-                                else
-                                    [ firstSet, (addWildToSet secondCard.order secondSet) ]
-                            else
-                                [ firstSet, [ designateWild firstCard.suit (firstCard.order + 1) ], secondSet ]
+                            distributeWildAcrossFirstAndSecondSet
 
                         thirdSet :: [] ->
                             let
@@ -340,15 +343,7 @@ distributeOneWildCard wildcard sets =
                                     [ firstSet, secondSet, [ designateWild secondCard.suit (secondCard.order + 1) ], thirdSet ]
 
                         otherwise ->
-                            if allRanksConsecutive [ maybe firstCard, maybe secondCard ] then
-                                if length firstSet == length secondSet then
-                                    [ firstSet, secondSet ] ++ distributeOneWildCard wildcard rest
-                                else if length firstSet < length secondSet then
-                                    [ (addWildToSet firstCard.order firstSet), secondSet ] ++ rest
-                                else
-                                    [ firstSet, (addWildToSet secondCard.order secondSet) ] ++ rest
-                            else
-                                [ firstSet, [ designateWild firstCard.suit (firstCard.order + 1) ], secondSet ] ++ rest
+                            distributeWildAcrossFirstAndSecondSet ++ rest
 
 
 collectSets : List Card -> ListOfSets
