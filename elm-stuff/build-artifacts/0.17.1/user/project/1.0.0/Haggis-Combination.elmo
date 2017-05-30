@@ -431,10 +431,6 @@ var _user$project$Haggis_Combination$makeSet = function (cards) {
 			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$FiveOfAKind);
 		case 6:
 			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SixOfAKind);
-		case 7:
-			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$SevenOfAKind);
-		case 8:
-			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$EightOfAKind);
 		default:
 			return _elm_lang$core$Maybe$Nothing;
 	}

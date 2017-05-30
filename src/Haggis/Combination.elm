@@ -106,12 +106,6 @@ makeSet cards =
         6 ->
             Just SixOfAKind
 
-        7 ->
-            Just SevenOfAKind
-
-        8 ->
-            Just EightOfAKind
-
         otherwise ->
             Nothing
 
