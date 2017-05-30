@@ -118,9 +118,6 @@ all =
                 , test "two wildcards can fill a 2 rank gap between two singles to form a run" <|
                     \() ->
                         Expect.equal (sequence [ greenTwo, greenFive, king, jack ]) [ Just RunOfSingles ]
-                , test "wild card should distribute as missing card in run of pairs" <|
-                    \() ->
-                        Expect.equal (distribute [ jack ] (collectSets [ blueTwo, greenTwo, greenThree ])) [ [ [ blueTwo, greenTwo ], [ { suit = Blue, rank = Jack, order = 3, points = 2 }, greenThree ] ] ]
 
                 -- , test "one spot card and three wildcards could be a run of singles or a run of pairs" <|
                 --     \() ->
@@ -128,10 +125,10 @@ all =
                 , test "wild card should sub for missing card in run of pairs" <|
                     \() ->
                         Expect.equal (sequence [ blueTwo, greenTwo, jack, greenThree ]) [ Just RunOfPairs ]
+                , test "a pair of tens plus two wilds is a run of pairs (T-T-J-J)" <|
+                    \() ->
+                        Expect.equal (sequence [ blueTen, greenTen, jack, king ]) [ Just RunOfPairs ]
 
-                -- , test "a pair of tens plus two wilds is a run of pairs (T-T-J-J)" <|
-                --     \() ->
-                --         Expect.equal (sequence [ blueTen, greenTen, jack, king ]) [ Just RunOfPairs ]
                 -- , test "a consecutive single and a pair of spot cards, plus 3 wildcards, could be a run of pairs or a run of triples" <|
                 --     \() ->
                 --         Expect.equal (sequence [ blueTwo, greenTwo, greenThree, jack, queen, king ]) [ Just RunOfPairs, Just RunOfTriples ]

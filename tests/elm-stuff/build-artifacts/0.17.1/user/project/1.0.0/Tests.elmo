@@ -454,42 +454,29 @@ var _user$project$Tests$all = A2(
 							}),
 							A2(
 							_elm_community$elm_test$Test$test,
-							'wild card should distribute as missing card in run of pairs',
+							'wild card should sub for missing card in run of pairs',
 							function (_p68) {
 								var _p69 = _p68;
 								return A2(
 									_elm_community$elm_test$Expect$equal,
-									A2(
-										_user$project$Haggis_Combination$distribute,
+									_user$project$Haggis_Combination$sequence(
 										_elm_lang$core$Native_List.fromArray(
-											[_user$project$Tests$jack]),
-										_user$project$Haggis_Combination$collectSets(
-											_elm_lang$core$Native_List.fromArray(
-												[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo, _user$project$Tests$greenThree]))),
+											[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo, _user$project$Tests$jack, _user$project$Tests$greenThree])),
 									_elm_lang$core$Native_List.fromArray(
 										[
-											_elm_lang$core$Native_List.fromArray(
-											[
-												_elm_lang$core$Native_List.fromArray(
-												[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo]),
-												_elm_lang$core$Native_List.fromArray(
-												[
-													{suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Jack, order: 3, points: 2},
-													_user$project$Tests$greenThree
-												])
-											])
+											_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs)
 										]));
 							}),
 							A2(
 							_elm_community$elm_test$Test$test,
-							'wild card should sub for missing card in run of pairs',
+							'a pair of tens plus two wilds is a run of pairs (T-T-J-J)',
 							function (_p70) {
 								var _p71 = _p70;
 								return A2(
 									_elm_community$elm_test$Expect$equal,
 									_user$project$Haggis_Combination$sequence(
 										_elm_lang$core$Native_List.fromArray(
-											[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo, _user$project$Tests$jack, _user$project$Tests$greenThree])),
+											[_user$project$Tests$blueTen, _user$project$Tests$greenTen, _user$project$Tests$jack, _user$project$Tests$king])),
 									_elm_lang$core$Native_List.fromArray(
 										[
 											_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs)

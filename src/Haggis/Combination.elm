@@ -14,6 +14,7 @@ module Haggis.Combination
 import Haggis.Card exposing (..)
 import List exposing (..)
 import List.Extra exposing (..)
+import Debug exposing (..)
 
 
 type Combination
@@ -314,7 +315,12 @@ distributeOneWildCard wildcard sets =
                     case rest of
                         [] ->
                             if allRanksConsecutive [ maybe firstCard, maybe secondCard ] then
-                                [ firstSet, secondSet, [ designateWild secondCard.suit (secondCard.order + 1) ] ]
+                                if length firstSet == length secondSet then
+                                    [ firstSet, secondSet, [ designateWild secondCard.suit (secondCard.order + 1) ] ]
+                                else if length firstSet < length secondSet then
+                                    [ (addWildToSet firstCard.order firstSet), secondSet ]
+                                else
+                                    [ firstSet, (addWildToSet secondCard.order secondSet) ]
                             else
                                 [ firstSet, [ designateWild firstCard.suit (firstCard.order + 1) ], secondSet ]
 
