@@ -135,7 +135,7 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 		} else {
 			if (_p7._1.ctor === '[]') {
 				var _p8 = _p7._0;
-				var firstCard = A2(
+				var spotCard = A2(
 					_elm_lang$core$Maybe$withDefault,
 					wildcard,
 					_elm_lang$core$List$head(_p8));
@@ -144,7 +144,7 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 						_p8,
 						_elm_lang$core$Native_List.fromArray(
 						[
-							A2(designateWild, firstCard.suit, firstCard.order + 1)
+							A2(designateWild, spotCard.suit, spotCard.order + 1)
 						])
 					]);
 			} else {

@@ -296,10 +296,10 @@ distributeOneWildCard wildcard sets =
 
             onlyOneSet :: [] ->
                 let
-                    firstCard =
+                    spotCard =
                         Maybe.withDefault wildcard (head onlyOneSet)
                 in
-                    [ onlyOneSet, [ designateWild firstCard.suit (firstCard.order + 1) ] ]
+                    [ onlyOneSet, [ designateWild spotCard.suit (spotCard.order + 1) ] ]
 
             firstSet :: secondSet :: rest ->
                 let
