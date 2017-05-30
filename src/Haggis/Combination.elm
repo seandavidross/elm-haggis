@@ -332,7 +332,12 @@ distributeOneWildCard wildcard sets =
                                     Maybe.withDefault wildcard (head thirdSet)
                             in
                                 if allRanksConsecutive [ maybe secondCard, maybe thirdCard ] then
-                                    [ firstSet, secondSet, thirdSet, [ setWild thirdCard.suit (thirdCard.order + 1) ] ]
+                                    if length secondSet == length thirdSet then
+                                        [ firstSet, secondSet, thirdSet, [ setWild thirdCard.suit (thirdCard.order + 1) ] ]
+                                    else if length secondSet < length thirdSet then
+                                        [ firstSet, (addWildToSet secondCard.order secondSet), thirdSet ]
+                                    else
+                                        [ firstSet, secondSet, (addWildToSet thirdCard.order thirdSet) ]
                                 else
                                     [ firstSet, secondSet, [ setWild secondCard.suit (secondCard.order + 1) ], thirdSet ]
 

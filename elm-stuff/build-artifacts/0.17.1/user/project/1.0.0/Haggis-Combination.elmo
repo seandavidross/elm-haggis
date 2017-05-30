@@ -208,7 +208,9 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 								[
 									_user$project$Haggis_Combination$maybe(secondCard),
 									_user$project$Haggis_Combination$maybe(thirdCard)
-								])) ? _elm_lang$core$Native_List.fromArray(
+								])) ? (_elm_lang$core$Native_Utils.eq(
+							_elm_lang$core$List$length(_p13),
+							_elm_lang$core$List$length(_p10)) ? _elm_lang$core$Native_List.fromArray(
 							[
 								_p11,
 								_p13,
@@ -217,7 +219,19 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 								[
 									A2(setWild, thirdCard.suit, thirdCard.order + 1)
 								])
+							]) : ((_elm_lang$core$Native_Utils.cmp(
+							_elm_lang$core$List$length(_p13),
+							_elm_lang$core$List$length(_p10)) < 0) ? _elm_lang$core$Native_List.fromArray(
+							[
+								_p11,
+								A2(addWildToSet, secondCard.order, _p13),
+								_p10
 							]) : _elm_lang$core$Native_List.fromArray(
+							[
+								_p11,
+								_p13,
+								A2(addWildToSet, thirdCard.order, _p10)
+							]))) : _elm_lang$core$Native_List.fromArray(
 							[
 								_p11,
 								_p13,

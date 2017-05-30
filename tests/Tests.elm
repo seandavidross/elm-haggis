@@ -118,9 +118,9 @@ all =
                 , test "two wildcards can fill a 2 rank gap between two singles to form a run" <|
                     \() ->
                         Expect.equal (sequence [ greenTwo, greenFive, king, jack ]) [ Just RunOfSingles ]
-                , test "two wildcards distribute to fill a 2 rank gap between two singles and form a run" <|
+                , test "wild card should distribute as missing card in run of pairs" <|
                     \() ->
-                        Expect.equal (distribute [ king, jack ] (collectSets [ greenTwo, greenFive ])) [ [ [ greenTwo ], [ { suit = Green, rank = Jack, order = 3, points = 2 } ], [ { suit = Green, rank = King, order = 4, points = 5 } ], [ greenFive ] ] ]
+                        Expect.equal (distribute [ jack ] (collectSets [ blueTwo, greenTwo, greenThree ])) [ [ [ blueTwo, greenTwo ], [ { suit = Blue, rank = Jack, order = 3, points = 2 }, greenThree ] ] ]
 
                 -- , test "one spot card and three wildcards could be a run of singles or a run of pairs" <|
                 --     \() ->
