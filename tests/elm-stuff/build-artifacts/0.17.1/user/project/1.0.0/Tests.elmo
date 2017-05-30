@@ -454,9 +454,42 @@ var _user$project$Tests$all = A2(
 							}),
 							A2(
 							_elm_community$elm_test$Test$test,
-							'wild card should sub for missing card in run of pairs',
+							'two wildcards distribute to fill a 2 rank gap between two singles and form a run',
 							function (_p68) {
 								var _p69 = _p68;
+								return A2(
+									_elm_community$elm_test$Expect$equal,
+									A2(
+										_user$project$Haggis_Combination$distribute,
+										_elm_lang$core$Native_List.fromArray(
+											[_user$project$Tests$king, _user$project$Tests$jack]),
+										_user$project$Haggis_Combination$collectSets(
+											_elm_lang$core$Native_List.fromArray(
+												[_user$project$Tests$greenTwo, _user$project$Tests$greenFive]))),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$core$Native_List.fromArray(
+											[
+												_elm_lang$core$Native_List.fromArray(
+												[_user$project$Tests$greenTwo]),
+												_elm_lang$core$Native_List.fromArray(
+												[
+													{suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Jack, order: 3, points: 2}
+												]),
+												_elm_lang$core$Native_List.fromArray(
+												[
+													{suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$King, order: 4, points: 5}
+												]),
+												_elm_lang$core$Native_List.fromArray(
+												[_user$project$Tests$greenFive])
+											])
+										]));
+							}),
+							A2(
+							_elm_community$elm_test$Test$test,
+							'wild card should sub for missing card in run of pairs',
+							function (_p70) {
+								var _p71 = _p70;
 								return A2(
 									_elm_community$elm_test$Expect$equal,
 									_user$project$Haggis_Combination$sequence(

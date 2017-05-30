@@ -7,6 +7,8 @@ module Haggis.Combination
         , set
         , sequence
         , bomb
+        , distribute
+        , collectSets
         )
 
 import Haggis.Card exposing (..)
@@ -267,7 +269,7 @@ but this is NOT a Sequence, it can only ever be a Bomb.
 -}
 distribute : List Card -> ListOfSets -> List ListOfSets
 distribute wildcards sets =
-    case wildcards of
+    case sortBy (.order) wildcards of
         [] ->
             [ sets ]
 
@@ -317,20 +319,33 @@ distributeOneWildCard wildcard sets =
                     addWildToSet order set =
                         (append set [ setWild (missingSuit firstSet secondSet) order ])
                 in
-                    if allRanksConsecutive [ maybe firstCard, maybe secondCard ] then
-                        if length firstSet == length secondSet then
-                            case rest of
-                                [] ->
-                                    [ firstSet, secondSet, [ setWild secondCard.suit (secondCard.order + 1) ] ]
+                    case rest of
+                        [] ->
+                            if allRanksConsecutive [ maybe firstCard, maybe secondCard ] then
+                                [ firstSet, secondSet, [ setWild secondCard.suit (secondCard.order + 1) ] ]
+                            else
+                                [ firstSet, [ setWild firstCard.suit (firstCard.order + 1) ], secondSet ]
 
-                                otherwise ->
+                        thirdSet :: [] ->
+                            let
+                                thirdCard =
+                                    Maybe.withDefault wildcard (head thirdSet)
+                            in
+                                if allRanksConsecutive [ maybe secondCard, maybe thirdCard ] then
+                                    [ firstSet, secondSet, thirdSet, [ setWild thirdCard.suit (thirdCard.order + 1) ] ]
+                                else
+                                    [ firstSet, secondSet, [ setWild secondCard.suit (secondCard.order + 1) ], thirdSet ]
+
+                        otherwise ->
+                            if allRanksConsecutive [ maybe firstCard, maybe secondCard ] then
+                                if length firstSet == length secondSet then
                                     [ firstSet, secondSet ] ++ distributeOneWildCard wildcard rest
-                        else if length firstSet < length secondSet then
-                            [ (addWildToSet firstCard.order firstSet), secondSet ] ++ rest
-                        else
-                            [ firstSet, (addWildToSet secondCard.order secondSet) ] ++ rest
-                    else
-                        [ firstSet, [ setWild firstCard.suit (firstCard.order + 1) ], secondSet ] ++ rest
+                                else if length firstSet < length secondSet then
+                                    [ (addWildToSet firstCard.order firstSet), secondSet ] ++ rest
+                                else
+                                    [ firstSet, (addWildToSet secondCard.order secondSet) ] ++ rest
+                            else
+                                [ firstSet, [ setWild firstCard.suit (firstCard.order + 1) ], secondSet ] ++ rest
 
 
 collectSets : List Card -> ListOfSets
