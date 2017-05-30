@@ -299,41 +299,38 @@ distributeOneWildCard wildcard sets =
             [] ->
                 [ [ wildcard ] ]
 
-            s :: [] ->
+            firstSet :: [] ->
                 let
-                    one =
-                        Maybe.withDefault wildcard (head s)
+                    firstCard =
+                        Maybe.withDefault wildcard (head firstSet)
                 in
-                    [ s, [ setWild one.suit (one.order + 1) ] ]
+                    [ firstSet, [ setWild firstCard.suit (firstCard.order + 1) ] ]
 
-            s :: s' :: rest ->
+            firstSet :: secondSet :: rest ->
                 let
-                    one =
-                        Maybe.withDefault wildcard (head s)
+                    firstCard =
+                        Maybe.withDefault wildcard (head firstSet)
 
-                    two =
-                        Maybe.withDefault wildcard (head s')
+                    secondCard =
+                        Maybe.withDefault wildcard (head secondSet)
 
-                    appendWild set suit order =
-                        (append set [ setWild suit order ])
-
-                    missingSuit' =
-                        missingSuit s s'
+                    addWildToSet order set =
+                        (append set [ setWild (missingSuit firstSet secondSet) order ])
                 in
-                    if allRanksConsecutive [ maybe one, maybe two ] then
-                        if length s == length s' then
+                    if allRanksConsecutive [ maybe firstCard, maybe secondCard ] then
+                        if length firstSet == length secondSet then
                             case rest of
                                 [] ->
-                                    [ s, s', [ setWild two.suit (two.order + 1) ] ]
+                                    [ firstSet, secondSet, [ setWild secondCard.suit (secondCard.order + 1) ] ]
 
                                 otherwise ->
-                                    [ s, s' ] ++ distributeOneWildCard wildcard rest
-                        else if length s < length s' then
-                            [ appendWild s missingSuit' one.order, s' ] ++ rest
+                                    [ firstSet, secondSet ] ++ distributeOneWildCard wildcard rest
+                        else if length firstSet < length secondSet then
+                            [ (addWildToSet firstCard.order firstSet), secondSet ] ++ rest
                         else
-                            [ s, appendWild s' missingSuit' two.order ] ++ rest
+                            [ firstSet, (addWildToSet secondCard.order secondSet) ] ++ rest
                     else
-                        [ s, [ setWild one.suit (one.order + 1) ], s' ] ++ rest
+                        [ firstSet, [ setWild firstCard.suit (firstCard.order + 1) ], secondSet ] ++ rest
 
 
 collectSets : List Card -> ListOfSets

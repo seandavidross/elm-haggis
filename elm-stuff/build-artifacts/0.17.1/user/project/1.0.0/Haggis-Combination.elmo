@@ -135,7 +135,7 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 		} else {
 			if (_p7._1.ctor === '[]') {
 				var _p8 = _p7._0;
-				var one = A2(
+				var firstCard = A2(
 					_elm_lang$core$Maybe$withDefault,
 					wildcard,
 					_elm_lang$core$List$head(_p8));
@@ -144,80 +144,82 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 						_p8,
 						_elm_lang$core$Native_List.fromArray(
 						[
-							A2(setWild, one.suit, one.order + 1)
+							A2(setWild, firstCard.suit, firstCard.order + 1)
 						])
 					]);
 			} else {
 				var _p12 = _p7._1._0;
-				var _p11 = _p7._0;
-				var _p10 = _p7._1._1;
-				var missingSuit$ = A2(_user$project$Haggis_Combination$missingSuit, _p11, _p12);
-				var appendWild = F3(
-					function (set, suit, order) {
+				var _p11 = _p7._1._1;
+				var _p10 = _p7._0;
+				var addWildToSet = F2(
+					function (order, set) {
 						return A2(
 							_elm_lang$core$List$append,
 							set,
 							_elm_lang$core$Native_List.fromArray(
 								[
-									A2(setWild, suit, order)
+									A2(
+									setWild,
+									A2(_user$project$Haggis_Combination$missingSuit, _p10, _p12),
+									order)
 								]));
 					});
-				var two = A2(
+				var secondCard = A2(
 					_elm_lang$core$Maybe$withDefault,
 					wildcard,
 					_elm_lang$core$List$head(_p12));
-				var one = A2(
+				var firstCard = A2(
 					_elm_lang$core$Maybe$withDefault,
 					wildcard,
-					_elm_lang$core$List$head(_p11));
+					_elm_lang$core$List$head(_p10));
 				if (_user$project$Haggis_Combination$allRanksConsecutive(
 					_elm_lang$core$Native_List.fromArray(
 						[
-							_user$project$Haggis_Combination$maybe(one),
-							_user$project$Haggis_Combination$maybe(two)
+							_user$project$Haggis_Combination$maybe(firstCard),
+							_user$project$Haggis_Combination$maybe(secondCard)
 						]))) {
 					if (_elm_lang$core$Native_Utils.eq(
-						_elm_lang$core$List$length(_p11),
+						_elm_lang$core$List$length(_p10),
 						_elm_lang$core$List$length(_p12))) {
-						var _p9 = _p10;
+						var _p9 = _p11;
 						if (_p9.ctor === '[]') {
 							return _elm_lang$core$Native_List.fromArray(
 								[
-									_p11,
+									_p10,
 									_p12,
 									_elm_lang$core$Native_List.fromArray(
 									[
-										A2(setWild, two.suit, two.order + 1)
+										A2(setWild, secondCard.suit, secondCard.order + 1)
 									])
 								]);
 						} else {
 							return A2(
 								_elm_lang$core$Basics_ops['++'],
 								_elm_lang$core$Native_List.fromArray(
-									[_p11, _p12]),
-								A2(_user$project$Haggis_Combination$distributeOneWildCard, wildcard, _p10));
+									[_p10, _p12]),
+								A2(_user$project$Haggis_Combination$distributeOneWildCard, wildcard, _p11));
 						}
 					} else {
 						if (_elm_lang$core$Native_Utils.cmp(
-							_elm_lang$core$List$length(_p11),
+							_elm_lang$core$List$length(_p10),
 							_elm_lang$core$List$length(_p12)) < 0) {
 							return A2(
 								_elm_lang$core$Basics_ops['++'],
 								_elm_lang$core$Native_List.fromArray(
 									[
-										A3(appendWild, _p11, missingSuit$, one.order),
+										A2(addWildToSet, firstCard.order, _p10),
 										_p12
 									]),
-								_p10);
+								_p11);
 						} else {
 							return A2(
 								_elm_lang$core$Basics_ops['++'],
 								_elm_lang$core$Native_List.fromArray(
 									[
-										_p11,
-										A3(appendWild, _p12, missingSuit$, two.order)
+										_p10,
+										A2(addWildToSet, secondCard.order, _p12)
 									]),
-								_p10);
+								_p11);
 						}
 					}
 				} else {
@@ -225,14 +227,14 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 						_elm_lang$core$Basics_ops['++'],
 						_elm_lang$core$Native_List.fromArray(
 							[
-								_p11,
+								_p10,
 								_elm_lang$core$Native_List.fromArray(
 								[
-									A2(setWild, one.suit, one.order + 1)
+									A2(setWild, firstCard.suit, firstCard.order + 1)
 								]),
 								_p12
 							]),
-						_p10);
+						_p11);
 				}
 			}
 		}
