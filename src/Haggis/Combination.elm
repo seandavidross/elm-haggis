@@ -294,53 +294,42 @@ distributeOneWildCard wildcard sets =
             [] ->
                 [ [ wildcard ] ]
 
-            firstSet :: [] ->
+            onlyOneSet :: [] ->
                 let
                     firstCard =
-                        Maybe.withDefault wildcard (head firstSet)
+                        Maybe.withDefault wildcard (head onlyOneSet)
                 in
-                    [ firstSet, [ designateWild firstCard.suit (firstCard.order + 1) ] ]
+                    [ onlyOneSet, [ designateWild firstCard.suit (firstCard.order + 1) ] ]
 
             firstSet :: secondSet :: rest ->
                 let
-                    firstCard =
-                        Maybe.withDefault wildcard (head firstSet)
+                    distributeWildAcrossTwoSets firstSet' secondSet' =
+                        let
+                            firstCard =
+                                Maybe.withDefault wildcard (head firstSet')
 
-                    secondCard =
-                        Maybe.withDefault wildcard (head secondSet)
+                            secondCard =
+                                Maybe.withDefault wildcard (head secondSet')
 
-                    addWildToSet order set =
-                        (append set [ designateWild (missingSuit firstSet secondSet) order ])
-
-                    distributeWildAcrossFirstAndSecondSet =
-                        if allRanksConsecutive [ maybe firstCard, maybe secondCard ] then
-                            if length firstSet == length secondSet then
-                                [ firstSet, secondSet, [ designateWild secondCard.suit (secondCard.order + 1) ] ]
-                            else if length firstSet < length secondSet then
-                                [ (addWildToSet firstCard.order firstSet), secondSet ]
+                            addWildToSet order set =
+                                (append set [ designateWild (missingSuit firstSet' secondSet') order ])
+                        in
+                            if allRanksConsecutive [ maybe firstCard, maybe secondCard ] then
+                                if length firstSet' == length secondSet' then
+                                    [ firstSet', secondSet', [ designateWild secondCard.suit (secondCard.order + 1) ] ]
+                                else if length firstSet' < length secondSet' then
+                                    [ (addWildToSet firstCard.order firstSet'), secondSet' ]
+                                else
+                                    [ firstSet', (addWildToSet secondCard.order secondSet') ]
                             else
-                                [ firstSet, (addWildToSet secondCard.order secondSet) ]
-                        else
-                            [ firstSet, [ designateWild firstCard.suit (firstCard.order + 1) ], secondSet ]
+                                [ firstSet', [ designateWild firstCard.suit (firstCard.order + 1) ], secondSet' ]
                 in
                     case rest of
                         thirdSet :: [] ->
-                            let
-                                thirdCard =
-                                    Maybe.withDefault wildcard (head thirdSet)
-                            in
-                                if allRanksConsecutive [ maybe secondCard, maybe thirdCard ] then
-                                    if length secondSet == length thirdSet then
-                                        [ firstSet, secondSet, thirdSet, [ designateWild thirdCard.suit (thirdCard.order + 1) ] ]
-                                    else if length secondSet < length thirdSet then
-                                        [ firstSet, (addWildToSet secondCard.order secondSet), thirdSet ]
-                                    else
-                                        [ firstSet, secondSet, (addWildToSet thirdCard.order thirdSet) ]
-                                else
-                                    [ firstSet, secondSet, [ designateWild secondCard.suit (secondCard.order + 1) ], thirdSet ]
+                            [ firstSet ] ++ (distributeWildAcrossTwoSets secondSet thirdSet)
 
                         otherwise ->
-                            distributeWildAcrossFirstAndSecondSet ++ rest
+                            (distributeWildAcrossTwoSets firstSet secondSet) ++ rest
 
 
 collectSets : List Card -> ListOfSets
