@@ -119,7 +119,7 @@ var _user$project$Haggis_Combination$collectSets = function (cards) {
 };
 var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 	function (wildcard, sets) {
-		var setWild = F2(
+		var designateWild = F2(
 			function (suit, order) {
 				return _elm_lang$core$Native_Utils.update(
 					wildcard,
@@ -144,7 +144,7 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 						_p8,
 						_elm_lang$core$Native_List.fromArray(
 						[
-							A2(setWild, firstCard.suit, firstCard.order + 1)
+							A2(designateWild, firstCard.suit, firstCard.order + 1)
 						])
 					]);
 			} else {
@@ -159,7 +159,7 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 							_elm_lang$core$Native_List.fromArray(
 								[
 									A2(
-									setWild,
+									designateWild,
 									A2(_user$project$Haggis_Combination$missingSuit, _p11, _p13),
 									order)
 								]));
@@ -185,14 +185,14 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 							_p13,
 							_elm_lang$core$Native_List.fromArray(
 							[
-								A2(setWild, secondCard.suit, secondCard.order + 1)
+								A2(designateWild, secondCard.suit, secondCard.order + 1)
 							])
 						]) : _elm_lang$core$Native_List.fromArray(
 						[
 							_p11,
 							_elm_lang$core$Native_List.fromArray(
 							[
-								A2(setWild, firstCard.suit, firstCard.order + 1)
+								A2(designateWild, firstCard.suit, firstCard.order + 1)
 							]),
 							_p13
 						]);
@@ -217,7 +217,7 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 								_p10,
 								_elm_lang$core$Native_List.fromArray(
 								[
-									A2(setWild, thirdCard.suit, thirdCard.order + 1)
+									A2(designateWild, thirdCard.suit, thirdCard.order + 1)
 								])
 							]) : ((_elm_lang$core$Native_Utils.cmp(
 							_elm_lang$core$List$length(_p13),
@@ -237,7 +237,7 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 								_p13,
 								_elm_lang$core$Native_List.fromArray(
 								[
-									A2(setWild, secondCard.suit, secondCard.order + 1)
+									A2(designateWild, secondCard.suit, secondCard.order + 1)
 								]),
 								_p10
 							]);
@@ -276,7 +276,7 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 									_p11,
 									_elm_lang$core$Native_List.fromArray(
 									[
-										A2(setWild, firstCard.suit, firstCard.order + 1)
+										A2(designateWild, firstCard.suit, firstCard.order + 1)
 									]),
 									_p13
 								]),
