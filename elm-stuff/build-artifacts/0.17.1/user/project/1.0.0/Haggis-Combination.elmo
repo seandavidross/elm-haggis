@@ -108,7 +108,7 @@ var _user$project$Haggis_Combination$canFormSequence = function (sets) {
 };
 var _user$project$Haggis_Combination$collectSets = function (cards) {
 	return A2(
-		_elm_community$elm_list_extra$List_Extra$groupWhileTransitively,
+		_elm_community$elm_list_extra$List_Extra$groupWhile,
 		_user$project$Haggis_Card$equal,
 		A2(
 			_elm_lang$core$List$sortBy,

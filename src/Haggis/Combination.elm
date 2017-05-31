@@ -335,7 +335,7 @@ distributeAcrossTwoSets wildcard firstSet secondSet =
 
 collectSets : List Card -> ListOfSets
 collectSets cards =
-    List.Extra.groupWhileTransitively (equal) (sortBy (.order) cards)
+    List.Extra.groupWhile (equal) (sortBy (.order) cards)
 
 
 canFormSequence : ListOfSets -> Bool
