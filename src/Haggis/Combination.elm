@@ -349,7 +349,7 @@ allSetsSameSize : ListOfSets -> Bool
 allSetsSameSize sets =
     case sets of
         first :: rest ->
-            all (\s -> length s == length first) rest
+            all (\set -> length set == length first) rest
 
         otherwise ->
             False

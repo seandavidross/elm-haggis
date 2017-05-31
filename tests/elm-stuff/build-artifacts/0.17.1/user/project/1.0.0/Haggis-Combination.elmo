@@ -93,9 +93,9 @@ var _user$project$Haggis_Combination$allSetsSameSize = function (sets) {
 	if (_p6.ctor === '::') {
 		return A2(
 			_elm_lang$core$List$all,
-			function (s) {
+			function (set) {
 				return _elm_lang$core$Native_Utils.eq(
-					_elm_lang$core$List$length(s),
+					_elm_lang$core$List$length(set),
 					_elm_lang$core$List$length(_p6._0));
 			},
 			_p6._1);
