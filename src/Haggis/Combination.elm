@@ -286,50 +286,51 @@ distribute wildcards sets =
 
 distributeOneWildCard : Card -> ListOfSets -> ListOfSets
 distributeOneWildCard wildcard sets =
+    case sets of
+        [] ->
+            [ [ wildcard ] ]
+
+        set :: [] ->
+            let
+                spotcard =
+                    Maybe.withDefault wildcard (head set)
+            in
+                [ set, [ declare wildcard spotcard.suit (spotcard.order + 1) ] ]
+
+        firstSet :: secondSet :: rest ->
+            case rest of
+                thirdSet :: [] ->
+                    [ firstSet ] ++ (distributeAcrossTwoSets wildcard secondSet thirdSet)
+
+                otherwise ->
+                    (distributeAcrossTwoSets wildcard firstSet secondSet) ++ rest
+
+
+declare : Card -> Suit -> Int -> Card
+declare wildcard suit order =
+    { wildcard | suit = suit, order = order }
+
+
+distributeAcrossTwoSets wildcard firstSet secondSet =
     let
-        designateWild suit order =
-            { wildcard | suit = suit, order = order }
+        firstCard =
+            Maybe.withDefault wildcard (head firstSet)
+
+        secondCard =
+            Maybe.withDefault wildcard (head secondSet)
+
+        addWildToSet order set =
+            (append set [ declare wildcard (missingSuit firstSet secondSet) order ])
     in
-        case sets of
-            [] ->
-                [ [ wildcard ] ]
-
-            onlyOneSet :: [] ->
-                let
-                    spotCard =
-                        Maybe.withDefault wildcard (head onlyOneSet)
-                in
-                    [ onlyOneSet, [ designateWild spotCard.suit (spotCard.order + 1) ] ]
-
-            firstSet :: secondSet :: rest ->
-                let
-                    distributeWildAcrossTwoSets firstSet' secondSet' =
-                        let
-                            firstCard =
-                                Maybe.withDefault wildcard (head firstSet')
-
-                            secondCard =
-                                Maybe.withDefault wildcard (head secondSet')
-
-                            addWildToSet order set =
-                                (append set [ designateWild (missingSuit firstSet' secondSet') order ])
-                        in
-                            if allRanksConsecutive [ maybe firstCard, maybe secondCard ] then
-                                if length firstSet' == length secondSet' then
-                                    [ firstSet', secondSet', [ designateWild secondCard.suit (secondCard.order + 1) ] ]
-                                else if length firstSet' < length secondSet' then
-                                    [ (addWildToSet firstCard.order firstSet'), secondSet' ]
-                                else
-                                    [ firstSet', (addWildToSet secondCard.order secondSet') ]
-                            else
-                                [ firstSet', [ designateWild firstCard.suit (firstCard.order + 1) ], secondSet' ]
-                in
-                    case rest of
-                        thirdSet :: [] ->
-                            [ firstSet ] ++ (distributeWildAcrossTwoSets secondSet thirdSet)
-
-                        otherwise ->
-                            (distributeWildAcrossTwoSets firstSet secondSet) ++ rest
+        if allRanksConsecutive [ maybe firstCard, maybe secondCard ] then
+            if length firstSet == length secondSet then
+                [ firstSet, secondSet, [ declare wildcard secondCard.suit (secondCard.order + 1) ] ]
+            else if length firstSet < length secondSet then
+                [ (addWildToSet firstCard.order firstSet), secondSet ]
+            else
+                [ firstSet, (addWildToSet secondCard.order secondSet) ]
+        else
+            [ firstSet, [ declare wildcard firstCard.suit (firstCard.order + 1) ], secondSet ]
 
 
 collectSets : List Card -> ListOfSets
@@ -389,7 +390,7 @@ allSetsConsecutive sets =
 
 collectOneofEachRank : ListOfSets -> List (Maybe Card)
 collectOneofEachRank =
-    map (\s -> head s)
+    map (\set -> head set)
 
 
 allRanksConsecutive : List (Maybe Card) -> Bool
@@ -398,19 +399,19 @@ allRanksConsecutive cards =
         [] ->
             False
 
-        c :: [] ->
-            case c of
-                Just c ->
+        card :: [] ->
+            case card of
+                Just card ->
                     True
 
                 Nothing ->
                     False
 
-        c :: c' :: rest ->
-            case ( c, c' ) of
-                ( Just c, Just c' ) ->
-                    ((c.order + 1) == c'.order)
-                        && allRanksConsecutive (maybe c' :: rest)
+        firstCard :: secondCard :: rest ->
+            case ( firstCard, secondCard ) of
+                ( Just firstCard, Just secondCard ) ->
+                    ((firstCard.order + 1) == secondCard.order)
+                        && allRanksConsecutive (maybe secondCard :: rest)
 
                 otherwise ->
                     False

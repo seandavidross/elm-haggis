@@ -32,8 +32,8 @@ var _user$project$Haggis_Combination$allRanksConsecutive = function (cards) {
 	}
 };
 var _user$project$Haggis_Combination$collectOneofEachRank = _elm_lang$core$List$map(
-	function (s) {
-		return _elm_lang$core$List$head(s);
+	function (set) {
+		return _elm_lang$core$List$head(set);
 	});
 var _user$project$Haggis_Combination$allSetsConsecutive = function (sets) {
 	return _user$project$Haggis_Combination$allRanksConsecutive(
@@ -117,14 +117,73 @@ var _user$project$Haggis_Combination$collectSets = function (cards) {
 			},
 			cards));
 };
+var _user$project$Haggis_Combination$declare = F3(
+	function (wildcard, suit, order) {
+		return _elm_lang$core$Native_Utils.update(
+			wildcard,
+			{suit: suit, order: order});
+	});
+var _user$project$Haggis_Combination$distributeAcrossTwoSets = F3(
+	function (wildcard, firstSet, secondSet) {
+		var addWildToSet = F2(
+			function (order, set) {
+				return A2(
+					_elm_lang$core$List$append,
+					set,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A3(
+							_user$project$Haggis_Combination$declare,
+							wildcard,
+							A2(_user$project$Haggis_Combination$missingSuit, firstSet, secondSet),
+							order)
+						]));
+			});
+		var secondCard = A2(
+			_elm_lang$core$Maybe$withDefault,
+			wildcard,
+			_elm_lang$core$List$head(secondSet));
+		var firstCard = A2(
+			_elm_lang$core$Maybe$withDefault,
+			wildcard,
+			_elm_lang$core$List$head(firstSet));
+		return _user$project$Haggis_Combination$allRanksConsecutive(
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_user$project$Haggis_Combination$maybe(firstCard),
+					_user$project$Haggis_Combination$maybe(secondCard)
+				])) ? (_elm_lang$core$Native_Utils.eq(
+			_elm_lang$core$List$length(firstSet),
+			_elm_lang$core$List$length(secondSet)) ? _elm_lang$core$Native_List.fromArray(
+			[
+				firstSet,
+				secondSet,
+				_elm_lang$core$Native_List.fromArray(
+				[
+					A3(_user$project$Haggis_Combination$declare, wildcard, secondCard.suit, secondCard.order + 1)
+				])
+			]) : ((_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$List$length(firstSet),
+			_elm_lang$core$List$length(secondSet)) < 0) ? _elm_lang$core$Native_List.fromArray(
+			[
+				A2(addWildToSet, firstCard.order, firstSet),
+				secondSet
+			]) : _elm_lang$core$Native_List.fromArray(
+			[
+				firstSet,
+				A2(addWildToSet, secondCard.order, secondSet)
+			]))) : _elm_lang$core$Native_List.fromArray(
+			[
+				firstSet,
+				_elm_lang$core$Native_List.fromArray(
+				[
+					A3(_user$project$Haggis_Combination$declare, wildcard, firstCard.suit, firstCard.order + 1)
+				]),
+				secondSet
+			]);
+	});
 var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 	function (wildcard, sets) {
-		var designateWild = F2(
-			function (suit, order) {
-				return _elm_lang$core$Native_Utils.update(
-					wildcard,
-					{suit: suit, order: order});
-			});
 		var _p7 = sets;
 		if (_p7.ctor === '[]') {
 			return _elm_lang$core$Native_List.fromArray(
@@ -135,7 +194,7 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 		} else {
 			if (_p7._1.ctor === '[]') {
 				var _p8 = _p7._0;
-				var spotCard = A2(
+				var spotcard = A2(
 					_elm_lang$core$Maybe$withDefault,
 					wildcard,
 					_elm_lang$core$List$head(_p8));
@@ -144,82 +203,24 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 						_p8,
 						_elm_lang$core$Native_List.fromArray(
 						[
-							A2(designateWild, spotCard.suit, spotCard.order + 1)
+							A3(_user$project$Haggis_Combination$declare, wildcard, spotcard.suit, spotcard.order + 1)
 						])
 					]);
 			} else {
 				var _p12 = _p7._1._0;
 				var _p11 = _p7._1._1;
 				var _p10 = _p7._0;
-				var distributeWildAcrossTwoSets = F2(
-					function (firstSet$, secondSet$) {
-						var addWildToSet = F2(
-							function (order, set) {
-								return A2(
-									_elm_lang$core$List$append,
-									set,
-									_elm_lang$core$Native_List.fromArray(
-										[
-											A2(
-											designateWild,
-											A2(_user$project$Haggis_Combination$missingSuit, firstSet$, secondSet$),
-											order)
-										]));
-							});
-						var secondCard = A2(
-							_elm_lang$core$Maybe$withDefault,
-							wildcard,
-							_elm_lang$core$List$head(secondSet$));
-						var firstCard = A2(
-							_elm_lang$core$Maybe$withDefault,
-							wildcard,
-							_elm_lang$core$List$head(firstSet$));
-						return _user$project$Haggis_Combination$allRanksConsecutive(
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_user$project$Haggis_Combination$maybe(firstCard),
-									_user$project$Haggis_Combination$maybe(secondCard)
-								])) ? (_elm_lang$core$Native_Utils.eq(
-							_elm_lang$core$List$length(firstSet$),
-							_elm_lang$core$List$length(secondSet$)) ? _elm_lang$core$Native_List.fromArray(
-							[
-								firstSet$,
-								secondSet$,
-								_elm_lang$core$Native_List.fromArray(
-								[
-									A2(designateWild, secondCard.suit, secondCard.order + 1)
-								])
-							]) : ((_elm_lang$core$Native_Utils.cmp(
-							_elm_lang$core$List$length(firstSet$),
-							_elm_lang$core$List$length(secondSet$)) < 0) ? _elm_lang$core$Native_List.fromArray(
-							[
-								A2(addWildToSet, firstCard.order, firstSet$),
-								secondSet$
-							]) : _elm_lang$core$Native_List.fromArray(
-							[
-								firstSet$,
-								A2(addWildToSet, secondCard.order, secondSet$)
-							]))) : _elm_lang$core$Native_List.fromArray(
-							[
-								firstSet$,
-								_elm_lang$core$Native_List.fromArray(
-								[
-									A2(designateWild, firstCard.suit, firstCard.order + 1)
-								]),
-								secondSet$
-							]);
-					});
 				var _p9 = _p11;
 				if ((_p9.ctor === '::') && (_p9._1.ctor === '[]')) {
 					return A2(
 						_elm_lang$core$Basics_ops['++'],
 						_elm_lang$core$Native_List.fromArray(
 							[_p10]),
-						A2(distributeWildAcrossTwoSets, _p12, _p9._0));
+						A3(_user$project$Haggis_Combination$distributeAcrossTwoSets, wildcard, _p12, _p9._0));
 				} else {
 					return A2(
 						_elm_lang$core$Basics_ops['++'],
-						A2(distributeWildAcrossTwoSets, _p10, _p12),
+						A3(_user$project$Haggis_Combination$distributeAcrossTwoSets, wildcard, _p10, _p12),
 						_p11);
 				}
 			}
