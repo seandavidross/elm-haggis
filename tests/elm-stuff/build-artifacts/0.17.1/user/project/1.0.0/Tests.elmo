@@ -481,6 +481,21 @@ var _user$project$Tests$all = A2(
 										[
 											_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs)
 										]));
+							}),
+							A2(
+							_elm_community$elm_test$Test$test,
+							'can fill holes in run of pairs that is longer than 3 ranks',
+							function (_p72) {
+								var _p73 = _p72;
+								return A2(
+									_elm_community$elm_test$Expect$equal,
+									_user$project$Haggis_Combination$sequence(
+										_elm_lang$core$Native_List.fromArray(
+											[_user$project$Tests$blueTwo, _user$project$Tests$greenTwo, _user$project$Tests$blueThree, _user$project$Tests$greenThree, _user$project$Tests$blueFour, _user$project$Tests$greenFive, _user$project$Tests$jack, _user$project$Tests$king])),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs)
+										]));
 							})
 						]))
 				]))

@@ -128,6 +128,9 @@ all =
                 , test "a pair of tens plus two wilds is a run of pairs (T-T-J-J)" <|
                     \() ->
                         Expect.equal (sequence [ blueTen, greenTen, jack, king ]) [ Just RunOfPairs ]
+                , test "can fill holes in run of pairs that is longer than 3 ranks" <|
+                    \() ->
+                        Expect.equal (sequence [ blueTwo, greenTwo, blueThree, greenThree, blueFour, greenFive, jack, king ]) [ Just RunOfPairs ]
 
                 -- , test "a consecutive single and a pair of spot cards, plus 3 wildcards, could be a run of pairs or a run of triples" <|
                 --     \() ->
