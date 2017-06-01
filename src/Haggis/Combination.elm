@@ -299,11 +299,14 @@ distributeOneWildCard wildcard sets =
 
         firstSet :: secondSet :: rest ->
             case rest of
+                [] ->
+                    (distributeAcrossTwoSets wildcard firstSet secondSet) ++ rest
+
                 thirdSet :: [] ->
                     [ firstSet ] ++ (distributeAcrossTwoSets wildcard secondSet thirdSet)
 
                 otherwise ->
-                    (distributeAcrossTwoSets wildcard firstSet secondSet) ++ rest
+                    [ firstSet, secondSet ] ++ (distributeOneWildCard wildcard rest)
 
 
 declare : Card -> Suit -> Int -> Card

@@ -211,17 +211,25 @@ var _user$project$Haggis_Combination$distributeOneWildCard = F2(
 				var _p11 = _p7._1._1;
 				var _p10 = _p7._0;
 				var _p9 = _p11;
-				if ((_p9.ctor === '::') && (_p9._1.ctor === '[]')) {
-					return A2(
-						_elm_lang$core$Basics_ops['++'],
-						_elm_lang$core$Native_List.fromArray(
-							[_p10]),
-						A3(_user$project$Haggis_Combination$distributeAcrossTwoSets, wildcard, _p12, _p9._0));
-				} else {
+				if (_p9.ctor === '[]') {
 					return A2(
 						_elm_lang$core$Basics_ops['++'],
 						A3(_user$project$Haggis_Combination$distributeAcrossTwoSets, wildcard, _p10, _p12),
 						_p11);
+				} else {
+					if (_p9._1.ctor === '[]') {
+						return A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$core$Native_List.fromArray(
+								[_p10]),
+							A3(_user$project$Haggis_Combination$distributeAcrossTwoSets, wildcard, _p12, _p9._0));
+					} else {
+						return A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$core$Native_List.fromArray(
+								[_p10, _p12]),
+							A2(_user$project$Haggis_Combination$distributeOneWildCard, wildcard, _p11));
+					}
 				}
 			}
 		}
