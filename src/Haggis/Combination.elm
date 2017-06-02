@@ -202,77 +202,38 @@ sequence cards =
         numberOfCards =
             length cards
 
-        numberOfWilds =
-            length wildcards
-
-        naturalSuitCount =
-            countSuits spotcards
-
-        numberOfSuits =
-            countSuits cards
-
         lowestRank =
             findLowestRank spotcards
 
-        widths =
-            range naturalSuitCount numberOfSuits
+        sequenceWidths =
+            range (countSuits spotcards) (countSuits cards)
 
         maybeSequenceOfWidth sequenceWidth =
             let
                 sequenceLength =
-                    floor (toFloat (numberOfCards) / toFloat (sequenceWidth))
+                    numberOfCards // sequenceWidth
 
                 sequenceRank =
                     lowestRank + sequenceLength - 1
-
-                hasEnoughCardsForSequenceWidth =
-                    (sequenceWidth == 1 && numberOfCards >= 3)
-                        || (sequenceWidth > 1 && numberOfCards >= sequenceWidth * 2)
 
                 canFormSequenceUpToRank highestRank =
                     let
                         ranks =
                             range lowestRank highestRank
 
-                        cardsWithTheseRanks =
-                            map (\rank -> (filter (\c -> c.order == rank) cards)) ranks
-
-                        wildsForTheseRanks =
-                            map (\set -> sequenceWidth - (length set)) cardsWithTheseRanks
+                        wildsNeededToCompleteSet =
+                            map (\set -> sequenceWidth - (length set)) (collectCardsWithRanks ranks cards)
 
                         wildsUsedAsNaturals =
                             length (filter (\w -> member w.order ranks) wildcards)
 
                         wildsNeeded =
-                            (sum wildsForTheseRanks)
+                            (sum wildsNeededToCompleteSet)
                     in
-                        wildsNeeded == (numberOfWilds - wildsUsedAsNaturals)
-
-                makeSequenceWithWidth w =
-                    case w of
-                        1 ->
-                            Just RunOfSingles
-
-                        2 ->
-                            Just RunOfPairs
-
-                        3 ->
-                            Just RunOfTriples
-
-                        4 ->
-                            Just RunOfFourOfAKinds
-
-                        5 ->
-                            Just RunOfFiveOfAKinds
-
-                        6 ->
-                            Just RunOfSixOfAKinds
-
-                        otherwise ->
-                            Nothing
+                        wildsNeeded == ((length wildcards) - wildsUsedAsNaturals)
             in
                 if
-                    hasEnoughCardsForSequenceWidth
+                    hasEnoughCardsForSequenceWidth sequenceWidth numberOfCards
                         && (numberOfCards == (sequenceLength * sequenceWidth))
                         && canFormSequenceUpToRank sequenceRank
                 then
@@ -283,18 +244,50 @@ sequence cards =
         if length spotcards == 0 then
             [ Nothing ]
         else
-            widths
+            sequenceWidths
                 |> map maybeSequenceOfWidth
                 |> stripNothings
 
 
 findLowestRank : List Card -> Ordinal
 findLowestRank cards =
-    let
-        two =
-            2
-    in
-        cards |> map .order |> minimum |> Maybe.withDefault two
+    cards |> map .order |> minimum |> Maybe.withDefault 2
+
+
+hasEnoughCardsForSequenceWidth : Int -> Int -> Bool
+hasEnoughCardsForSequenceWidth sequenceWidth numberOfCards =
+    (sequenceWidth == 1 && numberOfCards >= 3)
+        || (sequenceWidth > 1 && numberOfCards >= sequenceWidth * 2)
+
+
+collectCardsWithRanks : List Int -> List Card -> ListOfSets
+collectCardsWithRanks ranks cards =
+    map (\rank -> (filter (\c -> c.order == rank) cards)) ranks
+
+
+makeSequenceWithWidth : Int -> Maybe Sequence
+makeSequenceWithWidth width' =
+    case width' of
+        1 ->
+            Just RunOfSingles
+
+        2 ->
+            Just RunOfPairs
+
+        3 ->
+            Just RunOfTriples
+
+        4 ->
+            Just RunOfFourOfAKinds
+
+        5 ->
+            Just RunOfFiveOfAKinds
+
+        6 ->
+            Just RunOfSixOfAKinds
+
+        otherwise ->
+            Nothing
 
 
 stripNothings : List (Maybe Sequence) -> List (Maybe Sequence)

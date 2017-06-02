@@ -42,11 +42,28 @@ var _user$project$Haggis_Combination$stripNothings = function (sequences) {
 		return somethings;
 	}
 };
+var _user$project$Haggis_Combination$collectCardsWithRanks = F2(
+	function (ranks, cards) {
+		return A2(
+			_elm_lang$core$List$map,
+			function (rank) {
+				return A2(
+					_elm_lang$core$List$filter,
+					function (c) {
+						return _elm_lang$core$Native_Utils.eq(c.order, rank);
+					},
+					cards);
+			},
+			ranks);
+	});
+var _user$project$Haggis_Combination$hasEnoughCardsForSequenceWidth = F2(
+	function (sequenceWidth, numberOfCards) {
+		return (_elm_lang$core$Native_Utils.eq(sequenceWidth, 1) && (_elm_lang$core$Native_Utils.cmp(numberOfCards, 3) > -1)) || ((_elm_lang$core$Native_Utils.cmp(sequenceWidth, 1) > 0) && (_elm_lang$core$Native_Utils.cmp(numberOfCards, sequenceWidth * 2) > -1));
+	});
 var _user$project$Haggis_Combination$findLowestRank = function (cards) {
-	var two = 2;
 	return A2(
 		_elm_lang$core$Maybe$withDefault,
-		two,
+		2,
 		_elm_lang$core$List$minimum(
 			A2(
 				_elm_lang$core$List$map,
@@ -178,56 +195,45 @@ var _user$project$Haggis_Combination$RunOfFourOfAKinds = {ctor: 'RunOfFourOfAKin
 var _user$project$Haggis_Combination$RunOfTriples = {ctor: 'RunOfTriples'};
 var _user$project$Haggis_Combination$RunOfPairs = {ctor: 'RunOfPairs'};
 var _user$project$Haggis_Combination$RunOfSingles = {ctor: 'RunOfSingles'};
+var _user$project$Haggis_Combination$makeSequenceWithWidth = function (width$) {
+	var _p9 = width$;
+	switch (_p9) {
+		case 1:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles);
+		case 2:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs);
+		case 3:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfTriples);
+		case 4:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfFourOfAKinds);
+		case 5:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfFiveOfAKinds);
+		case 6:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSixOfAKinds);
+		default:
+			return _elm_lang$core$Maybe$Nothing;
+	}
+};
 var _user$project$Haggis_Combination$sequence = function (cards) {
-	var numberOfSuits = _user$project$Haggis_Combination$countSuits(cards);
 	var numberOfCards = _elm_lang$core$List$length(cards);
-	var _p9 = A2(_elm_lang$core$List$partition, _user$project$Haggis_Card$isSpotCard, cards);
-	var spotcards = _p9._0;
-	var wildcards = _p9._1;
-	var numberOfWilds = _elm_lang$core$List$length(wildcards);
-	var naturalSuitCount = _user$project$Haggis_Combination$countSuits(spotcards);
-	var widths = A2(_user$project$Haggis_Combination$range, naturalSuitCount, numberOfSuits);
+	var _p10 = A2(_elm_lang$core$List$partition, _user$project$Haggis_Card$isSpotCard, cards);
+	var spotcards = _p10._0;
+	var wildcards = _p10._1;
 	var lowestRank = _user$project$Haggis_Combination$findLowestRank(spotcards);
+	var sequenceWidths = A2(
+		_user$project$Haggis_Combination$range,
+		_user$project$Haggis_Combination$countSuits(spotcards),
+		_user$project$Haggis_Combination$countSuits(cards));
 	var maybeSequenceOfWidth = function (sequenceWidth) {
-		var makeSequenceWithWidth = function (w) {
-			var _p10 = w;
-			switch (_p10) {
-				case 1:
-					return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles);
-				case 2:
-					return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs);
-				case 3:
-					return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfTriples);
-				case 4:
-					return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfFourOfAKinds);
-				case 5:
-					return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfFiveOfAKinds);
-				case 6:
-					return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSixOfAKinds);
-				default:
-					return _elm_lang$core$Maybe$Nothing;
-			}
-		};
 		var canFormSequenceUpToRank = function (highestRank) {
 			var ranks = A2(_user$project$Haggis_Combination$range, lowestRank, highestRank);
-			var cardsWithTheseRanks = A2(
-				_elm_lang$core$List$map,
-				function (rank) {
-					return A2(
-						_elm_lang$core$List$filter,
-						function (c) {
-							return _elm_lang$core$Native_Utils.eq(c.order, rank);
-						},
-						cards);
-				},
-				ranks);
-			var wildsForTheseRanks = A2(
+			var wildsNeededToCompleteSet = A2(
 				_elm_lang$core$List$map,
 				function (set) {
 					return sequenceWidth - _elm_lang$core$List$length(set);
 				},
-				cardsWithTheseRanks);
-			var wildsNeeded = _elm_lang$core$List$sum(wildsForTheseRanks);
+				A2(_user$project$Haggis_Combination$collectCardsWithRanks, ranks, cards));
+			var wildsNeeded = _elm_lang$core$List$sum(wildsNeededToCompleteSet);
 			var wildsUsedAsNaturals = _elm_lang$core$List$length(
 				A2(
 					_elm_lang$core$List$filter,
@@ -235,19 +241,19 @@ var _user$project$Haggis_Combination$sequence = function (cards) {
 						return A2(_elm_lang$core$List$member, w.order, ranks);
 					},
 					wildcards));
-			return _elm_lang$core$Native_Utils.eq(wildsNeeded, numberOfWilds - wildsUsedAsNaturals);
+			return _elm_lang$core$Native_Utils.eq(
+				wildsNeeded,
+				_elm_lang$core$List$length(wildcards) - wildsUsedAsNaturals);
 		};
-		var hasEnoughCardsForSequenceWidth = (_elm_lang$core$Native_Utils.eq(sequenceWidth, 1) && (_elm_lang$core$Native_Utils.cmp(numberOfCards, 3) > -1)) || ((_elm_lang$core$Native_Utils.cmp(sequenceWidth, 1) > 0) && (_elm_lang$core$Native_Utils.cmp(numberOfCards, sequenceWidth * 2) > -1));
-		var sequenceLength = _elm_lang$core$Basics$floor(
-			_elm_lang$core$Basics$toFloat(numberOfCards) / _elm_lang$core$Basics$toFloat(sequenceWidth));
+		var sequenceLength = (numberOfCards / sequenceWidth) | 0;
 		var sequenceRank = (lowestRank + sequenceLength) - 1;
-		return (hasEnoughCardsForSequenceWidth && (_elm_lang$core$Native_Utils.eq(numberOfCards, sequenceLength * sequenceWidth) && canFormSequenceUpToRank(sequenceRank))) ? makeSequenceWithWidth(sequenceWidth) : _elm_lang$core$Maybe$Nothing;
+		return (A2(_user$project$Haggis_Combination$hasEnoughCardsForSequenceWidth, sequenceWidth, numberOfCards) && (_elm_lang$core$Native_Utils.eq(numberOfCards, sequenceLength * sequenceWidth) && canFormSequenceUpToRank(sequenceRank))) ? _user$project$Haggis_Combination$makeSequenceWithWidth(sequenceWidth) : _elm_lang$core$Maybe$Nothing;
 	};
 	return _elm_lang$core$Native_Utils.eq(
 		_elm_lang$core$List$length(spotcards),
 		0) ? _elm_lang$core$Native_List.fromArray(
 		[_elm_lang$core$Maybe$Nothing]) : _user$project$Haggis_Combination$stripNothings(
-		A2(_elm_lang$core$List$map, maybeSequenceOfWidth, widths));
+		A2(_elm_lang$core$List$map, maybeSequenceOfWidth, sequenceWidths));
 };
 var _user$project$Haggis_Combination$Suited = {ctor: 'Suited'};
 var _user$project$Haggis_Combination$JQK = {ctor: 'JQK'};
