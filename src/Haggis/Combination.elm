@@ -199,59 +199,65 @@ sequence cards =
         ( spotcards, wildcards ) =
             partition (isSpotCard) cards
 
-        numberOfCards =
-            length cards
-
-        lowestRank =
-            findLowestRank spotcards
-
         sequenceWidths =
             range (countSuits spotcards) (countSuits cards)
-
-        maybeSequenceOfWidth sequenceWidth =
-            let
-                sequenceLength =
-                    numberOfCards // sequenceWidth
-
-                sequenceRank =
-                    lowestRank + sequenceLength - 1
-
-                canFormSequenceUpToRank highestRank =
-                    let
-                        ranks =
-                            range lowestRank highestRank
-
-                        wildsNeededToCompleteSet =
-                            map (\set -> sequenceWidth - (length set)) (collectCardsWithRanks ranks cards)
-
-                        wildsUsedAsNaturals =
-                            length (filter (\w -> member w.order ranks) wildcards)
-
-                        wildsNeeded =
-                            (sum wildsNeededToCompleteSet)
-                    in
-                        wildsNeeded == ((length wildcards) - wildsUsedAsNaturals)
-            in
-                if
-                    hasEnoughCardsForSequenceWidth sequenceWidth numberOfCards
-                        && (numberOfCards == (sequenceLength * sequenceWidth))
-                        && canFormSequenceUpToRank sequenceRank
-                then
-                    makeSequenceWithWidth sequenceWidth
-                else
-                    Nothing
     in
         if length spotcards == 0 then
             [ Nothing ]
         else
             sequenceWidths
-                |> map maybeSequenceOfWidth
-                |> stripNothings
+                |> map (maybeSequenceOfWidth cards)
+                |> keepJustSequences
+
+
+maybeSequenceOfWidth : List Card -> Int -> Maybe Sequence
+maybeSequenceOfWidth cards sequenceWidth =
+    let
+        ( spotcards, wildcards ) =
+            partition (isSpotCard) cards
+
+        numberOfCards =
+            length cards
+
+        lowRank =
+            findLowestRank spotcards
+
+        sequenceLength =
+            numberOfCards // sequenceWidth
+    in
+        if
+            hasEnoughCardsForSequenceWidth sequenceWidth numberOfCards
+                && (numberOfCards == (sequenceLength * sequenceWidth))
+                && canFormSequence lowRank (lowRank + sequenceLength - 1) sequenceWidth cards
+        then
+            makeSequenceWithWidth sequenceWidth
+        else
+            Nothing
 
 
 findLowestRank : List Card -> Ordinal
 findLowestRank cards =
     cards |> map .order |> minimum |> Maybe.withDefault 2
+
+
+canFormSequence : Int -> Int -> Int -> List Card -> Bool
+canFormSequence lowRank highRank sequenceWidth cards =
+    let
+        ( spotcards, wildcards ) =
+            partition (isSpotCard) cards
+
+        ranks =
+            range lowRank highRank
+
+        wildsUsedAsNaturals =
+            length (filter (\w -> member w.order ranks) wildcards)
+    in
+        (wildsNeeded sequenceWidth (collectCardsWithRanks ranks cards)) == ((length wildcards) - wildsUsedAsNaturals)
+
+
+wildsNeeded : Int -> ListOfSets -> Int
+wildsNeeded sizeOfSets sets =
+    sum (map (\set -> sizeOfSets - (length set)) sets)
 
 
 hasEnoughCardsForSequenceWidth : Int -> Int -> Bool
@@ -290,22 +296,22 @@ makeSequenceWithWidth width' =
             Nothing
 
 
-stripNothings : List (Maybe Sequence) -> List (Maybe Sequence)
-stripNothings sequences =
+keepJustSequences : List (Maybe Sequence) -> List (Maybe Sequence)
+keepJustSequences sequences =
     let
-        somethings =
-            filter (isNotNothing) sequences
+        justSequences =
+            filter (isSequence) sequences
     in
-        case somethings of
+        case justSequences of
             [] ->
                 [ Nothing ]
 
             otherwise ->
-                somethings
+                justSequences
 
 
-isNotNothing : Maybe Sequence -> Bool
-isNotNothing s =
+isSequence : Maybe Sequence -> Bool
+isSequence s =
     case s of
         Nothing ->
             False
