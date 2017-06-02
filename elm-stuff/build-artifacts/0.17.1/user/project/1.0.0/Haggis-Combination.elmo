@@ -66,9 +66,8 @@ var _user$project$Haggis_Combination$wildsNeeded = F2(
 				},
 				sets));
 	});
-var _user$project$Haggis_Combination$canFormSequence = F4(
-	function (lowRank, highRank, sequenceWidth, cards) {
-		var ranks = A2(_user$project$Haggis_Combination$range, lowRank, highRank);
+var _user$project$Haggis_Combination$canFormSequence = F3(
+	function (sequenceWidth, ranks, cards) {
 		var wildsNeedToCompleteSets = A2(
 			_user$project$Haggis_Combination$wildsNeeded,
 			sequenceWidth,
@@ -254,7 +253,8 @@ var _user$project$Haggis_Combination$maybeSequenceOfWidth = F2(
 		var wildcards = _p11._1;
 		var lowRank = _user$project$Haggis_Combination$findLowestRank(spotcards);
 		var highRank = (lowRank + sequenceLength) - 1;
-		return (A2(_user$project$Haggis_Combination$hasEnoughCardsForSequenceWidth, sequenceWidth, numberOfCards) && (_elm_lang$core$Native_Utils.eq(numberOfCards, sequenceLength * sequenceWidth) && A4(_user$project$Haggis_Combination$canFormSequence, lowRank, highRank, sequenceWidth, cards))) ? _user$project$Haggis_Combination$makeSequenceOfWidth(sequenceWidth) : _elm_lang$core$Maybe$Nothing;
+		var ranks = A2(_user$project$Haggis_Combination$range, lowRank, highRank);
+		return (A2(_user$project$Haggis_Combination$hasEnoughCardsForSequenceWidth, sequenceWidth, numberOfCards) && (_elm_lang$core$Native_Utils.eq(numberOfCards, sequenceLength * sequenceWidth) && A3(_user$project$Haggis_Combination$canFormSequence, sequenceWidth, ranks, cards))) ? _user$project$Haggis_Combination$makeSequenceOfWidth(sequenceWidth) : _elm_lang$core$Maybe$Nothing;
 	});
 var _user$project$Haggis_Combination$sequence = function (cards) {
 	var _p12 = A2(_elm_lang$core$List$partition, _user$project$Haggis_Card$isSpotCard, cards);

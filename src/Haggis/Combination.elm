@@ -227,11 +227,14 @@ maybeSequenceOfWidth cards sequenceWidth =
 
         highRank =
             lowRank + sequenceLength - 1
+
+        ranks =
+            range lowRank highRank
     in
         if
             hasEnoughCardsForSequenceWidth sequenceWidth numberOfCards
                 && (numberOfCards == (sequenceLength * sequenceWidth))
-                && canFormSequence lowRank highRank sequenceWidth cards
+                && canFormSequence sequenceWidth ranks cards
         then
             makeSequenceOfWidth sequenceWidth
         else
@@ -249,14 +252,11 @@ hasEnoughCardsForSequenceWidth sequenceWidth numberOfCards =
         || (sequenceWidth > 1 && numberOfCards >= sequenceWidth * 2)
 
 
-canFormSequence : Int -> Int -> Int -> List Card -> Bool
-canFormSequence lowRank highRank sequenceWidth cards =
+canFormSequence : Int -> List Int -> List Card -> Bool
+canFormSequence sequenceWidth ranks cards =
     let
         ( spotcards, wildcards ) =
             partition (isSpotCard) cards
-
-        ranks =
-            range lowRank highRank
 
         wildsNeedToCompleteSets =
             wildsNeeded sequenceWidth (collectCardsWithRanks ranks cards)
