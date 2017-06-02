@@ -224,13 +224,16 @@ maybeSequenceOfWidth cards sequenceWidth =
 
         sequenceLength =
             numberOfCards // sequenceWidth
+
+        highRank =
+            lowRank + sequenceLength - 1
     in
         if
             hasEnoughCardsForSequenceWidth sequenceWidth numberOfCards
                 && (numberOfCards == (sequenceLength * sequenceWidth))
-                && canFormSequence lowRank (lowRank + sequenceLength - 1) sequenceWidth cards
+                && canFormSequence lowRank highRank sequenceWidth cards
         then
-            makeSequenceWithWidth sequenceWidth
+            makeSequenceOfWidth sequenceWidth
         else
             Nothing
 
@@ -238,6 +241,12 @@ maybeSequenceOfWidth cards sequenceWidth =
 findLowestRank : List Card -> Ordinal
 findLowestRank cards =
     cards |> map .order |> minimum |> Maybe.withDefault 2
+
+
+hasEnoughCardsForSequenceWidth : Int -> Int -> Bool
+hasEnoughCardsForSequenceWidth sequenceWidth numberOfCards =
+    (sequenceWidth == 1 && numberOfCards >= 3)
+        || (sequenceWidth > 1 && numberOfCards >= sequenceWidth * 2)
 
 
 canFormSequence : Int -> Int -> Int -> List Card -> Bool
@@ -249,10 +258,13 @@ canFormSequence lowRank highRank sequenceWidth cards =
         ranks =
             range lowRank highRank
 
+        wildsNeedToCompleteSets =
+            wildsNeeded sequenceWidth (collectCardsWithRanks ranks cards)
+
         wildsUsedAsNaturals =
             length (filter (\w -> member w.order ranks) wildcards)
     in
-        (wildsNeeded sequenceWidth (collectCardsWithRanks ranks cards)) == ((length wildcards) - wildsUsedAsNaturals)
+        wildsNeedToCompleteSets == ((length wildcards) - wildsUsedAsNaturals)
 
 
 wildsNeeded : Int -> ListOfSets -> Int
@@ -260,19 +272,13 @@ wildsNeeded sizeOfSets sets =
     sum (map (\set -> sizeOfSets - (length set)) sets)
 
 
-hasEnoughCardsForSequenceWidth : Int -> Int -> Bool
-hasEnoughCardsForSequenceWidth sequenceWidth numberOfCards =
-    (sequenceWidth == 1 && numberOfCards >= 3)
-        || (sequenceWidth > 1 && numberOfCards >= sequenceWidth * 2)
-
-
 collectCardsWithRanks : List Int -> List Card -> ListOfSets
 collectCardsWithRanks ranks cards =
     map (\rank -> (filter (\c -> c.order == rank) cards)) ranks
 
 
-makeSequenceWithWidth : Int -> Maybe Sequence
-makeSequenceWithWidth width' =
+makeSequenceOfWidth : Int -> Maybe Sequence
+makeSequenceOfWidth width' =
     case width' of
         1 ->
             Just RunOfSingles
