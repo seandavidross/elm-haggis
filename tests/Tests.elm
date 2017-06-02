@@ -106,9 +106,9 @@ all =
                 , test "one spot card and two wildcards is a run of singles" <|
                     \() ->
                         Expect.equal (sequence [ blueTwo, jack, king ]) [ Just RunOfSingles ]
-                , test "a ten and three wildcards is a run of singles" <|
+                , test "a ten and three wildcards is a run of singles and a run of pairs" <|
                     \() ->
-                        Expect.equal (sequence [ blueTen, jack, queen, king ]) [ Just RunOfSingles ]
+                        Expect.equal (sequence [ blueTen, jack, queen, king ]) [ Just RunOfSingles, Just RunOfPairs ]
                 , test "one wildcard can fill a one rank gap between two singles to form a run" <|
                     \() ->
                         Expect.equal (sequence [ blueTwo, blueFour, king ]) [ Just RunOfSingles ]
@@ -118,10 +118,9 @@ all =
                 , test "two wildcards can fill a 2 rank gap between two singles to form a run" <|
                     \() ->
                         Expect.equal (sequence [ greenTwo, greenFive, king, jack ]) [ Just RunOfSingles ]
-
-                -- , test "one spot card and three wildcards could be a run of singles or a run of pairs" <|
-                --     \() ->
-                --         Expect.equal (sequence [ blueTwo, jack, queen, king ]) [ Just RunOfSingles, Just RunOfPairs ]
+                , test "one spot card and three wildcards could be a run of singles or a run of pairs" <|
+                    \() ->
+                        Expect.equal (sequence [ blueTwo, jack, queen, king ]) [ Just RunOfSingles, Just RunOfPairs ]
                 , test "wild card should sub for missing card in run of pairs" <|
                     \() ->
                         Expect.equal (sequence [ blueTwo, greenTwo, jack, greenThree ]) [ Just RunOfPairs ]
@@ -131,13 +130,12 @@ all =
                 , test "can fill holes in run of pairs that is longer than 3 ranks" <|
                     \() ->
                         Expect.equal (sequence [ blueTwo, greenTwo, blueThree, greenThree, blueFour, greenFive, jack, king ]) [ Just RunOfPairs ]
-
-                -- , test "a consecutive single and a pair of spot cards, plus 3 wildcards, could be a run of pairs or a run of triples" <|
-                --     \() ->
-                --         Expect.equal (sequence [ blueTwo, greenTwo, greenThree, jack, queen, king ]) [ Just RunOfPairs, Just RunOfTriples ]
-                -- , test "two consecutive pairs and two wildcards could be a run of pairs or a run of triples" <|
-                --     \() ->
-                --         Expect.equal (sequence [ blueTwo, blueThree, greenTwo, greenThree, jack, queen ]) [ Just RunOfPairs, Just RunOfTriples ]
+                , test "a consecutive single and a pair of spot cards, plus 3 wildcards, could be a run of pairs or a run of triples" <|
+                    \() ->
+                        Expect.equal (sequence [ blueTwo, greenTwo, greenThree, jack, queen, king ]) [ Just RunOfPairs, Just RunOfTriples ]
+                , test "two consecutive pairs and two wildcards could be a run of pairs or a run of triples" <|
+                    \() ->
+                        Expect.equal (sequence [ blueTwo, blueThree, greenTwo, greenThree, jack, queen ]) [ Just RunOfPairs, Just RunOfTriples ]
                 ]
             ]
         ]

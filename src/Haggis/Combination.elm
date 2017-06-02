@@ -7,14 +7,11 @@ module Haggis.Combination
         , set
         , sequence
         , bomb
-        , distribute
-        , collectSets
         )
 
 import Haggis.Card exposing (..)
 import List exposing (..)
 import List.Extra exposing (..)
-import Debug exposing (..)
 
 
 type Combination
@@ -161,14 +158,15 @@ hasSameSuit card card' =
 
 hasFourSuits : List Card -> Bool
 hasFourSuits cards =
-    let
-        numberOfSuits =
-            cards
-                |> map .suit
-                |> dropDuplicates
-                |> length
-    in
-        numberOfSuits == 4
+    (countSuits cards) == 4
+
+
+countSuits : List Card -> Int
+countSuits cards =
+    cards
+        |> map .suit
+        |> dropDuplicates
+        |> length
 
 
 {-| dropDuplicates is based on code from elm-community/elm-list-extras
@@ -193,7 +191,6 @@ dropDuplicates' existing remaining =
 
 
 -- SEQUENCE
--- TODO still need to handle Wild cards...
 
 
 sequence : List Card -> List (Maybe Sequence)
@@ -202,254 +199,138 @@ sequence cards =
         ( spotcards, wildcards ) =
             partition (isSpotCard) cards
 
-        maybeSequences =
-            distribute wildcards (collectSets spotcards)
+        numberOfCards =
+            length cards
+
+        numberOfWilds =
+            length wildcards
+
+        naturalSuitCount =
+            countSuits spotcards
+
+        numberOfSuits =
+            countSuits cards
+
+        lowestRank =
+            findLowestRank spotcards
+
+        widths =
+            range naturalSuitCount numberOfSuits
+
+        maybeSequenceOfWidth sequenceWidth =
+            let
+                sequenceLength =
+                    floor (toFloat (numberOfCards) / toFloat (sequenceWidth))
+
+                sequenceRank =
+                    lowestRank + sequenceLength - 1
+
+                hasEnoughCardsForSequenceWidth =
+                    (sequenceWidth == 1 && numberOfCards >= 3)
+                        || (sequenceWidth > 1 && numberOfCards >= sequenceWidth * 2)
+
+                canFormSequenceUpToRank highestRank =
+                    let
+                        ranks =
+                            range lowestRank highestRank
+
+                        cardsWithTheseRanks =
+                            map (\rank -> (filter (\c -> c.order == rank) cards)) ranks
+
+                        wildsForTheseRanks =
+                            map (\set -> sequenceWidth - (length set)) cardsWithTheseRanks
+
+                        wildsUsedAsNaturals =
+                            length (filter (\w -> member w.order ranks) wildcards)
+
+                        wildsNeeded =
+                            (sum wildsForTheseRanks)
+                    in
+                        wildsNeeded == (numberOfWilds - wildsUsedAsNaturals)
+
+                makeSequenceWithWidth w =
+                    case w of
+                        1 ->
+                            Just RunOfSingles
+
+                        2 ->
+                            Just RunOfPairs
+
+                        3 ->
+                            Just RunOfTriples
+
+                        4 ->
+                            Just RunOfFourOfAKinds
+
+                        5 ->
+                            Just RunOfFiveOfAKinds
+
+                        6 ->
+                            Just RunOfSixOfAKinds
+
+                        otherwise ->
+                            Nothing
+            in
+                if
+                    hasEnoughCardsForSequenceWidth
+                        && (numberOfCards == (sequenceLength * sequenceWidth))
+                        && canFormSequenceUpToRank sequenceRank
+                then
+                    makeSequenceWithWidth sequenceWidth
+                else
+                    Nothing
     in
-        if length spotcards == 0 || length cards < 3 then
+        if length spotcards == 0 then
             [ Nothing ]
         else
-            map (tryToFormSequence) maybeSequences
+            widths
+                |> map maybeSequenceOfWidth
+                |> stripNothings
 
 
-tryToFormSequence : ListOfSets -> Maybe Sequence
-tryToFormSequence maybeSequence =
-    if canFormSequence maybeSequence then
-        makeSequence maybeSequence
-    else
-        Nothing
-
-
-{-| To determine the possible sequences that can be formed using wildcards,
-we first need to distribute the wildcards evenly amongst the sets of spot cards.
-As we do so, we need to change the wildcard's suit to fit the grouping of suits
-in its set, and we need change the ordinal value of the wildcard's rank so that
-it matches the rank of the other cards in the set.
-
-EXAMPLES:
-
-Let c_N be a card with rank N and let j_N, q_N, k_N be a wild card's rank after
-being distibuted, then:
-
-    distribute  [ j_11, q_12 ]   [ [ c_2 ] ]
-
-returns a RunOfSingles
-
-    [ [ c_2 ], [ j_3 ], [ q_4 ] ]
-
-But wildcards can be used to form more than one type of Sequence, so:
-
-    distribute  [ j_11, q_12, k_13 ]   [ [ c_2 ], [ c_3, c_3' ] ]
-
-returns a RunOfPairs
-
-    [ [ c_2, j_2 ], [ c_3, c_3' ], [ q_4, k_4 ] ]
-
-*AND* a RunOfTriples
-
-    [ [ c_2, j_2, q_2 ], [ c_3, c_3', k_3 ] ]
-
-NOTE
-We need at least one spot card to form a Sequence:
-
-    distribute  [ j_11, q_12, k_13 ]    [ [] ]
-
-returns
-
-    [ [ j_11 ], [ q_12 ], [ k_13 ] ]
-
-but this is NOT a Sequence, it can only ever be a Bomb.
-
--}
-distribute : List Card -> ListOfSets -> List ListOfSets
-distribute wildcards sets =
-    case sortBy (.order) wildcards of
-        [] ->
-            [ sets ]
-
-        [ w ] ->
-            [ distributeOneWildCard w sets ]
-
-        [ w, w' ] ->
-            [ distributeOneWildCard w' <|
-                distributeOneWildCard w sets
-            ]
-
-        [ w, w', w'' ] ->
-            [ distributeOneWildCard w'' <|
-                distributeOneWildCard w' <|
-                    distributeOneWildCard w sets
-            ]
-
-        otherwise ->
-            [ sets ]
-
-
-distributeOneWildCard : Card -> ListOfSets -> ListOfSets
-distributeOneWildCard wildcard sets =
-    case sets of
-        [] ->
-            [ [ wildcard ] ]
-
-        set :: [] ->
-            let
-                spotcard =
-                    Maybe.withDefault wildcard (head set)
-            in
-                [ set, [ declare wildcard spotcard.suit (spotcard.order + 1) ] ]
-
-        firstSet :: secondSet :: rest ->
-            case rest of
-                [] ->
-                    (distributeAcrossTwoSets wildcard firstSet secondSet) ++ rest
-
-                thirdSet :: [] ->
-                    [ firstSet ] ++ (distributeAcrossTwoSets wildcard secondSet thirdSet)
-
-                otherwise ->
-                    [ firstSet, secondSet ] ++ (distributeOneWildCard wildcard rest)
-
-
-declare : Card -> Suit -> Int -> Card
-declare wildcard suit order =
-    { wildcard | suit = suit, order = order }
-
-
-distributeAcrossTwoSets wildcard firstSet secondSet =
+findLowestRank : List Card -> Ordinal
+findLowestRank cards =
     let
-        firstCard =
-            Maybe.withDefault wildcard (head firstSet)
-
-        secondCard =
-            Maybe.withDefault wildcard (head secondSet)
-
-        addWildToSet order set =
-            (append set [ declare wildcard (missingSuit firstSet secondSet) order ])
+        two =
+            2
     in
-        if allRanksConsecutive [ maybe firstCard, maybe secondCard ] then
-            if length firstSet == length secondSet then
-                [ firstSet, secondSet, [ declare wildcard secondCard.suit (secondCard.order + 1) ] ]
-            else if length firstSet < length secondSet then
-                [ (addWildToSet firstCard.order firstSet), secondSet ]
-            else
-                [ firstSet, (addWildToSet secondCard.order secondSet) ]
-        else
-            [ firstSet, [ declare wildcard firstCard.suit (firstCard.order + 1) ], secondSet ]
+        cards |> map .order |> minimum |> Maybe.withDefault two
 
 
-collectSets : List Card -> ListOfSets
-collectSets cards =
-    List.Extra.groupWhile (equal) (sortBy (.order) cards)
+stripNothings : List (Maybe Sequence) -> List (Maybe Sequence)
+stripNothings sequences =
+    let
+        somethings =
+            filter (isNotNothing) sequences
+    in
+        case somethings of
+            [] ->
+                [ Nothing ]
+
+            otherwise ->
+                somethings
 
 
-canFormSequence : ListOfSets -> Bool
-canFormSequence sets =
-    allSetsSameSize sets
-        && allSetsSameSuits sets
-        && allSetsConsecutive sets
-
-
-allSetsSameSize : ListOfSets -> Bool
-allSetsSameSize sets =
-    case sets of
-        first :: rest ->
-            all (\set -> length set == length first) rest
-
-        otherwise ->
+isNotNothing : Maybe Sequence -> Bool
+isNotNothing s =
+    case s of
+        Nothing ->
             False
 
-
-allSetsSameSuits : ListOfSets -> Bool
-allSetsSameSuits sets =
-    case map (collectSuits) sets of
-        firstGroup :: suitGroups ->
-            all ((==) firstGroup) suitGroups
-
         otherwise ->
-            False
+            True
 
 
-collectSuits : List Card -> List Suit
-collectSuits set =
-    set
-        |> map .suit
-        |> sortWith (compareSuits)
+{-| It seems the version of Elm I'm using doesn't expose List.range...??
+-}
+range : Int -> Int -> List Int
+range lo hi =
+    rangeHelp lo hi []
 
 
-missingSuit : List Card -> List Card -> Suit
-missingSuit set set' =
-    case sortBy (length) [ collectSuits set, collectSuits set' ] of
-        [ shortSuits, longSuits ] ->
-            Maybe.withDefault Wild
-                (List.Extra.find (\suit -> notMember suit shortSuits) longSuits)
-
-        otherwise ->
-            Wild
-
-
-allSetsConsecutive : ListOfSets -> Bool
-allSetsConsecutive sets =
-    allRanksConsecutive (collectOneofEachRank sets)
-
-
-collectOneofEachRank : ListOfSets -> List (Maybe Card)
-collectOneofEachRank =
-    map (\set -> head set)
-
-
-allRanksConsecutive : List (Maybe Card) -> Bool
-allRanksConsecutive cards =
-    case cards of
-        [] ->
-            False
-
-        card :: [] ->
-            case card of
-                Just card ->
-                    True
-
-                Nothing ->
-                    False
-
-        firstCard :: secondCard :: rest ->
-            case ( firstCard, secondCard ) of
-                ( Just firstCard, Just secondCard ) ->
-                    ((firstCard.order + 1) == secondCard.order)
-                        && allRanksConsecutive (maybe secondCard :: rest)
-
-                otherwise ->
-                    False
-
-
-maybe : Card -> Maybe Card
-maybe card =
-    Maybe.map identity (Just card)
-
-
-makeSequence : ListOfSets -> Maybe Sequence
-makeSequence sets =
-    case sets of
-        set :: _ ->
-            case length set of
-                1 ->
-                    Just RunOfSingles
-
-                2 ->
-                    Just RunOfPairs
-
-                3 ->
-                    Just RunOfTriples
-
-                4 ->
-                    Just RunOfFourOfAKinds
-
-                5 ->
-                    Just RunOfFiveOfAKinds
-
-                6 ->
-                    Just RunOfSixOfAKinds
-
-                otherwise ->
-                    Nothing
-
-        otherwise ->
-            Nothing
+rangeHelp : Int -> Int -> List Int -> List Int
+rangeHelp lo hi list =
+    if lo <= hi then
+        rangeHelp lo (hi - 1) (hi :: list)
+    else
+        list
