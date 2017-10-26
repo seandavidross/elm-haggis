@@ -11,14 +11,14 @@ type alias Hand =
 
 collectSets : Hand -> List Set
 collectSets hand =
-    List.filterMap set (Haggis.Cards.subsets hand)
+    List.filterMap set (subsets hand)
 
 
 collectSequences : Hand -> List Sequence
 collectSequences hand =
     List.filterMap
         identity
-        (List.concatMap sequence (Haggis.Cards.subsets hand))
+        (List.concatMap sequence (subsets hand))
 
 
 collectBombs : Hand -> List Bomb
