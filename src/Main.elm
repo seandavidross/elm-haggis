@@ -1,53 +1,51 @@
 module Main exposing (..)
 
+import Haggis
 import Html
 import Html.App
 import Html.Attributes
 
-import Haggis
-
 
 type alias Model =
-  { is_on : Bool }
+    { is_on : Bool }
 
 
 initialize =
-  { is_on = True }
+    { is_on = True }
 
 
-update msg model = 
-  model
+update msg model =
+    model
 
 
 view model =
-  Html.div no_attributes
-    [ Html.div
-      [ Html.Attributes.style
-        [ ("background-color", "orange")
-        , ("width", "80px")
-        , ("height", "80px")
-        , ("border-radius", "6px")
-        , ("margin", "4px")
+    Html.div no_attributes
+        [ Html.div
+            [ Html.Attributes.style
+                [ ( "background-color", "orange" )
+                , ( "width", "80px" )
+                , ( "height", "80px" )
+                , ( "border-radius", "6px" )
+                , ( "margin", "4px" )
+                ]
+            ]
+            no_element
+        , Html.hr no_attributes no_element
+        , Html.pre no_attributes [ Html.text <| toString model ]
         ]
-      ]
-      no_element
-    , Html.hr no_attributes no_element
-    , Html.pre no_attributes [ Html.text <| toString model ]
-    ]
 
 
-no_attributes = 
-  []
+no_attributes =
+    []
 
 
 no_element =
-  []
-
+    []
 
 
 main =
-  Html.App.beginnerProgram
-    { model = initialize
-    , update = update
-    , view = view
-    }
+    Html.App.beginnerProgram
+        { model = initialize
+        , update = update
+        , view = view
+        }

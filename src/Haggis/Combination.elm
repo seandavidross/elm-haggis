@@ -1,17 +1,17 @@
 module Haggis.Combination
     exposing
-        ( Combination(..)
-        , Set(..)
+        ( Bomb(..)
+        , Combination(..)
         , Sequence(..)
-        , Bomb(..)
-        , set
-        , sequence
+        , Set(..)
         , bomb
+        , sequence
+        , set
         )
 
 import Haggis.Card exposing (..)
+import Haggis.Cards exposing (..)
 import List exposing (..)
-import List.Extra exposing (..)
 
 
 type Combination
@@ -31,8 +31,8 @@ type Set
     | EightOfAKind
 
 
-type alias ListOfSets =
-    List (List Card)
+type alias Sets =
+    List Cards
 
 
 type Sequence
@@ -57,21 +57,21 @@ type Bomb
 -- SET
 
 
-set : List Card -> Maybe Set
+set : Cards -> Maybe Set
 set cards =
     let
         ( spotcards, wildcards ) =
-            partition (isSpotCard) cards
+            partition isSpotCard cards
     in
-        if allSameRank spotcards then
-            makeSet cards
-        else if length wildcards == 1 && length cards == 1 then
-            Just Single
-        else
-            Nothing
+    if allSameRank spotcards then
+        makeSet cards
+    else if length wildcards == 1 && length cards == 1 then
+        Just Single
+    else
+        Nothing
 
 
-allSameRank : List Card -> Bool
+allSameRank : Cards -> Bool
 allSameRank cards =
     case cards of
         [] ->
@@ -81,7 +81,7 @@ allSameRank cards =
             all (equal first) rest
 
 
-makeSet : List Card -> Maybe Set
+makeSet : Cards -> Maybe Set
 makeSet cards =
     case length cards of
         1 ->
@@ -110,38 +110,38 @@ makeSet cards =
 -- BOMB
 
 
-bomb : List Card -> Maybe Bomb
+bomb : Cards -> Maybe Bomb
 bomb cards =
     let
         ranks =
-            cards |> sortBy (.order) |> map .rank
+            cards |> sortBy .order |> map .rank
     in
-        case ranks of
-            [ Jack, Queen ] ->
-                Just JQ
+    case ranks of
+        [ Jack, Queen ] ->
+            Just JQ
 
-            [ Jack, King ] ->
-                Just JK
+        [ Jack, King ] ->
+            Just JK
 
-            [ Queen, King ] ->
-                Just QK
+        [ Queen, King ] ->
+            Just QK
 
-            [ Jack, Queen, King ] ->
-                Just JQK
+        [ Jack, Queen, King ] ->
+            Just JQK
 
-            [ Three, Five, Seven, Nine ] ->
-                if allSameSuit cards then
-                    Just Suited
-                else if hasFourSuits cards then
-                    Just Rainbow
-                else
-                    Nothing
-
-            otherwise ->
+        [ Three, Five, Seven, Nine ] ->
+            if allSameSuit cards then
+                Just Suited
+            else if hasFourSuits cards then
+                Just Rainbow
+            else
                 Nothing
 
+        otherwise ->
+            Nothing
 
-allSameSuit : List Card -> Bool
+
+allSameSuit : Cards -> Bool
 allSameSuit cards =
     case cards of
         first :: rest ->
@@ -152,16 +152,16 @@ allSameSuit cards =
 
 
 hasSameSuit : Card -> Card -> Bool
-hasSameSuit card card' =
-    card.suit == card'.suit
+hasSameSuit card card_ =
+    card.suit == card_.suit
 
 
-hasFourSuits : List Card -> Bool
+hasFourSuits : Cards -> Bool
 hasFourSuits cards =
-    (countSuits cards) == 4
+    countSuits cards == 4
 
 
-countSuits : List Card -> Int
+countSuits : Cards -> Int
 countSuits cards =
     cards
         |> map .suit
@@ -173,48 +173,48 @@ countSuits cards =
 -}
 dropDuplicates : List Suit -> List Suit
 dropDuplicates suits =
-    dropDuplicates' [] suits
+    dropDuplicates_ [] suits
 
 
-dropDuplicates' : List Suit -> List Suit -> List Suit
-dropDuplicates' existing remaining =
+dropDuplicates_ : List Suit -> List Suit -> List Suit
+dropDuplicates_ existing remaining =
     case remaining of
         [] ->
             []
 
         first :: rest ->
             if List.member first existing then
-                dropDuplicates' existing rest
+                dropDuplicates_ existing rest
             else
-                first :: dropDuplicates' (first :: existing) rest
+                first :: dropDuplicates_ (first :: existing) rest
 
 
 
 -- SEQUENCE
 
 
-sequence : List Card -> List (Maybe Sequence)
+sequence : Cards -> List (Maybe Sequence)
 sequence cards =
     let
         ( spotcards, wildcards ) =
-            partition (isSpotCard) cards
+            partition isSpotCard cards
 
         sequenceWidths =
             range (countSuits spotcards) (countSuits cards)
     in
-        if length spotcards == 0 then
-            [ Nothing ]
-        else
-            sequenceWidths
-                |> map (maybeSequenceOfWidth cards)
-                |> keepJustSequences
+    if length spotcards == 0 then
+        [ Nothing ]
+    else
+        sequenceWidths
+            |> map (maybeSequenceOfWidth cards)
+            |> keepJustSequences
 
 
-maybeSequenceOfWidth : List Card -> Int -> Maybe Sequence
+maybeSequenceOfWidth : Cards -> Int -> Maybe Sequence
 maybeSequenceOfWidth cards sequenceWidth =
     let
         ( spotcards, wildcards ) =
-            partition (isSpotCard) cards
+            partition isSpotCard cards
 
         numberOfCards =
             length cards
@@ -231,17 +231,17 @@ maybeSequenceOfWidth cards sequenceWidth =
         ranks =
             range lowRank highRank
     in
-        if
-            hasEnoughCardsForSequenceWidth sequenceWidth numberOfCards
-                && (numberOfCards == (sequenceLength * sequenceWidth))
-                && canFormSequence sequenceWidth ranks cards
-        then
-            makeSequenceOfWidth sequenceWidth
-        else
-            Nothing
+    if
+        hasEnoughCardsForSequenceWidth sequenceWidth numberOfCards
+            && (numberOfCards == (sequenceLength * sequenceWidth))
+            && canFormSequence sequenceWidth ranks cards
+    then
+        makeSequenceOfWidth sequenceWidth
+    else
+        Nothing
 
 
-findLowestRank : List Card -> Ordinal
+findLowestRank : Cards -> Haggis.Card.Order
 findLowestRank cards =
     cards |> map .order |> minimum |> Maybe.withDefault 2
 
@@ -252,34 +252,34 @@ hasEnoughCardsForSequenceWidth sequenceWidth numberOfCards =
         || (sequenceWidth > 1 && numberOfCards >= sequenceWidth * 2)
 
 
-canFormSequence : Int -> List Int -> List Card -> Bool
+canFormSequence : Int -> List Int -> Cards -> Bool
 canFormSequence sequenceWidth ranks cards =
     let
         ( spotcards, wildcards ) =
-            partition (isSpotCard) cards
+            partition isSpotCard cards
 
         wildsNeedToCompleteSets =
-            wildsNeeded sequenceWidth (collectCardsWithRanks ranks cards)
+            countWildsNeeded sequenceWidth (collectCardsWithRanks ranks cards)
 
         wildsUsedAsNaturals =
             length (filter (\w -> member w.order ranks) wildcards)
     in
-        wildsNeedToCompleteSets == ((length wildcards) - wildsUsedAsNaturals)
+    wildsNeedToCompleteSets == (length wildcards - wildsUsedAsNaturals)
 
 
-wildsNeeded : Int -> ListOfSets -> Int
-wildsNeeded sizeOfSets sets =
-    sum (map (\set -> sizeOfSets - (length set)) sets)
+countWildsNeeded : Int -> Sets -> Int
+countWildsNeeded sizeOfSets sets =
+    sum (map (\set -> sizeOfSets - length set) sets)
 
 
-collectCardsWithRanks : List Int -> List Card -> ListOfSets
+collectCardsWithRanks : List Int -> Cards -> Sets
 collectCardsWithRanks ranks cards =
-    map (\rank -> (filter (\c -> c.order == rank) cards)) ranks
+    map (\rank -> filter (\c -> c.order == rank) cards) ranks
 
 
 makeSequenceOfWidth : Int -> Maybe Sequence
-makeSequenceOfWidth width' =
-    case width' of
+makeSequenceOfWidth width_ =
+    case width_ of
         1 ->
             Just RunOfSingles
 
@@ -306,14 +306,14 @@ keepJustSequences : List (Maybe Sequence) -> List (Maybe Sequence)
 keepJustSequences sequences =
     let
         justSequences =
-            filter (isSequence) sequences
+            filter isSequence sequences
     in
-        case justSequences of
-            [] ->
-                [ Nothing ]
+    case justSequences of
+        [] ->
+            [ Nothing ]
 
-            otherwise ->
-                justSequences
+        otherwise ->
+            justSequences
 
 
 isSequence : Maybe Sequence -> Bool

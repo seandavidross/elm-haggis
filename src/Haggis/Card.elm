@@ -4,7 +4,7 @@ module Haggis.Card exposing (..)
 type alias Card =
     { suit : Suit
     , rank : Rank
-    , order : Ordinal
+    , order : Order
     , points : Int
     }
 
@@ -33,13 +33,13 @@ type Rank
     | King
 
 
-type alias Ordinal =
+type alias Order =
     Int
 
 
 equal : Card -> Card -> Bool
-equal card card' =
-    card.order == card'.order
+equal card card_ =
+    card.order == card_.order
 
 
 {-| A "spot card" is a card game term for any card that is not
@@ -56,10 +56,10 @@ so, Suits need to be compareable. This seems like an instance
 where we could benefit from using Haskell-like typeclasses...
 -}
 compareSuits : Suit -> Suit -> Basics.Order
-compareSuits s s' =
+compareSuits s s_ =
     case s of
         Red ->
-            case s' of
+            case s_ of
                 Red ->
                     EQ
 
@@ -67,7 +67,7 @@ compareSuits s s' =
                     LT
 
         Orange ->
-            case s' of
+            case s_ of
                 Red ->
                     GT
 
@@ -78,7 +78,7 @@ compareSuits s s' =
                     LT
 
         Yellow ->
-            case s' of
+            case s_ of
                 Red ->
                     GT
 
@@ -92,7 +92,7 @@ compareSuits s s' =
                     LT
 
         Green ->
-            case s' of
+            case s_ of
                 Wild ->
                     LT
 
@@ -106,7 +106,7 @@ compareSuits s s' =
                     GT
 
         Blue ->
-            case s' of
+            case s_ of
                 Wild ->
                     LT
 

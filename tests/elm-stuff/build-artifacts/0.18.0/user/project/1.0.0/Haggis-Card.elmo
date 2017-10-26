@@ -1,0 +1,88 @@
+var _user$project$Haggis_Card$compareSuits = F2(
+	function (s, s_) {
+		var _p0 = s;
+		switch (_p0.ctor) {
+			case 'Red':
+				var _p1 = s_;
+				if (_p1.ctor === 'Red') {
+					return _elm_lang$core$Basics$EQ;
+				} else {
+					return _elm_lang$core$Basics$LT;
+				}
+			case 'Orange':
+				var _p2 = s_;
+				switch (_p2.ctor) {
+					case 'Red':
+						return _elm_lang$core$Basics$GT;
+					case 'Orange':
+						return _elm_lang$core$Basics$EQ;
+					default:
+						return _elm_lang$core$Basics$LT;
+				}
+			case 'Yellow':
+				var _p3 = s_;
+				switch (_p3.ctor) {
+					case 'Red':
+						return _elm_lang$core$Basics$GT;
+					case 'Orange':
+						return _elm_lang$core$Basics$GT;
+					case 'Yellow':
+						return _elm_lang$core$Basics$EQ;
+					default:
+						return _elm_lang$core$Basics$LT;
+				}
+			case 'Green':
+				var _p4 = s_;
+				switch (_p4.ctor) {
+					case 'Wild':
+						return _elm_lang$core$Basics$LT;
+					case 'Blue':
+						return _elm_lang$core$Basics$LT;
+					case 'Green':
+						return _elm_lang$core$Basics$EQ;
+					default:
+						return _elm_lang$core$Basics$GT;
+				}
+			case 'Blue':
+				var _p5 = s_;
+				switch (_p5.ctor) {
+					case 'Wild':
+						return _elm_lang$core$Basics$LT;
+					case 'Blue':
+						return _elm_lang$core$Basics$EQ;
+					default:
+						return _elm_lang$core$Basics$GT;
+				}
+			default:
+				return _elm_lang$core$Basics$GT;
+		}
+	});
+var _user$project$Haggis_Card$equal = F2(
+	function (card, card_) {
+		return _elm_lang$core$Native_Utils.eq(card.order, card_.order);
+	});
+var _user$project$Haggis_Card$Card = F4(
+	function (a, b, c, d) {
+		return {suit: a, rank: b, order: c, points: d};
+	});
+var _user$project$Haggis_Card$Wild = {ctor: 'Wild'};
+var _user$project$Haggis_Card$isSpotCard = function (card) {
+	return !_elm_lang$core$Native_Utils.eq(card.suit, _user$project$Haggis_Card$Wild);
+};
+var _user$project$Haggis_Card$Blue = {ctor: 'Blue'};
+var _user$project$Haggis_Card$Green = {ctor: 'Green'};
+var _user$project$Haggis_Card$Yellow = {ctor: 'Yellow'};
+var _user$project$Haggis_Card$Orange = {ctor: 'Orange'};
+var _user$project$Haggis_Card$Red = {ctor: 'Red'};
+var _user$project$Haggis_Card$King = {ctor: 'King'};
+var _user$project$Haggis_Card$Queen = {ctor: 'Queen'};
+var _user$project$Haggis_Card$Jack = {ctor: 'Jack'};
+var _user$project$Haggis_Card$Ten = {ctor: 'Ten'};
+var _user$project$Haggis_Card$Nine = {ctor: 'Nine'};
+var _user$project$Haggis_Card$Eight = {ctor: 'Eight'};
+var _user$project$Haggis_Card$Seven = {ctor: 'Seven'};
+var _user$project$Haggis_Card$Six = {ctor: 'Six'};
+var _user$project$Haggis_Card$Five = {ctor: 'Five'};
+var _user$project$Haggis_Card$Four = {ctor: 'Four'};
+var _user$project$Haggis_Card$Three = {ctor: 'Three'};
+var _user$project$Haggis_Card$Two = {ctor: 'Two'};

@@ -1,0 +1,47 @@
+var _user$project$Repl$t_s_o_l = {ctor: '_Tuple0'};
+var _user$project$Repl$hand = {
+	ctor: '::',
+	_0: 1,
+	_1: {
+		ctor: '::',
+		_0: 2,
+		_1: {
+			ctor: '::',
+			_0: 3,
+			_1: {
+				ctor: '::',
+				_0: 4,
+				_1: {
+					ctor: '::',
+					_0: 5,
+					_1: {
+						ctor: '::',
+						_0: 6,
+						_1: {
+							ctor: '::',
+							_0: 7,
+							_1: {
+								ctor: '::',
+								_0: 8,
+								_1: {
+									ctor: '::',
+									_0: 9,
+									_1: {
+										ctor: '::',
+										_0: 10,
+										_1: {
+											ctor: '::',
+											_0: 11,
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+};
+var _user$project$Repl$d_e_l_t_r_o_n_3_0_3_0 = _user$project$Repl$hand;

@@ -1,11 +1,13 @@
 module Tests exposing (..)
 
+import Expect exposing (..)
 import Haggis.Card exposing (..)
+import Haggis.Cards exposing (..)
 import Haggis.Combination exposing (..)
 import Test exposing (..)
-import Expect exposing (..)
 
 
+all : Test
 all =
     describe "Haggis"
         [ describe "Haggis.Card"
@@ -41,7 +43,9 @@ all =
                         Expect.equal (set [ blueTwo, redSeven ]) Nothing
                 , test "two matched number cards with one wild is a triple" <|
                     \() ->
-                        Expect.equal (set [ blueTwo, greenTwo, jack ]) (Just Triple)
+                        Expect.equal
+                            (set [ blueTwo, greenTwo, jack ])
+                            (Just Triple)
                 , test "two wild cards is NOT a pair" <|
                     \() ->
                         Expect.notEqual (set [ jack, queen ]) (Just Pair)
@@ -50,10 +54,14 @@ all =
                         Expect.equal (set [ jack ]) (Just Single)
                 , test "two matched spot cards plus three wilds is a five-of-a-kind" <|
                     \() ->
-                        Expect.equal (set [ blueTwo, greenTwo, jack, queen, king ]) (Just FiveOfAKind)
+                        Expect.equal
+                            (set [ blueTwo, greenTwo, jack, queen, king ])
+                            (Just FiveOfAKind)
                 , test "a pair of tens plus two wilds is a four-of-a-kind" <|
                     \() ->
-                        Expect.equal (set [ blueTen, greenTen, jack, king ]) (Just FourOfAKind)
+                        Expect.equal
+                            (set [ blueTen, greenTen, jack, king ])
+                            (Just FourOfAKind)
                 ]
             , describe "Haggis.Combination.Bomb"
                 [ test "one wild card is not a bomb" <|
@@ -68,18 +76,29 @@ all =
                 , test "three wild cards is a bomb" <|
                     \() ->
                         Expect.equal (bomb [ jack, queen, king ]) (Just JQK)
+                , test "three wild cards is not a set" <|
+                    \() ->
+                        Expect.equal (set [ jack, queen, king ]) Nothing
                 , test "four distinct, same-suited odd cards is a bomb" <|
                     \() ->
-                        Expect.equal (bomb [ redThree, redFive, redSeven, redNine ]) (Just Suited)
+                        Expect.equal
+                            (bomb [ redThree, redFive, redSeven, redNine ])
+                            (Just Suited)
                 , test "A suited bomb is a suited bomb regardless of card order" <|
                     \() ->
-                        Expect.equal (bomb [ redFive, redNine, redThree, redSeven ]) (Just Suited)
+                        Expect.equal
+                            (bomb [ redFive, redNine, redThree, redSeven ])
+                            (Just Suited)
                 , test "four distinct odd cards, with distinct suits, is a bomb" <|
                     \() ->
-                        Expect.equal (bomb [ blueThree, greenFive, redSeven, yellowNine ]) (Just Rainbow)
+                        Expect.equal
+                            (bomb [ blueThree, greenFive, redSeven, yellowNine ])
+                            (Just Rainbow)
                 , test "four distinct odd cards, with 2-3 suits, is a not bomb" <|
                     \() ->
-                        Expect.equal (bomb [ blueThree, redFive, redSeven, yellowNine ]) Nothing
+                        Expect.equal
+                            (bomb [ blueThree, redFive, redSeven, yellowNine ])
+                            Nothing
                 ]
             , describe "Haggis.Combination.Sequence"
                 [ test "empty set of cards is not a sequence" <|
@@ -87,55 +106,148 @@ all =
                         Expect.equal (sequence []) [ Nothing ]
                 , test "three consecutive singles is a sequence" <|
                     \() ->
-                        Expect.equal (sequence [ blueTwo, blueThree, blueFour ]) [ Just RunOfSingles ]
+                        Expect.equal
+                            (sequence [ blueTwo, blueThree, blueFour ])
+                            [ Just RunOfSingles ]
                 , test "three nonconsecutive singles is not a sequence" <|
                     \() ->
-                        Expect.equal (sequence [ blueTwo, blueThree, redThree ]) [ Nothing ]
+                        Expect.equal
+                            (sequence [ blueTwo, blueThree, redThree ])
+                            [ Nothing ]
                 , test "two consecutive singles is not a sequence" <|
                     \() ->
-                        Expect.equal (sequence [ blueTwo, blueThree ]) [ Nothing ]
+                        Expect.equal
+                            (sequence [ blueTwo, blueThree ])
+                            [ Nothing ]
                 , test "three wildcards is not a sequence" <|
                     \() ->
-                        Expect.equal (sequence [ jack, queen, king ]) [ Nothing ]
+                        Expect.equal
+                            (sequence [ jack, queen, king ])
+                            [ Nothing ]
                 , test "two consecutive pairs is a sequence" <|
                     \() ->
-                        Expect.equal (sequence [ blueTwo, greenTwo, blueThree, greenThree ]) [ Just RunOfPairs ]
+                        Expect.equal
+                            (sequence [ blueTwo, greenTwo, blueThree, greenThree ])
+                            [ Just RunOfPairs ]
                 , test "card order should not affect sequence identification" <|
                     \() ->
-                        Expect.equal (sequence [ greenTwo, blueThree, greenThree, blueTwo ]) [ Just RunOfPairs ]
+                        Expect.equal
+                            (sequence [ greenTwo, blueThree, greenThree, blueTwo ])
+                            [ Just RunOfPairs ]
                 , test "one spot card and two wildcards is a run of singles" <|
                     \() ->
-                        Expect.equal (sequence [ blueTwo, jack, king ]) [ Just RunOfSingles ]
+                        Expect.equal
+                            (sequence [ blueTwo, jack, king ])
+                            [ Just RunOfSingles ]
                 , test "a ten and three wildcards is a run of singles and a run of pairs" <|
                     \() ->
-                        Expect.equal (sequence [ blueTen, jack, queen, king ]) [ Just RunOfSingles, Just RunOfPairs ]
+                        Expect.equal
+                            (sequence [ blueTen, jack, queen, king ])
+                            [ Just RunOfSingles, Just RunOfPairs ]
                 , test "one wildcard can fill a one rank gap between two singles to form a run" <|
                     \() ->
-                        Expect.equal (sequence [ blueTwo, blueFour, king ]) [ Just RunOfSingles ]
+                        Expect.equal
+                            (sequence [ blueTwo, blueFour, king ])
+                            [ Just RunOfSingles ]
                 , test "one wildcard CANNOT fill a 2+ rank gap between two singles to form a run" <|
                     \() ->
-                        Expect.equal (sequence [ greenTwo, greenFive, king ]) [ Nothing ]
+                        Expect.equal
+                            (sequence [ greenTwo, greenFive, king ])
+                            [ Nothing ]
                 , test "two wildcards can fill a 2 rank gap between two singles to form a run" <|
                     \() ->
-                        Expect.equal (sequence [ greenTwo, greenFive, king, jack ]) [ Just RunOfSingles ]
+                        Expect.equal
+                            (sequence [ greenTwo, greenFive, king, jack ])
+                            [ Just RunOfSingles ]
                 , test "one spot card and three wildcards could be a run of singles or a run of pairs" <|
                     \() ->
-                        Expect.equal (sequence [ blueTwo, jack, queen, king ]) [ Just RunOfSingles, Just RunOfPairs ]
+                        Expect.equal
+                            (sequence [ blueTwo, jack, queen, king ])
+                            [ Just RunOfSingles, Just RunOfPairs ]
                 , test "wild card should sub for missing card in run of pairs" <|
                     \() ->
-                        Expect.equal (sequence [ blueTwo, greenTwo, jack, greenThree ]) [ Just RunOfPairs ]
+                        Expect.equal
+                            (sequence [ blueTwo, greenTwo, jack, greenThree ])
+                            [ Just RunOfPairs ]
                 , test "a pair of tens plus two wilds is a run of pairs (T-T-J-J)" <|
                     \() ->
-                        Expect.equal (sequence [ blueTen, greenTen, jack, king ]) [ Just RunOfPairs ]
+                        Expect.equal
+                            (sequence [ blueTen, greenTen, jack, king ])
+                            [ Just RunOfPairs ]
                 , test "can fill holes in run of pairs that is longer than 3 ranks" <|
                     \() ->
-                        Expect.equal (sequence [ blueTwo, greenTwo, blueThree, greenThree, blueFour, greenFive, jack, king ]) [ Just RunOfPairs ]
+                        Expect.equal
+                            (sequence [ blueTwo, greenTwo, blueThree, greenThree, blueFour, greenFive, jack, king ])
+                            [ Just RunOfPairs ]
                 , test "a consecutive single and a pair of spot cards, plus 3 wildcards, could be a run of pairs or a run of triples" <|
                     \() ->
-                        Expect.equal (sequence [ blueTwo, greenTwo, greenThree, jack, queen, king ]) [ Just RunOfPairs, Just RunOfTriples ]
+                        Expect.equal
+                            (sequence [ blueTwo, greenTwo, greenThree, jack, queen, king ])
+                            [ Just RunOfPairs, Just RunOfTriples ]
                 , test "two consecutive pairs and two wildcards could be a run of pairs or a run of triples" <|
                     \() ->
-                        Expect.equal (sequence [ blueTwo, blueThree, greenTwo, greenThree, jack, queen ]) [ Just RunOfPairs, Just RunOfTriples ]
+                        Expect.equal
+                            (sequence [ blueTwo, blueThree, greenTwo, greenThree, jack, queen ])
+                            [ Just RunOfPairs, Just RunOfTriples ]
+                ]
+            , describe "Haggis.Cards.subsets"
+                [ test "the subsets of no cards is a set containing the set with no cards" <|
+                    \() ->
+                        Expect.equal (subsets []) [ [] ]
+                , test "the subsets of one card is a set with no cards and a set with the one card" <|
+                    \() ->
+                        Expect.equal (subsets [ blueTwo ]) [ [ blueTwo ], [] ]
+                , test "the subsets of a pair is the pair, each of its singles, and the empty set" <|
+                    \() ->
+                        Expect.equal
+                            (subsets [ blueTwo, greenTwo ])
+                            [ [ blueTwo, greenTwo ], [ blueTwo ], [ greenTwo ], [] ]
+                , test "the subsets of 3 cards is the 3 cards, each card paired, each card alone, and the empty set" <|
+                    \() ->
+                        Expect.equal
+                            (subsets [ greenTwo, greenThree, jack ])
+                            [ [ greenTwo, greenThree, jack ]
+                            , [ greenTwo, greenThree ]
+                            , [ greenTwo, jack ]
+                            , [ greenTwo ]
+                            , [ greenThree, jack ]
+                            , [ greenThree ]
+                            , [ jack ]
+                            , []
+                            ]
+                , test "can find all sequences contained in a set of cards" <|
+                    \() ->
+                        Expect.equal
+                            (List.map sequence (subsets [ greenTwo, greenThree, jack ]))
+                            [ [ Just RunOfSingles ]
+                            , [ Nothing ]
+                            , [ Nothing ]
+                            , [ Nothing ]
+                            , [ Nothing ]
+                            , [ Nothing ]
+                            , [ Nothing ]
+                            , [ Nothing ]
+                            ]
+                , test "can find all sets contained in a set of cards" <|
+                    \() ->
+                        Expect.equal
+                            (List.filterMap set (subsets [ greenTwo, greenThree, jack ]))
+                            [ Pair
+                            , Single
+                            , Pair
+                            , Single
+                            , Single
+                            ]
+                , test "can find all bombs contained in a set of cards" <|
+                    \() ->
+                        Expect.equal
+                            (List.filterMap
+                                bomb
+                                (subsets [ redThree, greenThree, redFive, redSeven, orangeSeven, redNine, yellowNine ])
+                            )
+                            [ Suited
+                            , Rainbow
+                            ]
                 ]
             ]
         ]

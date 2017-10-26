@@ -1,0 +1,1564 @@
+var _user$project$Tests$king = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$King, order: 13, points: 5};
+var _user$project$Tests$queen = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$Queen, order: 12, points: 3};
+var _user$project$Tests$jack = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$Jack, order: 11, points: 2};
+var _user$project$Tests$greenTen = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Ten, order: 10, points: 0};
+var _user$project$Tests$blueTen = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Ten, order: 10, points: 0};
+var _user$project$Tests$yellowNine = {suit: _user$project$Haggis_Card$Yellow, rank: _user$project$Haggis_Card$Nine, order: 9, points: 1};
+var _user$project$Tests$redNine = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Nine, order: 9, points: 1};
+var _user$project$Tests$orangeSeven = {suit: _user$project$Haggis_Card$Orange, rank: _user$project$Haggis_Card$Seven, order: 7, points: 1};
+var _user$project$Tests$redSeven = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Seven, order: 7, points: 1};
+var _user$project$Tests$greenFive = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Five, order: 5, points: 1};
+var _user$project$Tests$redFive = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Five, order: 5, points: 1};
+var _user$project$Tests$blueFour = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Four, order: 4, points: 1};
+var _user$project$Tests$redThree = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Three, order: 3, points: 1};
+var _user$project$Tests$greenThree = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Three, order: 3, points: 1};
+var _user$project$Tests$blueThree = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Three, order: 3, points: 1};
+var _user$project$Tests$greenTwo = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Two, order: 2, points: 0};
+var _user$project$Tests$blueTwo = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Two, order: 2, points: 0};
+var _user$project$Tests$all = A2(
+	_elm_community$elm_test$Test$describe,
+	'Haggis',
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_community$elm_test$Test$describe,
+			'Haggis.Card',
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_community$elm_test$Test$test,
+					'new card has correct suit',
+					function (_p0) {
+						var _p1 = _p0;
+						return A2(_elm_community$elm_test$Expect$equal, _user$project$Tests$blueTwo.suit, _user$project$Haggis_Card$Blue);
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_community$elm_test$Test$test,
+						'new card has correct rank',
+						function (_p2) {
+							var _p3 = _p2;
+							return A2(_elm_community$elm_test$Expect$equal, _user$project$Tests$blueTwo.rank, _user$project$Haggis_Card$Two);
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_community$elm_test$Test$test,
+							'new card has correct points',
+							function (_p4) {
+								var _p5 = _p4;
+								return A2(_elm_community$elm_test$Expect$equal, _user$project$Tests$redSeven.points, 1);
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_community$elm_test$Test$test,
+								'card with lower rank less than card with higher rank',
+								function (_p6) {
+									var _p7 = _p6;
+									return A2(_elm_community$elm_test$Expect$lessThan, _user$project$Tests$redSeven.order, _user$project$Tests$blueTwo.order);
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_community$elm_test$Test$test,
+									'two cards with the same rank are equal',
+									function (_p8) {
+										var _p9 = _p8;
+										return A2(_elm_community$elm_test$Expect$equal, _user$project$Tests$blueTwo.order, _user$project$Tests$greenTwo.order);
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_community$elm_test$Test$test,
+										'non-matching single cards do not match',
+										function (_p10) {
+											var _p11 = _p10;
+											return A2(_elm_community$elm_test$Expect$notEqual, _user$project$Tests$blueTwo, _user$project$Tests$redSeven);
+										}),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			}),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_elm_community$elm_test$Test$describe,
+				'Haggis.Combination',
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_community$elm_test$Test$describe,
+						'Haggis.Combination.Set',
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_community$elm_test$Test$test,
+								'one card is a single',
+								function (_p12) {
+									var _p13 = _p12;
+									return A2(
+										_elm_community$elm_test$Expect$equal,
+										_user$project$Haggis_Combination$set(
+											{
+												ctor: '::',
+												_0: _user$project$Tests$redSeven,
+												_1: {ctor: '[]'}
+											}),
+										_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Single));
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_community$elm_test$Test$test,
+									'two cards of matching rank are a pair',
+									function (_p14) {
+										var _p15 = _p14;
+										return A2(
+											_elm_community$elm_test$Expect$equal,
+											_user$project$Haggis_Combination$set(
+												{
+													ctor: '::',
+													_0: _user$project$Tests$blueTwo,
+													_1: {
+														ctor: '::',
+														_0: _user$project$Tests$greenTwo,
+														_1: {ctor: '[]'}
+													}
+												}),
+											_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Pair));
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_community$elm_test$Test$test,
+										'two cards with unmatched ranks are not a combination',
+										function (_p16) {
+											var _p17 = _p16;
+											return A2(
+												_elm_community$elm_test$Expect$equal,
+												_user$project$Haggis_Combination$set(
+													{
+														ctor: '::',
+														_0: _user$project$Tests$blueTwo,
+														_1: {
+															ctor: '::',
+															_0: _user$project$Tests$redSeven,
+															_1: {ctor: '[]'}
+														}
+													}),
+												_elm_lang$core$Maybe$Nothing);
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_community$elm_test$Test$test,
+											'two matched number cards with one wild is a triple',
+											function (_p18) {
+												var _p19 = _p18;
+												return A2(
+													_elm_community$elm_test$Expect$equal,
+													_user$project$Haggis_Combination$set(
+														{
+															ctor: '::',
+															_0: _user$project$Tests$blueTwo,
+															_1: {
+																ctor: '::',
+																_0: _user$project$Tests$greenTwo,
+																_1: {
+																	ctor: '::',
+																	_0: _user$project$Tests$jack,
+																	_1: {ctor: '[]'}
+																}
+															}
+														}),
+													_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Triple));
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_community$elm_test$Test$test,
+												'two wild cards is NOT a pair',
+												function (_p20) {
+													var _p21 = _p20;
+													return A2(
+														_elm_community$elm_test$Expect$notEqual,
+														_user$project$Haggis_Combination$set(
+															{
+																ctor: '::',
+																_0: _user$project$Tests$jack,
+																_1: {
+																	ctor: '::',
+																	_0: _user$project$Tests$queen,
+																	_1: {ctor: '[]'}
+																}
+															}),
+														_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Pair));
+												}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_community$elm_test$Test$test,
+													'one wild card is a single',
+													function (_p22) {
+														var _p23 = _p22;
+														return A2(
+															_elm_community$elm_test$Expect$equal,
+															_user$project$Haggis_Combination$set(
+																{
+																	ctor: '::',
+																	_0: _user$project$Tests$jack,
+																	_1: {ctor: '[]'}
+																}),
+															_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Single));
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_elm_community$elm_test$Test$test,
+														'two matched spot cards plus three wilds is a five-of-a-kind',
+														function (_p24) {
+															var _p25 = _p24;
+															return A2(
+																_elm_community$elm_test$Expect$equal,
+																_user$project$Haggis_Combination$set(
+																	{
+																		ctor: '::',
+																		_0: _user$project$Tests$blueTwo,
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$Tests$greenTwo,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Tests$jack,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Tests$queen,
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Tests$king,
+																						_1: {ctor: '[]'}
+																					}
+																				}
+																			}
+																		}
+																	}),
+																_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$FiveOfAKind));
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_elm_community$elm_test$Test$test,
+															'a pair of tens plus two wilds is a four-of-a-kind',
+															function (_p26) {
+																var _p27 = _p26;
+																return A2(
+																	_elm_community$elm_test$Expect$equal,
+																	_user$project$Haggis_Combination$set(
+																		{
+																			ctor: '::',
+																			_0: _user$project$Tests$blueTen,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Tests$greenTen,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Tests$jack,
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Tests$king,
+																						_1: {ctor: '[]'}
+																					}
+																				}
+																			}
+																		}),
+																	_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$FourOfAKind));
+															}),
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_community$elm_test$Test$describe,
+							'Haggis.Combination.Bomb',
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_community$elm_test$Test$test,
+									'one wild card is not a bomb',
+									function (_p28) {
+										var _p29 = _p28;
+										return A2(
+											_elm_community$elm_test$Expect$equal,
+											_user$project$Haggis_Combination$bomb(
+												{
+													ctor: '::',
+													_0: _user$project$Tests$king,
+													_1: {ctor: '[]'}
+												}),
+											_elm_lang$core$Maybe$Nothing);
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_community$elm_test$Test$test,
+										'two wild cards is a bomb',
+										function (_p30) {
+											var _p31 = _p30;
+											return A2(
+												_elm_community$elm_test$Expect$equal,
+												_user$project$Haggis_Combination$bomb(
+													{
+														ctor: '::',
+														_0: _user$project$Tests$queen,
+														_1: {
+															ctor: '::',
+															_0: _user$project$Tests$king,
+															_1: {ctor: '[]'}
+														}
+													}),
+												_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$QK));
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_community$elm_test$Test$test,
+											'two wild cards is a bomb, order does not matter',
+											function (_p32) {
+												var _p33 = _p32;
+												return A2(
+													_elm_community$elm_test$Expect$equal,
+													_user$project$Haggis_Combination$bomb(
+														{
+															ctor: '::',
+															_0: _user$project$Tests$king,
+															_1: {
+																ctor: '::',
+																_0: _user$project$Tests$jack,
+																_1: {ctor: '[]'}
+															}
+														}),
+													_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$JK));
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_community$elm_test$Test$test,
+												'three wild cards is a bomb',
+												function (_p34) {
+													var _p35 = _p34;
+													return A2(
+														_elm_community$elm_test$Expect$equal,
+														_user$project$Haggis_Combination$bomb(
+															{
+																ctor: '::',
+																_0: _user$project$Tests$jack,
+																_1: {
+																	ctor: '::',
+																	_0: _user$project$Tests$queen,
+																	_1: {
+																		ctor: '::',
+																		_0: _user$project$Tests$king,
+																		_1: {ctor: '[]'}
+																	}
+																}
+															}),
+														_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$JQK));
+												}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_community$elm_test$Test$test,
+													'three wild cards is not a set',
+													function (_p36) {
+														var _p37 = _p36;
+														return A2(
+															_elm_community$elm_test$Expect$equal,
+															_user$project$Haggis_Combination$set(
+																{
+																	ctor: '::',
+																	_0: _user$project$Tests$jack,
+																	_1: {
+																		ctor: '::',
+																		_0: _user$project$Tests$queen,
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$Tests$king,
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																}),
+															_elm_lang$core$Maybe$Nothing);
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_elm_community$elm_test$Test$test,
+														'four distinct, same-suited odd cards is a bomb',
+														function (_p38) {
+															var _p39 = _p38;
+															return A2(
+																_elm_community$elm_test$Expect$equal,
+																_user$project$Haggis_Combination$bomb(
+																	{
+																		ctor: '::',
+																		_0: _user$project$Tests$redThree,
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$Tests$redFive,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Tests$redSeven,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Tests$redNine,
+																					_1: {ctor: '[]'}
+																				}
+																			}
+																		}
+																	}),
+																_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Suited));
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_elm_community$elm_test$Test$test,
+															'A suited bomb is a suited bomb regardless of card order',
+															function (_p40) {
+																var _p41 = _p40;
+																return A2(
+																	_elm_community$elm_test$Expect$equal,
+																	_user$project$Haggis_Combination$bomb(
+																		{
+																			ctor: '::',
+																			_0: _user$project$Tests$redFive,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Tests$redNine,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Tests$redThree,
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Tests$redSeven,
+																						_1: {ctor: '[]'}
+																					}
+																				}
+																			}
+																		}),
+																	_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Suited));
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_elm_community$elm_test$Test$test,
+																'four distinct odd cards, with distinct suits, is a bomb',
+																function (_p42) {
+																	var _p43 = _p42;
+																	return A2(
+																		_elm_community$elm_test$Expect$equal,
+																		_user$project$Haggis_Combination$bomb(
+																			{
+																				ctor: '::',
+																				_0: _user$project$Tests$blueThree,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Tests$greenFive,
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Tests$redSeven,
+																						_1: {
+																							ctor: '::',
+																							_0: _user$project$Tests$yellowNine,
+																							_1: {ctor: '[]'}
+																						}
+																					}
+																				}
+																			}),
+																		_elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Rainbow));
+																}),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_elm_community$elm_test$Test$test,
+																	'four distinct odd cards, with 2-3 suits, is a not bomb',
+																	function (_p44) {
+																		var _p45 = _p44;
+																		return A2(
+																			_elm_community$elm_test$Expect$equal,
+																			_user$project$Haggis_Combination$bomb(
+																				{
+																					ctor: '::',
+																					_0: _user$project$Tests$blueThree,
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Tests$redFive,
+																						_1: {
+																							ctor: '::',
+																							_0: _user$project$Tests$redSeven,
+																							_1: {
+																								ctor: '::',
+																								_0: _user$project$Tests$yellowNine,
+																								_1: {ctor: '[]'}
+																							}
+																						}
+																					}
+																				}),
+																			_elm_lang$core$Maybe$Nothing);
+																	}),
+																_1: {ctor: '[]'}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_community$elm_test$Test$describe,
+								'Haggis.Combination.Sequence',
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_community$elm_test$Test$test,
+										'empty set of cards is not a sequence',
+										function (_p46) {
+											var _p47 = _p46;
+											return A2(
+												_elm_community$elm_test$Expect$equal,
+												_user$project$Haggis_Combination$sequence(
+													{ctor: '[]'}),
+												{
+													ctor: '::',
+													_0: _elm_lang$core$Maybe$Nothing,
+													_1: {ctor: '[]'}
+												});
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_community$elm_test$Test$test,
+											'three consecutive singles is a sequence',
+											function (_p48) {
+												var _p49 = _p48;
+												return A2(
+													_elm_community$elm_test$Expect$equal,
+													_user$project$Haggis_Combination$sequence(
+														{
+															ctor: '::',
+															_0: _user$project$Tests$blueTwo,
+															_1: {
+																ctor: '::',
+																_0: _user$project$Tests$blueThree,
+																_1: {
+																	ctor: '::',
+																	_0: _user$project$Tests$blueFour,
+																	_1: {ctor: '[]'}
+																}
+															}
+														}),
+													{
+														ctor: '::',
+														_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles),
+														_1: {ctor: '[]'}
+													});
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_community$elm_test$Test$test,
+												'three nonconsecutive singles is not a sequence',
+												function (_p50) {
+													var _p51 = _p50;
+													return A2(
+														_elm_community$elm_test$Expect$equal,
+														_user$project$Haggis_Combination$sequence(
+															{
+																ctor: '::',
+																_0: _user$project$Tests$blueTwo,
+																_1: {
+																	ctor: '::',
+																	_0: _user$project$Tests$blueThree,
+																	_1: {
+																		ctor: '::',
+																		_0: _user$project$Tests$redThree,
+																		_1: {ctor: '[]'}
+																	}
+																}
+															}),
+														{
+															ctor: '::',
+															_0: _elm_lang$core$Maybe$Nothing,
+															_1: {ctor: '[]'}
+														});
+												}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_community$elm_test$Test$test,
+													'two consecutive singles is not a sequence',
+													function (_p52) {
+														var _p53 = _p52;
+														return A2(
+															_elm_community$elm_test$Expect$equal,
+															_user$project$Haggis_Combination$sequence(
+																{
+																	ctor: '::',
+																	_0: _user$project$Tests$blueTwo,
+																	_1: {
+																		ctor: '::',
+																		_0: _user$project$Tests$blueThree,
+																		_1: {ctor: '[]'}
+																	}
+																}),
+															{
+																ctor: '::',
+																_0: _elm_lang$core$Maybe$Nothing,
+																_1: {ctor: '[]'}
+															});
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_elm_community$elm_test$Test$test,
+														'three wildcards is not a sequence',
+														function (_p54) {
+															var _p55 = _p54;
+															return A2(
+																_elm_community$elm_test$Expect$equal,
+																_user$project$Haggis_Combination$sequence(
+																	{
+																		ctor: '::',
+																		_0: _user$project$Tests$jack,
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$Tests$queen,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Tests$king,
+																				_1: {ctor: '[]'}
+																			}
+																		}
+																	}),
+																{
+																	ctor: '::',
+																	_0: _elm_lang$core$Maybe$Nothing,
+																	_1: {ctor: '[]'}
+																});
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_elm_community$elm_test$Test$test,
+															'two consecutive pairs is a sequence',
+															function (_p56) {
+																var _p57 = _p56;
+																return A2(
+																	_elm_community$elm_test$Expect$equal,
+																	_user$project$Haggis_Combination$sequence(
+																		{
+																			ctor: '::',
+																			_0: _user$project$Tests$blueTwo,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Tests$greenTwo,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Tests$blueThree,
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Tests$greenThree,
+																						_1: {ctor: '[]'}
+																					}
+																				}
+																			}
+																		}),
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs),
+																		_1: {ctor: '[]'}
+																	});
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_elm_community$elm_test$Test$test,
+																'card order should not affect sequence identification',
+																function (_p58) {
+																	var _p59 = _p58;
+																	return A2(
+																		_elm_community$elm_test$Expect$equal,
+																		_user$project$Haggis_Combination$sequence(
+																			{
+																				ctor: '::',
+																				_0: _user$project$Tests$greenTwo,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Tests$blueThree,
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Tests$greenThree,
+																						_1: {
+																							ctor: '::',
+																							_0: _user$project$Tests$blueTwo,
+																							_1: {ctor: '[]'}
+																						}
+																					}
+																				}
+																			}),
+																		{
+																			ctor: '::',
+																			_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs),
+																			_1: {ctor: '[]'}
+																		});
+																}),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_elm_community$elm_test$Test$test,
+																	'one spot card and two wildcards is a run of singles',
+																	function (_p60) {
+																		var _p61 = _p60;
+																		return A2(
+																			_elm_community$elm_test$Expect$equal,
+																			_user$project$Haggis_Combination$sequence(
+																				{
+																					ctor: '::',
+																					_0: _user$project$Tests$blueTwo,
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Tests$jack,
+																						_1: {
+																							ctor: '::',
+																							_0: _user$project$Tests$king,
+																							_1: {ctor: '[]'}
+																						}
+																					}
+																				}),
+																			{
+																				ctor: '::',
+																				_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles),
+																				_1: {ctor: '[]'}
+																			});
+																	}),
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_elm_community$elm_test$Test$test,
+																		'a ten and three wildcards is a run of singles and a run of pairs',
+																		function (_p62) {
+																			var _p63 = _p62;
+																			return A2(
+																				_elm_community$elm_test$Expect$equal,
+																				_user$project$Haggis_Combination$sequence(
+																					{
+																						ctor: '::',
+																						_0: _user$project$Tests$blueTen,
+																						_1: {
+																							ctor: '::',
+																							_0: _user$project$Tests$jack,
+																							_1: {
+																								ctor: '::',
+																								_0: _user$project$Tests$queen,
+																								_1: {
+																									ctor: '::',
+																									_0: _user$project$Tests$king,
+																									_1: {ctor: '[]'}
+																								}
+																							}
+																						}
+																					}),
+																				{
+																					ctor: '::',
+																					_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles),
+																					_1: {
+																						ctor: '::',
+																						_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs),
+																						_1: {ctor: '[]'}
+																					}
+																				});
+																		}),
+																	_1: {
+																		ctor: '::',
+																		_0: A2(
+																			_elm_community$elm_test$Test$test,
+																			'one wildcard can fill a one rank gap between two singles to form a run',
+																			function (_p64) {
+																				var _p65 = _p64;
+																				return A2(
+																					_elm_community$elm_test$Expect$equal,
+																					_user$project$Haggis_Combination$sequence(
+																						{
+																							ctor: '::',
+																							_0: _user$project$Tests$blueTwo,
+																							_1: {
+																								ctor: '::',
+																								_0: _user$project$Tests$blueFour,
+																								_1: {
+																									ctor: '::',
+																									_0: _user$project$Tests$king,
+																									_1: {ctor: '[]'}
+																								}
+																							}
+																						}),
+																					{
+																						ctor: '::',
+																						_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles),
+																						_1: {ctor: '[]'}
+																					});
+																			}),
+																		_1: {
+																			ctor: '::',
+																			_0: A2(
+																				_elm_community$elm_test$Test$test,
+																				'one wildcard CANNOT fill a 2+ rank gap between two singles to form a run',
+																				function (_p66) {
+																					var _p67 = _p66;
+																					return A2(
+																						_elm_community$elm_test$Expect$equal,
+																						_user$project$Haggis_Combination$sequence(
+																							{
+																								ctor: '::',
+																								_0: _user$project$Tests$greenTwo,
+																								_1: {
+																									ctor: '::',
+																									_0: _user$project$Tests$greenFive,
+																									_1: {
+																										ctor: '::',
+																										_0: _user$project$Tests$king,
+																										_1: {ctor: '[]'}
+																									}
+																								}
+																							}),
+																						{
+																							ctor: '::',
+																							_0: _elm_lang$core$Maybe$Nothing,
+																							_1: {ctor: '[]'}
+																						});
+																				}),
+																			_1: {
+																				ctor: '::',
+																				_0: A2(
+																					_elm_community$elm_test$Test$test,
+																					'two wildcards can fill a 2 rank gap between two singles to form a run',
+																					function (_p68) {
+																						var _p69 = _p68;
+																						return A2(
+																							_elm_community$elm_test$Expect$equal,
+																							_user$project$Haggis_Combination$sequence(
+																								{
+																									ctor: '::',
+																									_0: _user$project$Tests$greenTwo,
+																									_1: {
+																										ctor: '::',
+																										_0: _user$project$Tests$greenFive,
+																										_1: {
+																											ctor: '::',
+																											_0: _user$project$Tests$king,
+																											_1: {
+																												ctor: '::',
+																												_0: _user$project$Tests$jack,
+																												_1: {ctor: '[]'}
+																											}
+																										}
+																									}
+																								}),
+																							{
+																								ctor: '::',
+																								_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles),
+																								_1: {ctor: '[]'}
+																							});
+																					}),
+																				_1: {
+																					ctor: '::',
+																					_0: A2(
+																						_elm_community$elm_test$Test$test,
+																						'one spot card and three wildcards could be a run of singles or a run of pairs',
+																						function (_p70) {
+																							var _p71 = _p70;
+																							return A2(
+																								_elm_community$elm_test$Expect$equal,
+																								_user$project$Haggis_Combination$sequence(
+																									{
+																										ctor: '::',
+																										_0: _user$project$Tests$blueTwo,
+																										_1: {
+																											ctor: '::',
+																											_0: _user$project$Tests$jack,
+																											_1: {
+																												ctor: '::',
+																												_0: _user$project$Tests$queen,
+																												_1: {
+																													ctor: '::',
+																													_0: _user$project$Tests$king,
+																													_1: {ctor: '[]'}
+																												}
+																											}
+																										}
+																									}),
+																								{
+																									ctor: '::',
+																									_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles),
+																									_1: {
+																										ctor: '::',
+																										_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs),
+																										_1: {ctor: '[]'}
+																									}
+																								});
+																						}),
+																					_1: {
+																						ctor: '::',
+																						_0: A2(
+																							_elm_community$elm_test$Test$test,
+																							'wild card should sub for missing card in run of pairs',
+																							function (_p72) {
+																								var _p73 = _p72;
+																								return A2(
+																									_elm_community$elm_test$Expect$equal,
+																									_user$project$Haggis_Combination$sequence(
+																										{
+																											ctor: '::',
+																											_0: _user$project$Tests$blueTwo,
+																											_1: {
+																												ctor: '::',
+																												_0: _user$project$Tests$greenTwo,
+																												_1: {
+																													ctor: '::',
+																													_0: _user$project$Tests$jack,
+																													_1: {
+																														ctor: '::',
+																														_0: _user$project$Tests$greenThree,
+																														_1: {ctor: '[]'}
+																													}
+																												}
+																											}
+																										}),
+																									{
+																										ctor: '::',
+																										_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs),
+																										_1: {ctor: '[]'}
+																									});
+																							}),
+																						_1: {
+																							ctor: '::',
+																							_0: A2(
+																								_elm_community$elm_test$Test$test,
+																								'a pair of tens plus two wilds is a run of pairs (T-T-J-J)',
+																								function (_p74) {
+																									var _p75 = _p74;
+																									return A2(
+																										_elm_community$elm_test$Expect$equal,
+																										_user$project$Haggis_Combination$sequence(
+																											{
+																												ctor: '::',
+																												_0: _user$project$Tests$blueTen,
+																												_1: {
+																													ctor: '::',
+																													_0: _user$project$Tests$greenTen,
+																													_1: {
+																														ctor: '::',
+																														_0: _user$project$Tests$jack,
+																														_1: {
+																															ctor: '::',
+																															_0: _user$project$Tests$king,
+																															_1: {ctor: '[]'}
+																														}
+																													}
+																												}
+																											}),
+																										{
+																											ctor: '::',
+																											_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs),
+																											_1: {ctor: '[]'}
+																										});
+																								}),
+																							_1: {
+																								ctor: '::',
+																								_0: A2(
+																									_elm_community$elm_test$Test$test,
+																									'can fill holes in run of pairs that is longer than 3 ranks',
+																									function (_p76) {
+																										var _p77 = _p76;
+																										return A2(
+																											_elm_community$elm_test$Expect$equal,
+																											_user$project$Haggis_Combination$sequence(
+																												{
+																													ctor: '::',
+																													_0: _user$project$Tests$blueTwo,
+																													_1: {
+																														ctor: '::',
+																														_0: _user$project$Tests$greenTwo,
+																														_1: {
+																															ctor: '::',
+																															_0: _user$project$Tests$blueThree,
+																															_1: {
+																																ctor: '::',
+																																_0: _user$project$Tests$greenThree,
+																																_1: {
+																																	ctor: '::',
+																																	_0: _user$project$Tests$blueFour,
+																																	_1: {
+																																		ctor: '::',
+																																		_0: _user$project$Tests$greenFive,
+																																		_1: {
+																																			ctor: '::',
+																																			_0: _user$project$Tests$jack,
+																																			_1: {
+																																				ctor: '::',
+																																				_0: _user$project$Tests$king,
+																																				_1: {ctor: '[]'}
+																																			}
+																																		}
+																																	}
+																																}
+																															}
+																														}
+																													}
+																												}),
+																											{
+																												ctor: '::',
+																												_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs),
+																												_1: {ctor: '[]'}
+																											});
+																									}),
+																								_1: {
+																									ctor: '::',
+																									_0: A2(
+																										_elm_community$elm_test$Test$test,
+																										'a consecutive single and a pair of spot cards, plus 3 wildcards, could be a run of pairs or a run of triples',
+																										function (_p78) {
+																											var _p79 = _p78;
+																											return A2(
+																												_elm_community$elm_test$Expect$equal,
+																												_user$project$Haggis_Combination$sequence(
+																													{
+																														ctor: '::',
+																														_0: _user$project$Tests$blueTwo,
+																														_1: {
+																															ctor: '::',
+																															_0: _user$project$Tests$greenTwo,
+																															_1: {
+																																ctor: '::',
+																																_0: _user$project$Tests$greenThree,
+																																_1: {
+																																	ctor: '::',
+																																	_0: _user$project$Tests$jack,
+																																	_1: {
+																																		ctor: '::',
+																																		_0: _user$project$Tests$queen,
+																																		_1: {
+																																			ctor: '::',
+																																			_0: _user$project$Tests$king,
+																																			_1: {ctor: '[]'}
+																																		}
+																																	}
+																																}
+																															}
+																														}
+																													}),
+																												{
+																													ctor: '::',
+																													_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs),
+																													_1: {
+																														ctor: '::',
+																														_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfTriples),
+																														_1: {ctor: '[]'}
+																													}
+																												});
+																										}),
+																									_1: {
+																										ctor: '::',
+																										_0: A2(
+																											_elm_community$elm_test$Test$test,
+																											'two consecutive pairs and two wildcards could be a run of pairs or a run of triples',
+																											function (_p80) {
+																												var _p81 = _p80;
+																												return A2(
+																													_elm_community$elm_test$Expect$equal,
+																													_user$project$Haggis_Combination$sequence(
+																														{
+																															ctor: '::',
+																															_0: _user$project$Tests$blueTwo,
+																															_1: {
+																																ctor: '::',
+																																_0: _user$project$Tests$blueThree,
+																																_1: {
+																																	ctor: '::',
+																																	_0: _user$project$Tests$greenTwo,
+																																	_1: {
+																																		ctor: '::',
+																																		_0: _user$project$Tests$greenThree,
+																																		_1: {
+																																			ctor: '::',
+																																			_0: _user$project$Tests$jack,
+																																			_1: {
+																																				ctor: '::',
+																																				_0: _user$project$Tests$queen,
+																																				_1: {ctor: '[]'}
+																																			}
+																																		}
+																																	}
+																																}
+																															}
+																														}),
+																													{
+																														ctor: '::',
+																														_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfPairs),
+																														_1: {
+																															ctor: '::',
+																															_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfTriples),
+																															_1: {ctor: '[]'}
+																														}
+																													});
+																											}),
+																										_1: {ctor: '[]'}
+																									}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_community$elm_test$Test$describe,
+									'Haggis.Cards.subsets',
+									{
+										ctor: '::',
+										_0: A2(
+											_elm_community$elm_test$Test$test,
+											'the subsets of no cards is a set containing the set with no cards',
+											function (_p82) {
+												var _p83 = _p82;
+												return A2(
+													_elm_community$elm_test$Expect$equal,
+													_user$project$Haggis_Cards$subsets(
+														{ctor: '[]'}),
+													{
+														ctor: '::',
+														_0: {ctor: '[]'},
+														_1: {ctor: '[]'}
+													});
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_community$elm_test$Test$test,
+												'the subsets of one card is a set with no cards and a set with the one card',
+												function (_p84) {
+													var _p85 = _p84;
+													return A2(
+														_elm_community$elm_test$Expect$equal,
+														_user$project$Haggis_Cards$subsets(
+															{
+																ctor: '::',
+																_0: _user$project$Tests$blueTwo,
+																_1: {ctor: '[]'}
+															}),
+														{
+															ctor: '::',
+															_0: {
+																ctor: '::',
+																_0: _user$project$Tests$blueTwo,
+																_1: {ctor: '[]'}
+															},
+															_1: {
+																ctor: '::',
+																_0: {ctor: '[]'},
+																_1: {ctor: '[]'}
+															}
+														});
+												}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_community$elm_test$Test$test,
+													'the subsets of a pair is the pair, each of its singles, and the empty set',
+													function (_p86) {
+														var _p87 = _p86;
+														return A2(
+															_elm_community$elm_test$Expect$equal,
+															_user$project$Haggis_Cards$subsets(
+																{
+																	ctor: '::',
+																	_0: _user$project$Tests$blueTwo,
+																	_1: {
+																		ctor: '::',
+																		_0: _user$project$Tests$greenTwo,
+																		_1: {ctor: '[]'}
+																	}
+																}),
+															{
+																ctor: '::',
+																_0: {
+																	ctor: '::',
+																	_0: _user$project$Tests$blueTwo,
+																	_1: {
+																		ctor: '::',
+																		_0: _user$project$Tests$greenTwo,
+																		_1: {ctor: '[]'}
+																	}
+																},
+																_1: {
+																	ctor: '::',
+																	_0: {
+																		ctor: '::',
+																		_0: _user$project$Tests$blueTwo,
+																		_1: {ctor: '[]'}
+																	},
+																	_1: {
+																		ctor: '::',
+																		_0: {
+																			ctor: '::',
+																			_0: _user$project$Tests$greenTwo,
+																			_1: {ctor: '[]'}
+																		},
+																		_1: {
+																			ctor: '::',
+																			_0: {ctor: '[]'},
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																}
+															});
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_elm_community$elm_test$Test$test,
+														'the subsets of 3 cards is the 3 cards, each card paired, each card alone, and the empty set',
+														function (_p88) {
+															var _p89 = _p88;
+															return A2(
+																_elm_community$elm_test$Expect$equal,
+																_user$project$Haggis_Cards$subsets(
+																	{
+																		ctor: '::',
+																		_0: _user$project$Tests$greenTwo,
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$Tests$greenThree,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Tests$jack,
+																				_1: {ctor: '[]'}
+																			}
+																		}
+																	}),
+																{
+																	ctor: '::',
+																	_0: {
+																		ctor: '::',
+																		_0: _user$project$Tests$greenTwo,
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$Tests$greenThree,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Tests$jack,
+																				_1: {ctor: '[]'}
+																			}
+																		}
+																	},
+																	_1: {
+																		ctor: '::',
+																		_0: {
+																			ctor: '::',
+																			_0: _user$project$Tests$greenTwo,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Tests$greenThree,
+																				_1: {ctor: '[]'}
+																			}
+																		},
+																		_1: {
+																			ctor: '::',
+																			_0: {
+																				ctor: '::',
+																				_0: _user$project$Tests$greenTwo,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Tests$jack,
+																					_1: {ctor: '[]'}
+																				}
+																			},
+																			_1: {
+																				ctor: '::',
+																				_0: {
+																					ctor: '::',
+																					_0: _user$project$Tests$greenTwo,
+																					_1: {ctor: '[]'}
+																				},
+																				_1: {
+																					ctor: '::',
+																					_0: {
+																						ctor: '::',
+																						_0: _user$project$Tests$greenThree,
+																						_1: {
+																							ctor: '::',
+																							_0: _user$project$Tests$jack,
+																							_1: {ctor: '[]'}
+																						}
+																					},
+																					_1: {
+																						ctor: '::',
+																						_0: {
+																							ctor: '::',
+																							_0: _user$project$Tests$greenThree,
+																							_1: {ctor: '[]'}
+																						},
+																						_1: {
+																							ctor: '::',
+																							_0: {
+																								ctor: '::',
+																								_0: _user$project$Tests$jack,
+																								_1: {ctor: '[]'}
+																							},
+																							_1: {
+																								ctor: '::',
+																								_0: {ctor: '[]'},
+																								_1: {ctor: '[]'}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																});
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_elm_community$elm_test$Test$test,
+															'can find all sequences contained in a set of cards',
+															function (_p90) {
+																var _p91 = _p90;
+																return A2(
+																	_elm_community$elm_test$Expect$equal,
+																	A2(
+																		_elm_lang$core$List$map,
+																		_user$project$Haggis_Combination$sequence,
+																		_user$project$Haggis_Cards$subsets(
+																			{
+																				ctor: '::',
+																				_0: _user$project$Tests$greenTwo,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Tests$greenThree,
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Tests$jack,
+																						_1: {ctor: '[]'}
+																					}
+																				}
+																			})),
+																	{
+																		ctor: '::',
+																		_0: {
+																			ctor: '::',
+																			_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles),
+																			_1: {ctor: '[]'}
+																		},
+																		_1: {
+																			ctor: '::',
+																			_0: {
+																				ctor: '::',
+																				_0: _elm_lang$core$Maybe$Nothing,
+																				_1: {ctor: '[]'}
+																			},
+																			_1: {
+																				ctor: '::',
+																				_0: {
+																					ctor: '::',
+																					_0: _elm_lang$core$Maybe$Nothing,
+																					_1: {ctor: '[]'}
+																				},
+																				_1: {
+																					ctor: '::',
+																					_0: {
+																						ctor: '::',
+																						_0: _elm_lang$core$Maybe$Nothing,
+																						_1: {ctor: '[]'}
+																					},
+																					_1: {
+																						ctor: '::',
+																						_0: {
+																							ctor: '::',
+																							_0: _elm_lang$core$Maybe$Nothing,
+																							_1: {ctor: '[]'}
+																						},
+																						_1: {
+																							ctor: '::',
+																							_0: {
+																								ctor: '::',
+																								_0: _elm_lang$core$Maybe$Nothing,
+																								_1: {ctor: '[]'}
+																							},
+																							_1: {
+																								ctor: '::',
+																								_0: {
+																									ctor: '::',
+																									_0: _elm_lang$core$Maybe$Nothing,
+																									_1: {ctor: '[]'}
+																								},
+																								_1: {
+																									ctor: '::',
+																									_0: {
+																										ctor: '::',
+																										_0: _elm_lang$core$Maybe$Nothing,
+																										_1: {ctor: '[]'}
+																									},
+																									_1: {ctor: '[]'}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	});
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_elm_community$elm_test$Test$test,
+																'can find all sets contained in a set of cards',
+																function (_p92) {
+																	var _p93 = _p92;
+																	return A2(
+																		_elm_community$elm_test$Expect$equal,
+																		A2(
+																			_elm_lang$core$List$filterMap,
+																			_user$project$Haggis_Combination$set,
+																			_user$project$Haggis_Cards$subsets(
+																				{
+																					ctor: '::',
+																					_0: _user$project$Tests$greenTwo,
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Tests$greenThree,
+																						_1: {
+																							ctor: '::',
+																							_0: _user$project$Tests$jack,
+																							_1: {ctor: '[]'}
+																						}
+																					}
+																				})),
+																		{
+																			ctor: '::',
+																			_0: _user$project$Haggis_Combination$Pair,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Haggis_Combination$Single,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Haggis_Combination$Pair,
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Haggis_Combination$Single,
+																						_1: {
+																							ctor: '::',
+																							_0: _user$project$Haggis_Combination$Single,
+																							_1: {ctor: '[]'}
+																						}
+																					}
+																				}
+																			}
+																		});
+																}),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_elm_community$elm_test$Test$test,
+																	'can find all bombs contained in a set of cards',
+																	function (_p94) {
+																		var _p95 = _p94;
+																		return A2(
+																			_elm_community$elm_test$Expect$equal,
+																			A2(
+																				_elm_lang$core$List$filterMap,
+																				_user$project$Haggis_Combination$bomb,
+																				_user$project$Haggis_Cards$subsets(
+																					{
+																						ctor: '::',
+																						_0: _user$project$Tests$redThree,
+																						_1: {
+																							ctor: '::',
+																							_0: _user$project$Tests$greenThree,
+																							_1: {
+																								ctor: '::',
+																								_0: _user$project$Tests$redFive,
+																								_1: {
+																									ctor: '::',
+																									_0: _user$project$Tests$redSeven,
+																									_1: {
+																										ctor: '::',
+																										_0: _user$project$Tests$orangeSeven,
+																										_1: {
+																											ctor: '::',
+																											_0: _user$project$Tests$redNine,
+																											_1: {
+																												ctor: '::',
+																												_0: _user$project$Tests$yellowNine,
+																												_1: {ctor: '[]'}
+																											}
+																										}
+																									}
+																								}
+																							}
+																						}
+																					})),
+																			{
+																				ctor: '::',
+																				_0: _user$project$Haggis_Combination$Suited,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Haggis_Combination$Rainbow,
+																					_1: {ctor: '[]'}
+																				}
+																			});
+																	}),
+																_1: {ctor: '[]'}
+															}
+														}
+													}
+												}
+											}
+										}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}),
+			_1: {ctor: '[]'}
+		}
+	});
