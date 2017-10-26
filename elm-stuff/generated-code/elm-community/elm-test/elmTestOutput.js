@@ -12653,6 +12653,28 @@ var _user$project$Haggis_Combination$bomb = function (cards) {
 	return _elm_lang$core$Maybe$Nothing;
 };
 
+var _user$project$Haggis_Hand$collectBombs = function (hand) {
+	return A2(
+		_elm_lang$core$List$filterMap,
+		_user$project$Haggis_Combination$bomb,
+		_user$project$Haggis_Cards$subsets(hand));
+};
+var _user$project$Haggis_Hand$collectSequences = function (hand) {
+	return A2(
+		_elm_lang$core$List$filterMap,
+		_elm_lang$core$Basics$identity,
+		A2(
+			_elm_lang$core$List$concatMap,
+			_user$project$Haggis_Combination$sequence,
+			_user$project$Haggis_Cards$subsets(hand)));
+};
+var _user$project$Haggis_Hand$collectSets = function (hand) {
+	return A2(
+		_elm_lang$core$List$filterMap,
+		_user$project$Haggis_Combination$set,
+		_user$project$Haggis_Cards$subsets(hand));
+};
+
 var _user$project$Native_RunTest = (function() {
   return {
     runThunk: function(thunk) {
@@ -14038,10 +14060,36 @@ var _user$project$Tests$all = A2(
 																var _p91 = _p90;
 																return A2(
 																	_elm_community$elm_test$Expect$equal,
-																	A2(
-																		_elm_lang$core$List$map,
-																		_user$project$Haggis_Combination$sequence,
-																		_user$project$Haggis_Cards$subsets(
+																	_user$project$Haggis_Hand$collectSequences(
+																		{
+																			ctor: '::',
+																			_0: _user$project$Tests$greenTwo,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Tests$greenThree,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Tests$jack,
+																					_1: {ctor: '[]'}
+																				}
+																			}
+																		}),
+																	{
+																		ctor: '::',
+																		_0: _user$project$Haggis_Combination$RunOfSingles,
+																		_1: {ctor: '[]'}
+																	});
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_elm_community$elm_test$Test$test,
+																'can find all sets contained in a set of cards',
+																function (_p92) {
+																	var _p93 = _p92;
+																	return A2(
+																		_elm_community$elm_test$Expect$equal,
+																		_user$project$Haggis_Hand$collectSets(
 																			{
 																				ctor: '::',
 																				_0: _user$project$Tests$greenTwo,
@@ -14054,99 +14102,7 @@ var _user$project$Tests$all = A2(
 																						_1: {ctor: '[]'}
 																					}
 																				}
-																			})),
-																	{
-																		ctor: '::',
-																		_0: {
-																			ctor: '::',
-																			_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles),
-																			_1: {ctor: '[]'}
-																		},
-																		_1: {
-																			ctor: '::',
-																			_0: {
-																				ctor: '::',
-																				_0: _elm_lang$core$Maybe$Nothing,
-																				_1: {ctor: '[]'}
-																			},
-																			_1: {
-																				ctor: '::',
-																				_0: {
-																					ctor: '::',
-																					_0: _elm_lang$core$Maybe$Nothing,
-																					_1: {ctor: '[]'}
-																				},
-																				_1: {
-																					ctor: '::',
-																					_0: {
-																						ctor: '::',
-																						_0: _elm_lang$core$Maybe$Nothing,
-																						_1: {ctor: '[]'}
-																					},
-																					_1: {
-																						ctor: '::',
-																						_0: {
-																							ctor: '::',
-																							_0: _elm_lang$core$Maybe$Nothing,
-																							_1: {ctor: '[]'}
-																						},
-																						_1: {
-																							ctor: '::',
-																							_0: {
-																								ctor: '::',
-																								_0: _elm_lang$core$Maybe$Nothing,
-																								_1: {ctor: '[]'}
-																							},
-																							_1: {
-																								ctor: '::',
-																								_0: {
-																									ctor: '::',
-																									_0: _elm_lang$core$Maybe$Nothing,
-																									_1: {ctor: '[]'}
-																								},
-																								_1: {
-																									ctor: '::',
-																									_0: {
-																										ctor: '::',
-																										_0: _elm_lang$core$Maybe$Nothing,
-																										_1: {ctor: '[]'}
-																									},
-																									_1: {ctor: '[]'}
-																								}
-																							}
-																						}
-																					}
-																				}
-																			}
-																		}
-																	});
-															}),
-														_1: {
-															ctor: '::',
-															_0: A2(
-																_elm_community$elm_test$Test$test,
-																'can find all sets contained in a set of cards',
-																function (_p92) {
-																	var _p93 = _p92;
-																	return A2(
-																		_elm_community$elm_test$Expect$equal,
-																		A2(
-																			_elm_lang$core$List$filterMap,
-																			_user$project$Haggis_Combination$set,
-																			_user$project$Haggis_Cards$subsets(
-																				{
-																					ctor: '::',
-																					_0: _user$project$Tests$greenTwo,
-																					_1: {
-																						ctor: '::',
-																						_0: _user$project$Tests$greenThree,
-																						_1: {
-																							ctor: '::',
-																							_0: _user$project$Tests$jack,
-																							_1: {ctor: '[]'}
-																						}
-																					}
-																				})),
+																			}),
 																		{
 																			ctor: '::',
 																			_0: _user$project$Haggis_Combination$Pair,
@@ -14178,39 +14134,36 @@ var _user$project$Tests$all = A2(
 																		var _p95 = _p94;
 																		return A2(
 																			_elm_community$elm_test$Expect$equal,
-																			A2(
-																				_elm_lang$core$List$filterMap,
-																				_user$project$Haggis_Combination$bomb,
-																				_user$project$Haggis_Cards$subsets(
-																					{
+																			_user$project$Haggis_Hand$collectBombs(
+																				{
+																					ctor: '::',
+																					_0: _user$project$Tests$redThree,
+																					_1: {
 																						ctor: '::',
-																						_0: _user$project$Tests$redThree,
+																						_0: _user$project$Tests$greenThree,
 																						_1: {
 																							ctor: '::',
-																							_0: _user$project$Tests$greenThree,
+																							_0: _user$project$Tests$redFive,
 																							_1: {
 																								ctor: '::',
-																								_0: _user$project$Tests$redFive,
+																								_0: _user$project$Tests$redSeven,
 																								_1: {
 																									ctor: '::',
-																									_0: _user$project$Tests$redSeven,
+																									_0: _user$project$Tests$orangeSeven,
 																									_1: {
 																										ctor: '::',
-																										_0: _user$project$Tests$orangeSeven,
+																										_0: _user$project$Tests$redNine,
 																										_1: {
 																											ctor: '::',
-																											_0: _user$project$Tests$redNine,
-																											_1: {
-																												ctor: '::',
-																												_0: _user$project$Tests$yellowNine,
-																												_1: {ctor: '[]'}
-																											}
+																											_0: _user$project$Tests$yellowNine,
+																											_1: {ctor: '[]'}
 																										}
 																									}
 																								}
 																							}
 																						}
-																					})),
+																					}
+																				}),
 																			{
 																				ctor: '::',
 																				_0: _user$project$Haggis_Combination$Suited,
@@ -16731,13 +16684,13 @@ var _user$project$Test_Runner_Node$runWithOptions = function (options) {
 		});
 };
 
-var _user$project$Test_Generated_Main166733720$main = A2(
+var _user$project$Test_Generated_Main45040372$main = A2(
 	_user$project$Test_Runner_Node$runWithOptions,
 	{
 		runs: _elm_lang$core$Maybe$Nothing,
 		report: _user$project$Test_Reporter_Reporter$ConsoleReport(_user$project$Console_Text$UseColor),
 		seed: _elm_lang$core$Maybe$Nothing,
-		processes: 8,
+		processes: 2,
 		paths: {ctor: '[]'}
 	},
 	_elm_community$elm_test$Test$concat(
@@ -16757,9 +16710,9 @@ var _user$project$Test_Generated_Main166733720$main = A2(
 var Elm = {};
 Elm['Test'] = Elm['Test'] || {};
 Elm['Test']['Generated'] = Elm['Test']['Generated'] || {};
-Elm['Test']['Generated']['Main166733720'] = Elm['Test']['Generated']['Main166733720'] || {};
-if (typeof _user$project$Test_Generated_Main166733720$main !== 'undefined') {
-    _user$project$Test_Generated_Main166733720$main(Elm['Test']['Generated']['Main166733720'], 'Test.Generated.Main166733720', undefined);
+Elm['Test']['Generated']['Main45040372'] = Elm['Test']['Generated']['Main45040372'] || {};
+if (typeof _user$project$Test_Generated_Main45040372$main !== 'undefined') {
+    _user$project$Test_Generated_Main45040372$main(Elm['Test']['Generated']['Main45040372'], 'Test.Generated.Main45040372', undefined);
 }
 
 if (typeof define === "function" && define['amd'])

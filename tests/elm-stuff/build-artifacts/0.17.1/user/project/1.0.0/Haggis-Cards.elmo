@@ -1,0 +1,22 @@
+var _user$project$Haggis_Cards$subsets = function (cards) {
+	var _p0 = cards;
+	if (_p0.ctor === '[]') {
+		return _elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$core$Native_List.fromArray(
+				[])
+			]);
+	} else {
+		var _p1 = _p0._1;
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			A2(
+				_elm_lang$core$List$map,
+				F2(
+					function (x, y) {
+						return A2(_elm_lang$core$List_ops['::'], x, y);
+					})(_p0._0),
+				_user$project$Haggis_Cards$subsets(_p1)),
+			_user$project$Haggis_Cards$subsets(_p1));
+	}
+};

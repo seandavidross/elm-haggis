@@ -1363,10 +1363,36 @@ var _user$project$Tests$all = A2(
 																var _p91 = _p90;
 																return A2(
 																	_elm_community$elm_test$Expect$equal,
-																	A2(
-																		_elm_lang$core$List$map,
-																		_user$project$Haggis_Combination$sequence,
-																		_user$project$Haggis_Cards$subsets(
+																	_user$project$Haggis_Hand$collectSequences(
+																		{
+																			ctor: '::',
+																			_0: _user$project$Tests$greenTwo,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Tests$greenThree,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Tests$jack,
+																					_1: {ctor: '[]'}
+																				}
+																			}
+																		}),
+																	{
+																		ctor: '::',
+																		_0: _user$project$Haggis_Combination$RunOfSingles,
+																		_1: {ctor: '[]'}
+																	});
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_elm_community$elm_test$Test$test,
+																'can find all sets contained in a set of cards',
+																function (_p92) {
+																	var _p93 = _p92;
+																	return A2(
+																		_elm_community$elm_test$Expect$equal,
+																		_user$project$Haggis_Hand$collectSets(
 																			{
 																				ctor: '::',
 																				_0: _user$project$Tests$greenTwo,
@@ -1379,99 +1405,7 @@ var _user$project$Tests$all = A2(
 																						_1: {ctor: '[]'}
 																					}
 																				}
-																			})),
-																	{
-																		ctor: '::',
-																		_0: {
-																			ctor: '::',
-																			_0: _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$RunOfSingles),
-																			_1: {ctor: '[]'}
-																		},
-																		_1: {
-																			ctor: '::',
-																			_0: {
-																				ctor: '::',
-																				_0: _elm_lang$core$Maybe$Nothing,
-																				_1: {ctor: '[]'}
-																			},
-																			_1: {
-																				ctor: '::',
-																				_0: {
-																					ctor: '::',
-																					_0: _elm_lang$core$Maybe$Nothing,
-																					_1: {ctor: '[]'}
-																				},
-																				_1: {
-																					ctor: '::',
-																					_0: {
-																						ctor: '::',
-																						_0: _elm_lang$core$Maybe$Nothing,
-																						_1: {ctor: '[]'}
-																					},
-																					_1: {
-																						ctor: '::',
-																						_0: {
-																							ctor: '::',
-																							_0: _elm_lang$core$Maybe$Nothing,
-																							_1: {ctor: '[]'}
-																						},
-																						_1: {
-																							ctor: '::',
-																							_0: {
-																								ctor: '::',
-																								_0: _elm_lang$core$Maybe$Nothing,
-																								_1: {ctor: '[]'}
-																							},
-																							_1: {
-																								ctor: '::',
-																								_0: {
-																									ctor: '::',
-																									_0: _elm_lang$core$Maybe$Nothing,
-																									_1: {ctor: '[]'}
-																								},
-																								_1: {
-																									ctor: '::',
-																									_0: {
-																										ctor: '::',
-																										_0: _elm_lang$core$Maybe$Nothing,
-																										_1: {ctor: '[]'}
-																									},
-																									_1: {ctor: '[]'}
-																								}
-																							}
-																						}
-																					}
-																				}
-																			}
-																		}
-																	});
-															}),
-														_1: {
-															ctor: '::',
-															_0: A2(
-																_elm_community$elm_test$Test$test,
-																'can find all sets contained in a set of cards',
-																function (_p92) {
-																	var _p93 = _p92;
-																	return A2(
-																		_elm_community$elm_test$Expect$equal,
-																		A2(
-																			_elm_lang$core$List$filterMap,
-																			_user$project$Haggis_Combination$set,
-																			_user$project$Haggis_Cards$subsets(
-																				{
-																					ctor: '::',
-																					_0: _user$project$Tests$greenTwo,
-																					_1: {
-																						ctor: '::',
-																						_0: _user$project$Tests$greenThree,
-																						_1: {
-																							ctor: '::',
-																							_0: _user$project$Tests$jack,
-																							_1: {ctor: '[]'}
-																						}
-																					}
-																				})),
+																			}),
 																		{
 																			ctor: '::',
 																			_0: _user$project$Haggis_Combination$Pair,
@@ -1503,39 +1437,36 @@ var _user$project$Tests$all = A2(
 																		var _p95 = _p94;
 																		return A2(
 																			_elm_community$elm_test$Expect$equal,
-																			A2(
-																				_elm_lang$core$List$filterMap,
-																				_user$project$Haggis_Combination$bomb,
-																				_user$project$Haggis_Cards$subsets(
-																					{
+																			_user$project$Haggis_Hand$collectBombs(
+																				{
+																					ctor: '::',
+																					_0: _user$project$Tests$redThree,
+																					_1: {
 																						ctor: '::',
-																						_0: _user$project$Tests$redThree,
+																						_0: _user$project$Tests$greenThree,
 																						_1: {
 																							ctor: '::',
-																							_0: _user$project$Tests$greenThree,
+																							_0: _user$project$Tests$redFive,
 																							_1: {
 																								ctor: '::',
-																								_0: _user$project$Tests$redFive,
+																								_0: _user$project$Tests$redSeven,
 																								_1: {
 																									ctor: '::',
-																									_0: _user$project$Tests$redSeven,
+																									_0: _user$project$Tests$orangeSeven,
 																									_1: {
 																										ctor: '::',
-																										_0: _user$project$Tests$orangeSeven,
+																										_0: _user$project$Tests$redNine,
 																										_1: {
 																											ctor: '::',
-																											_0: _user$project$Tests$redNine,
-																											_1: {
-																												ctor: '::',
-																												_0: _user$project$Tests$yellowNine,
-																												_1: {ctor: '[]'}
-																											}
+																											_0: _user$project$Tests$yellowNine,
+																											_1: {ctor: '[]'}
 																										}
 																									}
 																								}
 																							}
 																						}
-																					})),
+																					}
+																				}),
 																			{
 																				ctor: '::',
 																				_0: _user$project$Haggis_Combination$Suited,

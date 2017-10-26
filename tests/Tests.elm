@@ -4,6 +4,7 @@ import Expect exposing (..)
 import Haggis.Card exposing (..)
 import Haggis.Cards exposing (..)
 import Haggis.Combination exposing (..)
+import Haggis.Hand exposing (..)
 import Test exposing (..)
 
 
@@ -218,20 +219,12 @@ all =
                 , test "can find all sequences contained in a set of cards" <|
                     \() ->
                         Expect.equal
-                            (List.map sequence (subsets [ greenTwo, greenThree, jack ]))
-                            [ [ Just RunOfSingles ]
-                            , [ Nothing ]
-                            , [ Nothing ]
-                            , [ Nothing ]
-                            , [ Nothing ]
-                            , [ Nothing ]
-                            , [ Nothing ]
-                            , [ Nothing ]
-                            ]
+                            (Haggis.Hand.collectSequences [ greenTwo, greenThree, jack ])
+                            [ RunOfSingles ]
                 , test "can find all sets contained in a set of cards" <|
                     \() ->
                         Expect.equal
-                            (List.filterMap set (subsets [ greenTwo, greenThree, jack ]))
+                            (Haggis.Hand.collectSets [ greenTwo, greenThree, jack ])
                             [ Pair
                             , Single
                             , Pair
@@ -241,13 +234,32 @@ all =
                 , test "can find all bombs contained in a set of cards" <|
                     \() ->
                         Expect.equal
-                            (List.filterMap
-                                bomb
-                                (subsets [ redThree, greenThree, redFive, redSeven, orangeSeven, redNine, yellowNine ])
+                            (Haggis.Hand.collectBombs
+                                [ redThree, greenThree, redFive, redSeven, orangeSeven, redNine, yellowNine ]
                             )
-                            [ Suited
-                            , Rainbow
-                            ]
+                            [ Suited, Rainbow ]
+
+                -- , test "can find all combinations contained in a set of cards" <|
+                --     \() ->
+                --         Expect.equal
+                --             (Haggis.Hand.collectCombinations
+                --                 [ blueTwo
+                --                 , greenTwo
+                --                 , blueThree
+                --                 , redThree
+                --                 , greenThree
+                --                 , blueFour
+                --                 , redFive
+                --                 , greenFive
+                --                 , redSeven
+                --                 , orangeSeven
+                --                 , redNine
+                --                 , yellowNine
+                --                 , blueTen
+                --                 , greenTen
+                --                 ]
+                --             )
+                --             [ Pair, RunOfSingles, Suited, Rainbow ]
                 ]
             ]
         ]
