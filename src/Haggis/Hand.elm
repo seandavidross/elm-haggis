@@ -9,12 +9,12 @@ type alias Hand =
     Cards
 
 
-collectSets : Hand -> List Set
+collectSets : Hand -> List (Set Rank)
 collectSets hand =
     List.filterMap set (subsets hand)
 
 
-collectSequences : Hand -> List Sequence
+collectSequences : Hand -> List (Sequence Int Haggis.Card.Order)
 collectSequences hand =
     List.filterMap
         identity
@@ -24,10 +24,3 @@ collectSequences hand =
 collectBombs : Hand -> List Bomb
 collectBombs hand =
     List.filterMap bomb (subsets hand)
-
-
-
--- collectCombinations : hand -> List Combination
--- collectCombinations hand =
---     (collectSets hand)
---++ (collectSequences hand) ++ (collectBombs hand)

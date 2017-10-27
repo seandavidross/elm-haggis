@@ -35,10 +35,10 @@ all =
             [ describe "Haggis.Combination.Set"
                 [ test "one card is a single" <|
                     \() ->
-                        Expect.equal (set [ redSeven ]) (Just Single)
+                        Expect.equal (set [ redSeven ]) (Just (Single Seven))
                 , test "two cards of matching rank are a pair" <|
                     \() ->
-                        Expect.equal (set [ blueTwo, greenTwo ]) (Just Pair)
+                        Expect.equal (set [ blueTwo, greenTwo ]) (Just (Pair Two))
                 , test "two cards with unmatched ranks are not a combination" <|
                     \() ->
                         Expect.equal (set [ blueTwo, redSeven ]) Nothing
@@ -46,23 +46,23 @@ all =
                     \() ->
                         Expect.equal
                             (set [ blueTwo, greenTwo, jack ])
-                            (Just Triple)
+                            (Just (Triple Two))
                 , test "two wild cards is NOT a pair" <|
                     \() ->
-                        Expect.notEqual (set [ jack, queen ]) (Just Pair)
+                        Expect.notEqual (set [ jack, queen ]) (Just (Pair Jack))
                 , test "one wild card is a single" <|
                     \() ->
-                        Expect.equal (set [ jack ]) (Just Single)
+                        Expect.equal (set [ jack ]) (Just (Single Jack))
                 , test "two matched spot cards plus three wilds is a five-of-a-kind" <|
                     \() ->
                         Expect.equal
                             (set [ blueTwo, greenTwo, jack, queen, king ])
-                            (Just FiveOfAKind)
+                            (Just (FiveOfAKind Two))
                 , test "a pair of tens plus two wilds is a four-of-a-kind" <|
                     \() ->
                         Expect.equal
                             (set [ blueTen, greenTen, jack, king ])
-                            (Just FourOfAKind)
+                            (Just (FourOfAKind Ten))
                 ]
             , describe "Haggis.Combination.Bomb"
                 [ test "one wild card is not a bomb" <|
@@ -109,7 +109,7 @@ all =
                     \() ->
                         Expect.equal
                             (sequence [ blueTwo, blueThree, blueFour ])
-                            [ Just RunOfSingles ]
+                            [ Just (RunOfSingles 3 4) ]
                 , test "three nonconsecutive singles is not a sequence" <|
                     \() ->
                         Expect.equal
@@ -129,27 +129,27 @@ all =
                     \() ->
                         Expect.equal
                             (sequence [ blueTwo, greenTwo, blueThree, greenThree ])
-                            [ Just RunOfPairs ]
+                            [ Just (RunOfPairs 2 3) ]
                 , test "card order should not affect sequence identification" <|
                     \() ->
                         Expect.equal
                             (sequence [ greenTwo, blueThree, greenThree, blueTwo ])
-                            [ Just RunOfPairs ]
+                            [ Just (RunOfPairs 2 3) ]
                 , test "one spot card and two wildcards is a run of singles" <|
                     \() ->
                         Expect.equal
                             (sequence [ blueTwo, jack, king ])
-                            [ Just RunOfSingles ]
+                            [ Just (RunOfSingles 3 4) ]
                 , test "a ten and three wildcards is a run of singles and a run of pairs" <|
                     \() ->
                         Expect.equal
                             (sequence [ blueTen, jack, queen, king ])
-                            [ Just RunOfSingles, Just RunOfPairs ]
+                            [ Just (RunOfSingles 4 13), Just (RunOfPairs 2 11) ]
                 , test "one wildcard can fill a one rank gap between two singles to form a run" <|
                     \() ->
                         Expect.equal
                             (sequence [ blueTwo, blueFour, king ])
-                            [ Just RunOfSingles ]
+                            [ Just (RunOfSingles 3 4) ]
                 , test "one wildcard CANNOT fill a 2+ rank gap between two singles to form a run" <|
                     \() ->
                         Expect.equal
@@ -159,37 +159,37 @@ all =
                     \() ->
                         Expect.equal
                             (sequence [ greenTwo, greenFive, king, jack ])
-                            [ Just RunOfSingles ]
+                            [ Just (RunOfSingles 4 5) ]
                 , test "one spot card and three wildcards could be a run of singles or a run of pairs" <|
                     \() ->
                         Expect.equal
                             (sequence [ blueTwo, jack, queen, king ])
-                            [ Just RunOfSingles, Just RunOfPairs ]
+                            [ Just (RunOfSingles 4 5), Just (RunOfPairs 2 3) ]
                 , test "wild card should sub for missing card in run of pairs" <|
                     \() ->
                         Expect.equal
                             (sequence [ blueTwo, greenTwo, jack, greenThree ])
-                            [ Just RunOfPairs ]
+                            [ Just (RunOfPairs 2 3) ]
                 , test "a pair of tens plus two wilds is a run of pairs (T-T-J-J)" <|
                     \() ->
                         Expect.equal
                             (sequence [ blueTen, greenTen, jack, king ])
-                            [ Just RunOfPairs ]
+                            [ Just (RunOfPairs 2 11) ]
                 , test "can fill holes in run of pairs that is longer than 3 ranks" <|
                     \() ->
                         Expect.equal
                             (sequence [ blueTwo, greenTwo, blueThree, greenThree, blueFour, greenFive, jack, king ])
-                            [ Just RunOfPairs ]
+                            [ Just (RunOfPairs 4 5) ]
                 , test "a consecutive single and a pair of spot cards, plus 3 wildcards, could be a run of pairs or a run of triples" <|
                     \() ->
                         Expect.equal
                             (sequence [ blueTwo, greenTwo, greenThree, jack, queen, king ])
-                            [ Just RunOfPairs, Just RunOfTriples ]
+                            [ Just (RunOfPairs 3 4), Just (RunOfTriples 2 3) ]
                 , test "two consecutive pairs and two wildcards could be a run of pairs or a run of triples" <|
                     \() ->
                         Expect.equal
                             (sequence [ blueTwo, blueThree, greenTwo, greenThree, jack, queen ])
-                            [ Just RunOfPairs, Just RunOfTriples ]
+                            [ Just (RunOfPairs 3 4), Just (RunOfTriples 2 3) ]
                 ]
             , describe "Haggis.Cards.subsets"
                 [ test "the subsets of no cards is a set containing the set with no cards" <|
@@ -220,16 +220,16 @@ all =
                     \() ->
                         Expect.equal
                             (Haggis.Hand.collectSequences [ greenTwo, greenThree, jack ])
-                            [ RunOfSingles ]
+                            [ RunOfSingles 3 4 ]
                 , test "can find all sets contained in a set of cards" <|
                     \() ->
                         Expect.equal
                             (Haggis.Hand.collectSets [ greenTwo, greenThree, jack ])
-                            [ Pair
-                            , Single
-                            , Pair
-                            , Single
-                            , Single
+                            [ Pair Two
+                            , Single Two
+                            , Pair Three
+                            , Single Three
+                            , Single Jack
                             ]
                 , test "can find all bombs contained in a set of cards" <|
                     \() ->
@@ -238,28 +238,51 @@ all =
                                 [ redThree, greenThree, redFive, redSeven, orangeSeven, redNine, yellowNine ]
                             )
                             [ Suited, Rainbow ]
-
-                -- , test "can find all combinations contained in a set of cards" <|
-                --     \() ->
-                --         Expect.equal
-                --             (Haggis.Hand.collectCombinations
-                --                 [ blueTwo
-                --                 , greenTwo
-                --                 , blueThree
-                --                 , redThree
-                --                 , greenThree
-                --                 , blueFour
-                --                 , redFive
-                --                 , greenFive
-                --                 , redSeven
-                --                 , orangeSeven
-                --                 , redNine
-                --                 , yellowNine
-                --                 , blueTen
-                --                 , greenTen
-                --                 ]
-                --             )
-                --             [ Pair, RunOfSingles, Suited, Rainbow ]
+                , test "can find all sets contained in a full hand of cards" <|
+                    \() ->
+                        Expect.equal
+                            (Haggis.Hand.collectSets hand)
+                            [ Pair Two
+                            , Single Two
+                            , Single Two
+                            , Triple Three
+                            , Pair Three
+                            , Pair Three
+                            , Single Three
+                            , Pair Three
+                            , Single Three
+                            , Single Three
+                            , Single Four
+                            , Pair Five
+                            , Single Five
+                            , Single Five
+                            , Pair Seven
+                            , Single Seven
+                            , Single Seven
+                            , Pair Nine
+                            , Single Nine
+                            , Single Nine
+                            , Pair Ten
+                            , Single Ten
+                            , Single Ten
+                            ]
+                , test "can find all bombs contained in a full hand of cards" <|
+                    \() ->
+                        Expect.equal
+                            (Haggis.Hand.collectBombs hand)
+                            [ Rainbow
+                            , Rainbow
+                            , Rainbow
+                            , Rainbow
+                            , Suited
+                            , Rainbow
+                            , Rainbow
+                            ]
+                , test "can find all sequences contained in a full hand of cards" <|
+                    \() ->
+                        Expect.equal
+                            (Haggis.Hand.collectSequences hand)
+                            [ RunOfPairs 2 3, RunOfSingles 3 4 ]
                 ]
             ]
         ]
@@ -348,3 +371,22 @@ queen =
 king : Card
 king =
     { suit = Wild, rank = King, order = 13, points = 5 }
+
+
+hand : Hand
+hand =
+    [ blueTwo
+    , greenTwo
+    , blueThree
+    , redThree
+    , greenThree
+    , blueFour
+    , redFive
+    , greenFive
+    , redSeven
+    , orangeSeven
+    , redNine
+    , yellowNine
+    , blueTen
+    , greenTen
+    ]

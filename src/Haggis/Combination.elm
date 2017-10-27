@@ -9,7 +9,7 @@ module Haggis.Combination
         , set
         )
 
-import Haggis.Card exposing (..)
+import Haggis.Card as Card exposing (..)
 import Haggis.Cards exposing (..)
 import List exposing (..)
 
@@ -20,28 +20,28 @@ type Combination
     | Bomb
 
 
-type Set
-    = Single
-    | Pair
-    | Triple
-    | FourOfAKind
-    | FiveOfAKind
-    | SixOfAKind
-    | SevenOfAKind
-    | EightOfAKind
+type Set rank
+    = Single Rank
+    | Pair Rank
+    | Triple Rank
+    | FourOfAKind Rank
+    | FiveOfAKind Rank
+    | SixOfAKind Rank
+    | SevenOfAKind Rank
+    | EightOfAKind Rank
 
 
 type alias Sets =
     List Cards
 
 
-type Sequence
-    = RunOfSingles
-    | RunOfPairs
-    | RunOfTriples
-    | RunOfFourOfAKinds
-    | RunOfFiveOfAKinds
-    | RunOfSixOfAKinds
+type Sequence qty rank
+    = RunOfSingles Int Card.Order
+    | RunOfPairs Int Card.Order
+    | RunOfTriples Int Card.Order
+    | RunOfFourOfAKinds Int Card.Order
+    | RunOfFiveOfAKinds Int Card.Order
+    | RunOfSixOfAKinds Int Card.Order
 
 
 type Bomb
@@ -57,16 +57,19 @@ type Bomb
 -- SET
 
 
-set : Cards -> Maybe Set
+set : Cards -> Maybe (Set Rank)
 set cards =
     let
         ( spotcards, wildcards ) =
             partition isSpotCard cards
+
+        rank =
+            Result.withDefault Two (findRank cards)
     in
     if allSameRank spotcards then
         makeSet cards
     else if length wildcards == 1 && length cards == 1 then
-        Just Single
+        Just (Single rank)
     else
         Nothing
 
@@ -81,26 +84,43 @@ allSameRank cards =
             all (equal first) rest
 
 
-makeSet : Cards -> Maybe Set
+findRank : Cards -> Result String Rank
+findRank cards =
+    case cards of
+        [] ->
+            Err "Expected to get one or more cards but got zero."
+
+        c :: [] ->
+            Ok c.rank
+
+        c :: cs ->
+            Ok c.rank
+
+
+makeSet : Cards -> Maybe (Set Rank)
 makeSet cards =
+    let
+        rank =
+            Result.withDefault Two (findRank cards)
+    in
     case length cards of
         1 ->
-            Just Single
+            Just (Single rank)
 
         2 ->
-            Just Pair
+            Just (Pair rank)
 
         3 ->
-            Just Triple
+            Just (Triple rank)
 
         4 ->
-            Just FourOfAKind
+            Just (FourOfAKind rank)
 
         5 ->
-            Just FiveOfAKind
+            Just (FiveOfAKind rank)
 
         6 ->
-            Just SixOfAKind
+            Just (SixOfAKind rank)
 
         otherwise ->
             Nothing
@@ -193,7 +213,7 @@ dropDuplicates_ existing remaining =
 -- SEQUENCE
 
 
-sequence : Cards -> List (Maybe Sequence)
+sequence : Cards -> List (Maybe (Sequence Int Card.Order))
 sequence cards =
     let
         ( spotcards, wildcards ) =
@@ -210,7 +230,7 @@ sequence cards =
             |> keepJustSequences
 
 
-maybeSequenceOfWidth : Cards -> Int -> Maybe Sequence
+maybeSequenceOfWidth : Cards -> Int -> Maybe (Sequence Int Card.Order)
 maybeSequenceOfWidth cards sequenceWidth =
     let
         ( spotcards, wildcards ) =
@@ -232,22 +252,22 @@ maybeSequenceOfWidth cards sequenceWidth =
             range lowRank highRank
     in
     if
-        hasEnoughCardsForSequenceWidth sequenceWidth numberOfCards
+        hasEnoughCards sequenceWidth numberOfCards
             && (numberOfCards == (sequenceLength * sequenceWidth))
             && canFormSequence sequenceWidth ranks cards
     then
-        makeSequenceOfWidth sequenceWidth
+        makeSequence sequenceLength sequenceWidth highRank
     else
         Nothing
 
 
-findLowestRank : Cards -> Haggis.Card.Order
+findLowestRank : Cards -> Card.Order
 findLowestRank cards =
     cards |> map .order |> minimum |> Maybe.withDefault 2
 
 
-hasEnoughCardsForSequenceWidth : Int -> Int -> Bool
-hasEnoughCardsForSequenceWidth sequenceWidth numberOfCards =
+hasEnoughCards : Int -> Int -> Bool
+hasEnoughCards sequenceWidth numberOfCards =
     (sequenceWidth == 1 && numberOfCards >= 3)
         || (sequenceWidth > 1 && numberOfCards >= sequenceWidth * 2)
 
@@ -277,32 +297,32 @@ collectCardsWithRanks ranks cards =
     map (\rank -> filter (\c -> c.order == rank) cards) ranks
 
 
-makeSequenceOfWidth : Int -> Maybe Sequence
-makeSequenceOfWidth width_ =
-    case width_ of
+makeSequence : Int -> Int -> Card.Order -> Maybe (Sequence Int Card.Order)
+makeSequence sequenceLength sequenceWidth rank =
+    case sequenceWidth of
         1 ->
-            Just RunOfSingles
+            Just (RunOfSingles sequenceLength rank)
 
         2 ->
-            Just RunOfPairs
+            Just (RunOfPairs sequenceLength rank)
 
         3 ->
-            Just RunOfTriples
+            Just (RunOfTriples sequenceLength rank)
 
         4 ->
-            Just RunOfFourOfAKinds
+            Just (RunOfFourOfAKinds sequenceLength rank)
 
         5 ->
-            Just RunOfFiveOfAKinds
+            Just (RunOfFiveOfAKinds sequenceLength rank)
 
         6 ->
-            Just RunOfSixOfAKinds
+            Just (RunOfSixOfAKinds sequenceLength rank)
 
         otherwise ->
             Nothing
 
 
-keepJustSequences : List (Maybe Sequence) -> List (Maybe Sequence)
+keepJustSequences : List (Maybe (Sequence Int Card.Order)) -> List (Maybe (Sequence Int Card.Order))
 keepJustSequences sequences =
     let
         justSequences =
@@ -316,7 +336,7 @@ keepJustSequences sequences =
             justSequences
 
 
-isSequence : Maybe Sequence -> Bool
+isSequence : Maybe (Sequence Int Card.Order) -> Bool
 isSequence s =
     case s of
         Nothing ->
