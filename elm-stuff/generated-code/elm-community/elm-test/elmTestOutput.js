@@ -17000,13 +17000,13 @@ var _user$project$Test_Runner_Node$runWithOptions = function (options) {
 		});
 };
 
-var _user$project$Test_Generated_Main166733720$main = A2(
+var _user$project$Test_Generated_Main45040372$main = A2(
 	_user$project$Test_Runner_Node$runWithOptions,
 	{
 		runs: _elm_lang$core$Maybe$Nothing,
 		report: _user$project$Test_Reporter_Reporter$ConsoleReport(_user$project$Console_Text$UseColor),
 		seed: _elm_lang$core$Maybe$Nothing,
-		processes: 8,
+		processes: 2,
 		paths: {ctor: '[]'}
 	},
 	_elm_community$elm_test$Test$concat(
@@ -17026,9 +17026,9 @@ var _user$project$Test_Generated_Main166733720$main = A2(
 var Elm = {};
 Elm['Test'] = Elm['Test'] || {};
 Elm['Test']['Generated'] = Elm['Test']['Generated'] || {};
-Elm['Test']['Generated']['Main166733720'] = Elm['Test']['Generated']['Main166733720'] || {};
-if (typeof _user$project$Test_Generated_Main166733720$main !== 'undefined') {
-    _user$project$Test_Generated_Main166733720$main(Elm['Test']['Generated']['Main166733720'], 'Test.Generated.Main166733720', undefined);
+Elm['Test']['Generated']['Main45040372'] = Elm['Test']['Generated']['Main45040372'] || {};
+if (typeof _user$project$Test_Generated_Main45040372$main !== 'undefined') {
+    _user$project$Test_Generated_Main45040372$main(Elm['Test']['Generated']['Main45040372'], 'Test.Generated.Main45040372', undefined);
 }
 
 if (typeof define === "function" && define['amd'])
