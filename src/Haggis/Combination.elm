@@ -94,7 +94,12 @@ findRank cards =
             Ok c.rank
 
         c :: cs ->
-            Ok c.rank
+            case c.suit of
+                Wild ->
+                    findRank cs
+
+                otherwise ->
+                    Ok c.rank
 
 
 makeSet : Cards -> Maybe (Set Card.Rank)

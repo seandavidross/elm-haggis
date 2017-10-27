@@ -1,10 +1,10 @@
 module Tests exposing (..)
 
 import Expect exposing (..)
-import Haggis.Card exposing (..)
-import Haggis.Cards exposing (..)
-import Haggis.Combination exposing (..)
-import Haggis.Hand exposing (..)
+import Haggis.Card as Card exposing (..)
+import Haggis.Cards as Cards exposing (..)
+import Haggis.Combination as Combo exposing (..)
+import Haggis.Hand as Hand exposing (..)
 import Test exposing (..)
 
 
@@ -47,6 +47,11 @@ all =
                         Expect.equal
                             (set [ blueTwo, greenTwo, jack ])
                             (Just (Triple Two))
+                , test "a wild with a number card is a pair with the number card's rank" <|
+                    \() ->
+                        Expect.equal
+                            (set [ jack, blueTwo ])
+                            (Just (Pair Two))
                 , test "two wild cards is NOT a pair" <|
                     \() ->
                         Expect.notEqual (set [ jack, queen ]) (Just (Pair Jack))
@@ -219,12 +224,12 @@ all =
                 , test "can find all sequences contained in a set of cards" <|
                     \() ->
                         Expect.equal
-                            (Haggis.Hand.collectSequences [ greenTwo, greenThree, jack ])
+                            (Hand.collectSequences [ greenTwo, greenThree, jack ])
                             [ RunOfSingles 3 4 ]
                 , test "can find all sets contained in a set of cards" <|
                     \() ->
                         Expect.equal
-                            (Haggis.Hand.collectSets [ greenTwo, greenThree, jack ])
+                            (Hand.collectSets [ greenTwo, greenThree, jack ])
                             [ Pair Two
                             , Single Two
                             , Pair Three
@@ -234,14 +239,14 @@ all =
                 , test "can find all bombs contained in a set of cards" <|
                     \() ->
                         Expect.equal
-                            (Haggis.Hand.collectBombs
+                            (Hand.collectBombs
                                 [ redThree, greenThree, redFive, redSeven, orangeSeven, redNine, yellowNine ]
                             )
                             [ Suited, Rainbow ]
                 , test "can find all sets contained in a full hand of cards" <|
                     \() ->
                         Expect.equal
-                            (Haggis.Hand.collectSets hand)
+                            (Hand.collectSets hand)
                             [ Pair Two
                             , Single Two
                             , Single Two
@@ -269,7 +274,7 @@ all =
                 , test "can find all bombs contained in a full hand of cards" <|
                     \() ->
                         Expect.equal
-                            (Haggis.Hand.collectBombs hand)
+                            (Hand.collectBombs hand)
                             [ Rainbow
                             , Rainbow
                             , Rainbow
@@ -281,7 +286,7 @@ all =
                 , test "can find all sequences contained in a full hand of cards" <|
                     \() ->
                         Expect.equal
-                            (Haggis.Hand.collectSequences hand)
+                            (Hand.collectSequences hand)
                             [ RunOfPairs 2 3, RunOfSingles 3 4 ]
                 ]
             ]

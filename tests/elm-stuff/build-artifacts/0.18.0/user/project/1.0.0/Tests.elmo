@@ -242,47 +242,51 @@ var _user$project$Tests$all = A2(
 											ctor: '::',
 											_0: A2(
 												_elm_community$elm_test$Test$test,
-												'two wild cards is NOT a pair',
+												'a wild with a number card is a pair with the number card\'s rank',
 												function (_p20) {
 													var _p21 = _p20;
 													return A2(
-														_elm_community$elm_test$Expect$notEqual,
+														_elm_community$elm_test$Expect$equal,
 														_user$project$Haggis_Combination$set(
 															{
 																ctor: '::',
 																_0: _user$project$Tests$jack,
 																_1: {
 																	ctor: '::',
-																	_0: _user$project$Tests$queen,
+																	_0: _user$project$Tests$blueTwo,
 																	_1: {ctor: '[]'}
 																}
 															}),
 														_elm_lang$core$Maybe$Just(
-															_user$project$Haggis_Combination$Pair(_user$project$Haggis_Card$Jack)));
+															_user$project$Haggis_Combination$Pair(_user$project$Haggis_Card$Two)));
 												}),
 											_1: {
 												ctor: '::',
 												_0: A2(
 													_elm_community$elm_test$Test$test,
-													'one wild card is a single',
+													'two wild cards is NOT a pair',
 													function (_p22) {
 														var _p23 = _p22;
 														return A2(
-															_elm_community$elm_test$Expect$equal,
+															_elm_community$elm_test$Expect$notEqual,
 															_user$project$Haggis_Combination$set(
 																{
 																	ctor: '::',
 																	_0: _user$project$Tests$jack,
-																	_1: {ctor: '[]'}
+																	_1: {
+																		ctor: '::',
+																		_0: _user$project$Tests$queen,
+																		_1: {ctor: '[]'}
+																	}
 																}),
 															_elm_lang$core$Maybe$Just(
-																_user$project$Haggis_Combination$Single(_user$project$Haggis_Card$Jack)));
+																_user$project$Haggis_Combination$Pair(_user$project$Haggis_Card$Jack)));
 													}),
 												_1: {
 													ctor: '::',
 													_0: A2(
 														_elm_community$elm_test$Test$test,
-														'two matched spot cards plus three wilds is a five-of-a-kind',
+														'one wild card is a single',
 														function (_p24) {
 															var _p25 = _p24;
 															return A2(
@@ -290,33 +294,17 @@ var _user$project$Tests$all = A2(
 																_user$project$Haggis_Combination$set(
 																	{
 																		ctor: '::',
-																		_0: _user$project$Tests$blueTwo,
-																		_1: {
-																			ctor: '::',
-																			_0: _user$project$Tests$greenTwo,
-																			_1: {
-																				ctor: '::',
-																				_0: _user$project$Tests$jack,
-																				_1: {
-																					ctor: '::',
-																					_0: _user$project$Tests$queen,
-																					_1: {
-																						ctor: '::',
-																						_0: _user$project$Tests$king,
-																						_1: {ctor: '[]'}
-																					}
-																				}
-																			}
-																		}
+																		_0: _user$project$Tests$jack,
+																		_1: {ctor: '[]'}
 																	}),
 																_elm_lang$core$Maybe$Just(
-																	_user$project$Haggis_Combination$FiveOfAKind(_user$project$Haggis_Card$Two)));
+																	_user$project$Haggis_Combination$Single(_user$project$Haggis_Card$Jack)));
 														}),
 													_1: {
 														ctor: '::',
 														_0: A2(
 															_elm_community$elm_test$Test$test,
-															'a pair of tens plus two wilds is a four-of-a-kind',
+															'two matched spot cards plus three wilds is a five-of-a-kind',
 															function (_p26) {
 																var _p27 = _p26;
 																return A2(
@@ -324,25 +312,60 @@ var _user$project$Tests$all = A2(
 																	_user$project$Haggis_Combination$set(
 																		{
 																			ctor: '::',
-																			_0: _user$project$Tests$blueTen,
+																			_0: _user$project$Tests$blueTwo,
 																			_1: {
 																				ctor: '::',
-																				_0: _user$project$Tests$greenTen,
+																				_0: _user$project$Tests$greenTwo,
 																				_1: {
 																					ctor: '::',
 																					_0: _user$project$Tests$jack,
 																					_1: {
 																						ctor: '::',
-																						_0: _user$project$Tests$king,
-																						_1: {ctor: '[]'}
+																						_0: _user$project$Tests$queen,
+																						_1: {
+																							ctor: '::',
+																							_0: _user$project$Tests$king,
+																							_1: {ctor: '[]'}
+																						}
 																					}
 																				}
 																			}
 																		}),
 																	_elm_lang$core$Maybe$Just(
-																		_user$project$Haggis_Combination$FourOfAKind(_user$project$Haggis_Card$Ten)));
+																		_user$project$Haggis_Combination$FiveOfAKind(_user$project$Haggis_Card$Two)));
 															}),
-														_1: {ctor: '[]'}
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_elm_community$elm_test$Test$test,
+																'a pair of tens plus two wilds is a four-of-a-kind',
+																function (_p28) {
+																	var _p29 = _p28;
+																	return A2(
+																		_elm_community$elm_test$Expect$equal,
+																		_user$project$Haggis_Combination$set(
+																			{
+																				ctor: '::',
+																				_0: _user$project$Tests$blueTen,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Tests$greenTen,
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Tests$jack,
+																						_1: {
+																							ctor: '::',
+																							_0: _user$project$Tests$king,
+																							_1: {ctor: '[]'}
+																						}
+																					}
+																				}
+																			}),
+																		_elm_lang$core$Maybe$Just(
+																			_user$project$Haggis_Combination$FourOfAKind(_user$project$Haggis_Card$Ten)));
+																}),
+															_1: {ctor: '[]'}
+														}
 													}
 												}
 											}
@@ -361,8 +384,8 @@ var _user$project$Tests$all = A2(
 								_0: A2(
 									_elm_community$elm_test$Test$test,
 									'one wild card is not a bomb',
-									function (_p28) {
-										var _p29 = _p28;
+									function (_p30) {
+										var _p31 = _p30;
 										return A2(
 											_elm_community$elm_test$Expect$equal,
 											_user$project$Haggis_Combination$bomb(
@@ -378,8 +401,8 @@ var _user$project$Tests$all = A2(
 									_0: A2(
 										_elm_community$elm_test$Test$test,
 										'two wild cards is a bomb',
-										function (_p30) {
-											var _p31 = _p30;
+										function (_p32) {
+											var _p33 = _p32;
 											return A2(
 												_elm_community$elm_test$Expect$equal,
 												_user$project$Haggis_Combination$bomb(
@@ -399,8 +422,8 @@ var _user$project$Tests$all = A2(
 										_0: A2(
 											_elm_community$elm_test$Test$test,
 											'two wild cards is a bomb, order does not matter',
-											function (_p32) {
-												var _p33 = _p32;
+											function (_p34) {
+												var _p35 = _p34;
 												return A2(
 													_elm_community$elm_test$Expect$equal,
 													_user$project$Haggis_Combination$bomb(
@@ -420,8 +443,8 @@ var _user$project$Tests$all = A2(
 											_0: A2(
 												_elm_community$elm_test$Test$test,
 												'three wild cards is a bomb',
-												function (_p34) {
-													var _p35 = _p34;
+												function (_p36) {
+													var _p37 = _p36;
 													return A2(
 														_elm_community$elm_test$Expect$equal,
 														_user$project$Haggis_Combination$bomb(
@@ -445,8 +468,8 @@ var _user$project$Tests$all = A2(
 												_0: A2(
 													_elm_community$elm_test$Test$test,
 													'three wild cards is not a set',
-													function (_p36) {
-														var _p37 = _p36;
+													function (_p38) {
+														var _p39 = _p38;
 														return A2(
 															_elm_community$elm_test$Expect$equal,
 															_user$project$Haggis_Combination$set(
@@ -470,8 +493,8 @@ var _user$project$Tests$all = A2(
 													_0: A2(
 														_elm_community$elm_test$Test$test,
 														'four distinct, same-suited odd cards is a bomb',
-														function (_p38) {
-															var _p39 = _p38;
+														function (_p40) {
+															var _p41 = _p40;
 															return A2(
 																_elm_community$elm_test$Expect$equal,
 																_user$project$Haggis_Combination$bomb(
@@ -499,8 +522,8 @@ var _user$project$Tests$all = A2(
 														_0: A2(
 															_elm_community$elm_test$Test$test,
 															'A suited bomb is a suited bomb regardless of card order',
-															function (_p40) {
-																var _p41 = _p40;
+															function (_p42) {
+																var _p43 = _p42;
 																return A2(
 																	_elm_community$elm_test$Expect$equal,
 																	_user$project$Haggis_Combination$bomb(
@@ -528,8 +551,8 @@ var _user$project$Tests$all = A2(
 															_0: A2(
 																_elm_community$elm_test$Test$test,
 																'four distinct odd cards, with distinct suits, is a bomb',
-																function (_p42) {
-																	var _p43 = _p42;
+																function (_p44) {
+																	var _p45 = _p44;
 																	return A2(
 																		_elm_community$elm_test$Expect$equal,
 																		_user$project$Haggis_Combination$bomb(
@@ -557,8 +580,8 @@ var _user$project$Tests$all = A2(
 																_0: A2(
 																	_elm_community$elm_test$Test$test,
 																	'four distinct odd cards, with 2-3 suits, is a not bomb',
-																	function (_p44) {
-																		var _p45 = _p44;
+																	function (_p46) {
+																		var _p47 = _p46;
 																		return A2(
 																			_elm_community$elm_test$Expect$equal,
 																			_user$project$Haggis_Combination$bomb(
@@ -601,8 +624,8 @@ var _user$project$Tests$all = A2(
 									_0: A2(
 										_elm_community$elm_test$Test$test,
 										'empty set of cards is not a sequence',
-										function (_p46) {
-											var _p47 = _p46;
+										function (_p48) {
+											var _p49 = _p48;
 											return A2(
 												_elm_community$elm_test$Expect$equal,
 												_user$project$Haggis_Combination$sequence(
@@ -618,8 +641,8 @@ var _user$project$Tests$all = A2(
 										_0: A2(
 											_elm_community$elm_test$Test$test,
 											'three consecutive singles is a sequence',
-											function (_p48) {
-												var _p49 = _p48;
+											function (_p50) {
+												var _p51 = _p50;
 												return A2(
 													_elm_community$elm_test$Expect$equal,
 													_user$project$Haggis_Combination$sequence(
@@ -648,8 +671,8 @@ var _user$project$Tests$all = A2(
 											_0: A2(
 												_elm_community$elm_test$Test$test,
 												'three nonconsecutive singles is not a sequence',
-												function (_p50) {
-													var _p51 = _p50;
+												function (_p52) {
+													var _p53 = _p52;
 													return A2(
 														_elm_community$elm_test$Expect$equal,
 														_user$project$Haggis_Combination$sequence(
@@ -677,8 +700,8 @@ var _user$project$Tests$all = A2(
 												_0: A2(
 													_elm_community$elm_test$Test$test,
 													'two consecutive singles is not a sequence',
-													function (_p52) {
-														var _p53 = _p52;
+													function (_p54) {
+														var _p55 = _p54;
 														return A2(
 															_elm_community$elm_test$Expect$equal,
 															_user$project$Haggis_Combination$sequence(
@@ -702,8 +725,8 @@ var _user$project$Tests$all = A2(
 													_0: A2(
 														_elm_community$elm_test$Test$test,
 														'three wildcards is not a sequence',
-														function (_p54) {
-															var _p55 = _p54;
+														function (_p56) {
+															var _p57 = _p56;
 															return A2(
 																_elm_community$elm_test$Expect$equal,
 																_user$project$Haggis_Combination$sequence(
@@ -731,8 +754,8 @@ var _user$project$Tests$all = A2(
 														_0: A2(
 															_elm_community$elm_test$Test$test,
 															'two consecutive pairs is a sequence',
-															function (_p56) {
-																var _p57 = _p56;
+															function (_p58) {
+																var _p59 = _p58;
 																return A2(
 																	_elm_community$elm_test$Expect$equal,
 																	_user$project$Haggis_Combination$sequence(
@@ -765,8 +788,8 @@ var _user$project$Tests$all = A2(
 															_0: A2(
 																_elm_community$elm_test$Test$test,
 																'card order should not affect sequence identification',
-																function (_p58) {
-																	var _p59 = _p58;
+																function (_p60) {
+																	var _p61 = _p60;
 																	return A2(
 																		_elm_community$elm_test$Expect$equal,
 																		_user$project$Haggis_Combination$sequence(
@@ -799,8 +822,8 @@ var _user$project$Tests$all = A2(
 																_0: A2(
 																	_elm_community$elm_test$Test$test,
 																	'one spot card and two wildcards is a run of singles',
-																	function (_p60) {
-																		var _p61 = _p60;
+																	function (_p62) {
+																		var _p63 = _p62;
 																		return A2(
 																			_elm_community$elm_test$Expect$equal,
 																			_user$project$Haggis_Combination$sequence(
@@ -829,8 +852,8 @@ var _user$project$Tests$all = A2(
 																	_0: A2(
 																		_elm_community$elm_test$Test$test,
 																		'a ten and three wildcards is a run of singles and a run of pairs',
-																		function (_p62) {
-																			var _p63 = _p62;
+																		function (_p64) {
+																			var _p65 = _p64;
 																			return A2(
 																				_elm_community$elm_test$Expect$equal,
 																				_user$project$Haggis_Combination$sequence(
@@ -868,8 +891,8 @@ var _user$project$Tests$all = A2(
 																		_0: A2(
 																			_elm_community$elm_test$Test$test,
 																			'one wildcard can fill a one rank gap between two singles to form a run',
-																			function (_p64) {
-																				var _p65 = _p64;
+																			function (_p66) {
+																				var _p67 = _p66;
 																				return A2(
 																					_elm_community$elm_test$Expect$equal,
 																					_user$project$Haggis_Combination$sequence(
@@ -898,8 +921,8 @@ var _user$project$Tests$all = A2(
 																			_0: A2(
 																				_elm_community$elm_test$Test$test,
 																				'one wildcard CANNOT fill a 2+ rank gap between two singles to form a run',
-																				function (_p66) {
-																					var _p67 = _p66;
+																				function (_p68) {
+																					var _p69 = _p68;
 																					return A2(
 																						_elm_community$elm_test$Expect$equal,
 																						_user$project$Haggis_Combination$sequence(
@@ -927,8 +950,8 @@ var _user$project$Tests$all = A2(
 																				_0: A2(
 																					_elm_community$elm_test$Test$test,
 																					'two wildcards can fill a 2 rank gap between two singles to form a run',
-																					function (_p68) {
-																						var _p69 = _p68;
+																					function (_p70) {
+																						var _p71 = _p70;
 																						return A2(
 																							_elm_community$elm_test$Expect$equal,
 																							_user$project$Haggis_Combination$sequence(
@@ -961,8 +984,8 @@ var _user$project$Tests$all = A2(
 																					_0: A2(
 																						_elm_community$elm_test$Test$test,
 																						'one spot card and three wildcards could be a run of singles or a run of pairs',
-																						function (_p70) {
-																							var _p71 = _p70;
+																						function (_p72) {
+																							var _p73 = _p72;
 																							return A2(
 																								_elm_community$elm_test$Expect$equal,
 																								_user$project$Haggis_Combination$sequence(
@@ -1000,8 +1023,8 @@ var _user$project$Tests$all = A2(
 																						_0: A2(
 																							_elm_community$elm_test$Test$test,
 																							'wild card should sub for missing card in run of pairs',
-																							function (_p72) {
-																								var _p73 = _p72;
+																							function (_p74) {
+																								var _p75 = _p74;
 																								return A2(
 																									_elm_community$elm_test$Expect$equal,
 																									_user$project$Haggis_Combination$sequence(
@@ -1034,8 +1057,8 @@ var _user$project$Tests$all = A2(
 																							_0: A2(
 																								_elm_community$elm_test$Test$test,
 																								'a pair of tens plus two wilds is a run of pairs (T-T-J-J)',
-																								function (_p74) {
-																									var _p75 = _p74;
+																								function (_p76) {
+																									var _p77 = _p76;
 																									return A2(
 																										_elm_community$elm_test$Expect$equal,
 																										_user$project$Haggis_Combination$sequence(
@@ -1068,8 +1091,8 @@ var _user$project$Tests$all = A2(
 																								_0: A2(
 																									_elm_community$elm_test$Test$test,
 																									'can fill holes in run of pairs that is longer than 3 ranks',
-																									function (_p76) {
-																										var _p77 = _p76;
+																									function (_p78) {
+																										var _p79 = _p78;
 																										return A2(
 																											_elm_community$elm_test$Expect$equal,
 																											_user$project$Haggis_Combination$sequence(
@@ -1118,8 +1141,8 @@ var _user$project$Tests$all = A2(
 																									_0: A2(
 																										_elm_community$elm_test$Test$test,
 																										'a consecutive single and a pair of spot cards, plus 3 wildcards, could be a run of pairs or a run of triples',
-																										function (_p78) {
-																											var _p79 = _p78;
+																										function (_p80) {
+																											var _p81 = _p80;
 																											return A2(
 																												_elm_community$elm_test$Expect$equal,
 																												_user$project$Haggis_Combination$sequence(
@@ -1165,8 +1188,8 @@ var _user$project$Tests$all = A2(
 																										_0: A2(
 																											_elm_community$elm_test$Test$test,
 																											'two consecutive pairs and two wildcards could be a run of pairs or a run of triples',
-																											function (_p80) {
-																												var _p81 = _p80;
+																											function (_p82) {
+																												var _p83 = _p82;
 																												return A2(
 																													_elm_community$elm_test$Expect$equal,
 																													_user$project$Haggis_Combination$sequence(
@@ -1236,8 +1259,8 @@ var _user$project$Tests$all = A2(
 										_0: A2(
 											_elm_community$elm_test$Test$test,
 											'the subsets of no cards is a set containing the set with no cards',
-											function (_p82) {
-												var _p83 = _p82;
+											function (_p84) {
+												var _p85 = _p84;
 												return A2(
 													_elm_community$elm_test$Expect$equal,
 													_user$project$Haggis_Cards$subsets(
@@ -1253,8 +1276,8 @@ var _user$project$Tests$all = A2(
 											_0: A2(
 												_elm_community$elm_test$Test$test,
 												'the subsets of one card is a set with no cards and a set with the one card',
-												function (_p84) {
-													var _p85 = _p84;
+												function (_p86) {
+													var _p87 = _p86;
 													return A2(
 														_elm_community$elm_test$Expect$equal,
 														_user$project$Haggis_Cards$subsets(
@@ -1282,8 +1305,8 @@ var _user$project$Tests$all = A2(
 												_0: A2(
 													_elm_community$elm_test$Test$test,
 													'the subsets of a pair is the pair, each of its singles, and the empty set',
-													function (_p86) {
-														var _p87 = _p86;
+													function (_p88) {
+														var _p89 = _p88;
 														return A2(
 															_elm_community$elm_test$Expect$equal,
 															_user$project$Haggis_Cards$subsets(
@@ -1335,8 +1358,8 @@ var _user$project$Tests$all = A2(
 													_0: A2(
 														_elm_community$elm_test$Test$test,
 														'the subsets of 3 cards is the 3 cards, each card paired, each card alone, and the empty set',
-														function (_p88) {
-															var _p89 = _p88;
+														function (_p90) {
+															var _p91 = _p90;
 															return A2(
 																_elm_community$elm_test$Expect$equal,
 																_user$project$Haggis_Cards$subsets(
@@ -1440,8 +1463,8 @@ var _user$project$Tests$all = A2(
 														_0: A2(
 															_elm_community$elm_test$Test$test,
 															'can find all sequences contained in a set of cards',
-															function (_p90) {
-																var _p91 = _p90;
+															function (_p92) {
+																var _p93 = _p92;
 																return A2(
 																	_elm_community$elm_test$Expect$equal,
 																	_user$project$Haggis_Hand$collectSequences(
@@ -1469,8 +1492,8 @@ var _user$project$Tests$all = A2(
 															_0: A2(
 																_elm_community$elm_test$Test$test,
 																'can find all sets contained in a set of cards',
-																function (_p92) {
-																	var _p93 = _p92;
+																function (_p94) {
+																	var _p95 = _p94;
 																	return A2(
 																		_elm_community$elm_test$Expect$equal,
 																		_user$project$Haggis_Hand$collectSets(
@@ -1514,8 +1537,8 @@ var _user$project$Tests$all = A2(
 																_0: A2(
 																	_elm_community$elm_test$Test$test,
 																	'can find all bombs contained in a set of cards',
-																	function (_p94) {
-																		var _p95 = _p94;
+																	function (_p96) {
+																		var _p97 = _p96;
 																		return A2(
 																			_elm_community$elm_test$Expect$equal,
 																			_user$project$Haggis_Hand$collectBombs(
@@ -1563,8 +1586,8 @@ var _user$project$Tests$all = A2(
 																	_0: A2(
 																		_elm_community$elm_test$Test$test,
 																		'can find all sets contained in a full hand of cards',
-																		function (_p96) {
-																			var _p97 = _p96;
+																		function (_p98) {
+																			var _p99 = _p98;
 																			return A2(
 																				_elm_community$elm_test$Expect$equal,
 																				_user$project$Haggis_Hand$collectSets(_user$project$Tests$hand),
@@ -1667,8 +1690,8 @@ var _user$project$Tests$all = A2(
 																		_0: A2(
 																			_elm_community$elm_test$Test$test,
 																			'can find all bombs contained in a full hand of cards',
-																			function (_p98) {
-																				var _p99 = _p98;
+																			function (_p100) {
+																				var _p101 = _p100;
 																				return A2(
 																					_elm_community$elm_test$Expect$equal,
 																					_user$project$Haggis_Hand$collectBombs(_user$project$Tests$hand),
@@ -1707,8 +1730,8 @@ var _user$project$Tests$all = A2(
 																			_0: A2(
 																				_elm_community$elm_test$Test$test,
 																				'can find all sequences contained in a full hand of cards',
-																				function (_p100) {
-																					var _p101 = _p100;
+																				function (_p102) {
+																					var _p103 = _p102;
 																					return A2(
 																						_elm_community$elm_test$Expect$equal,
 																						_user$project$Haggis_Hand$collectSequences(_user$project$Tests$hand),
