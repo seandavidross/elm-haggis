@@ -37,6 +37,49 @@ type alias Order =
     Int
 
 
+toRank : Int -> Maybe Rank
+toRank order =
+    case order of
+        2 ->
+            Just Two
+
+        3 ->
+            Just Three
+
+        4 ->
+            Just Four
+
+        5 ->
+            Just Five
+
+        6 ->
+            Just Six
+
+        7 ->
+            Just Seven
+
+        8 ->
+            Just Eight
+
+        9 ->
+            Just Nine
+
+        10 ->
+            Just Ten
+
+        11 ->
+            Just Jack
+
+        12 ->
+            Just Queen
+
+        13 ->
+            Just King
+
+        otherwise ->
+            Nothing
+
+
 equal : Card -> Card -> Bool
 equal card card_ =
     card.order == card_.order
@@ -46,8 +89,8 @@ equal card card_ =
 a Jack, Queen, or King which are called face cards. In Haggis,
 face cards are wildcards: so, any non-wildcard is a spot card.
 -}
-isSpotCard : Card -> Bool
-isSpotCard card =
+isNatural : Card -> Bool
+isNatural card =
     card.suit /= Wild
 
 

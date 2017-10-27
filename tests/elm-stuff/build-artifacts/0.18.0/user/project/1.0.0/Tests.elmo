@@ -662,7 +662,7 @@ var _user$project$Tests$all = A2(
 													{
 														ctor: '::',
 														_0: _elm_lang$core$Maybe$Just(
-															A2(_user$project$Haggis_Combination$RunOfSingles, 3, 4)),
+															A2(_user$project$Haggis_Combination$RunOfSingles, 3, _user$project$Haggis_Card$Four)),
 														_1: {ctor: '[]'}
 													});
 											}),
@@ -779,7 +779,7 @@ var _user$project$Tests$all = A2(
 																	{
 																		ctor: '::',
 																		_0: _elm_lang$core$Maybe$Just(
-																			A2(_user$project$Haggis_Combination$RunOfPairs, 2, 3)),
+																			A2(_user$project$Haggis_Combination$RunOfPairs, 2, _user$project$Haggis_Card$Three)),
 																		_1: {ctor: '[]'}
 																	});
 															}),
@@ -813,7 +813,7 @@ var _user$project$Tests$all = A2(
 																		{
 																			ctor: '::',
 																			_0: _elm_lang$core$Maybe$Just(
-																				A2(_user$project$Haggis_Combination$RunOfPairs, 2, 3)),
+																				A2(_user$project$Haggis_Combination$RunOfPairs, 2, _user$project$Haggis_Card$Three)),
 																			_1: {ctor: '[]'}
 																		});
 																}),
@@ -843,7 +843,7 @@ var _user$project$Tests$all = A2(
 																			{
 																				ctor: '::',
 																				_0: _elm_lang$core$Maybe$Just(
-																					A2(_user$project$Haggis_Combination$RunOfSingles, 3, 4)),
+																					A2(_user$project$Haggis_Combination$RunOfSingles, 3, _user$project$Haggis_Card$Four)),
 																				_1: {ctor: '[]'}
 																			});
 																	}),
@@ -877,11 +877,11 @@ var _user$project$Tests$all = A2(
 																				{
 																					ctor: '::',
 																					_0: _elm_lang$core$Maybe$Just(
-																						A2(_user$project$Haggis_Combination$RunOfSingles, 4, 13)),
+																						A2(_user$project$Haggis_Combination$RunOfSingles, 4, _user$project$Haggis_Card$King)),
 																					_1: {
 																						ctor: '::',
 																						_0: _elm_lang$core$Maybe$Just(
-																							A2(_user$project$Haggis_Combination$RunOfPairs, 2, 11)),
+																							A2(_user$project$Haggis_Combination$RunOfPairs, 2, _user$project$Haggis_Card$Jack)),
 																						_1: {ctor: '[]'}
 																					}
 																				});
@@ -912,7 +912,7 @@ var _user$project$Tests$all = A2(
 																					{
 																						ctor: '::',
 																						_0: _elm_lang$core$Maybe$Just(
-																							A2(_user$project$Haggis_Combination$RunOfSingles, 3, 4)),
+																							A2(_user$project$Haggis_Combination$RunOfSingles, 3, _user$project$Haggis_Card$Four)),
 																						_1: {ctor: '[]'}
 																					});
 																			}),
@@ -975,7 +975,7 @@ var _user$project$Tests$all = A2(
 																							{
 																								ctor: '::',
 																								_0: _elm_lang$core$Maybe$Just(
-																									A2(_user$project$Haggis_Combination$RunOfSingles, 4, 5)),
+																									A2(_user$project$Haggis_Combination$RunOfSingles, 4, _user$project$Haggis_Card$Five)),
 																								_1: {ctor: '[]'}
 																							});
 																					}),
@@ -1009,11 +1009,11 @@ var _user$project$Tests$all = A2(
 																								{
 																									ctor: '::',
 																									_0: _elm_lang$core$Maybe$Just(
-																										A2(_user$project$Haggis_Combination$RunOfSingles, 4, 5)),
+																										A2(_user$project$Haggis_Combination$RunOfSingles, 4, _user$project$Haggis_Card$Five)),
 																									_1: {
 																										ctor: '::',
 																										_0: _elm_lang$core$Maybe$Just(
-																											A2(_user$project$Haggis_Combination$RunOfPairs, 2, 3)),
+																											A2(_user$project$Haggis_Combination$RunOfPairs, 2, _user$project$Haggis_Card$Three)),
 																										_1: {ctor: '[]'}
 																									}
 																								});
@@ -1048,7 +1048,7 @@ var _user$project$Tests$all = A2(
 																									{
 																										ctor: '::',
 																										_0: _elm_lang$core$Maybe$Just(
-																											A2(_user$project$Haggis_Combination$RunOfPairs, 2, 3)),
+																											A2(_user$project$Haggis_Combination$RunOfPairs, 2, _user$project$Haggis_Card$Three)),
 																										_1: {ctor: '[]'}
 																									});
 																							}),
@@ -1082,7 +1082,7 @@ var _user$project$Tests$all = A2(
 																										{
 																											ctor: '::',
 																											_0: _elm_lang$core$Maybe$Just(
-																												A2(_user$project$Haggis_Combination$RunOfPairs, 2, 11)),
+																												A2(_user$project$Haggis_Combination$RunOfPairs, 2, _user$project$Haggis_Card$Jack)),
 																											_1: {ctor: '[]'}
 																										});
 																								}),
@@ -1132,7 +1132,7 @@ var _user$project$Tests$all = A2(
 																											{
 																												ctor: '::',
 																												_0: _elm_lang$core$Maybe$Just(
-																													A2(_user$project$Haggis_Combination$RunOfPairs, 4, 5)),
+																													A2(_user$project$Haggis_Combination$RunOfPairs, 4, _user$project$Haggis_Card$Five)),
 																												_1: {ctor: '[]'}
 																											});
 																									}),
@@ -1174,11 +1174,11 @@ var _user$project$Tests$all = A2(
 																												{
 																													ctor: '::',
 																													_0: _elm_lang$core$Maybe$Just(
-																														A2(_user$project$Haggis_Combination$RunOfPairs, 3, 4)),
+																														A2(_user$project$Haggis_Combination$RunOfPairs, 3, _user$project$Haggis_Card$Four)),
 																													_1: {
 																														ctor: '::',
 																														_0: _elm_lang$core$Maybe$Just(
-																															A2(_user$project$Haggis_Combination$RunOfTriples, 2, 3)),
+																															A2(_user$project$Haggis_Combination$RunOfTriples, 2, _user$project$Haggis_Card$Three)),
 																														_1: {ctor: '[]'}
 																													}
 																												});
@@ -1221,11 +1221,11 @@ var _user$project$Tests$all = A2(
 																													{
 																														ctor: '::',
 																														_0: _elm_lang$core$Maybe$Just(
-																															A2(_user$project$Haggis_Combination$RunOfPairs, 3, 4)),
+																															A2(_user$project$Haggis_Combination$RunOfPairs, 3, _user$project$Haggis_Card$Four)),
 																														_1: {
 																															ctor: '::',
 																															_0: _elm_lang$core$Maybe$Just(
-																																A2(_user$project$Haggis_Combination$RunOfTriples, 2, 3)),
+																																A2(_user$project$Haggis_Combination$RunOfTriples, 2, _user$project$Haggis_Card$Three)),
 																															_1: {ctor: '[]'}
 																														}
 																													});
@@ -1483,7 +1483,7 @@ var _user$project$Tests$all = A2(
 																		}),
 																	{
 																		ctor: '::',
-																		_0: A2(_user$project$Haggis_Combination$RunOfSingles, 3, 4),
+																		_0: A2(_user$project$Haggis_Combination$RunOfSingles, 3, _user$project$Haggis_Card$Four),
 																		_1: {ctor: '[]'}
 																	});
 															}),
@@ -1737,10 +1737,10 @@ var _user$project$Tests$all = A2(
 																						_user$project$Haggis_Hand$collectSequences(_user$project$Tests$hand),
 																						{
 																							ctor: '::',
-																							_0: A2(_user$project$Haggis_Combination$RunOfPairs, 2, 3),
+																							_0: A2(_user$project$Haggis_Combination$RunOfPairs, 2, _user$project$Haggis_Card$Three),
 																							_1: {
 																								ctor: '::',
-																								_0: A2(_user$project$Haggis_Combination$RunOfSingles, 3, 4),
+																								_0: A2(_user$project$Haggis_Combination$RunOfSingles, 3, _user$project$Haggis_Card$Four),
 																								_1: {ctor: '[]'}
 																							}
 																						});

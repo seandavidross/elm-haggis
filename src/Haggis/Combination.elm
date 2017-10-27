@@ -36,12 +36,12 @@ type alias Sets =
 
 
 type Sequence qty rank
-    = RunOfSingles Int Card.Order
-    | RunOfPairs Int Card.Order
-    | RunOfTriples Int Card.Order
-    | RunOfFourOfAKinds Int Card.Order
-    | RunOfFiveOfAKinds Int Card.Order
-    | RunOfSixOfAKinds Int Card.Order
+    = RunOfSingles Int Card.Rank
+    | RunOfPairs Int Card.Rank
+    | RunOfTriples Int Card.Rank
+    | RunOfFourOfAKinds Int Card.Rank
+    | RunOfFiveOfAKinds Int Card.Rank
+    | RunOfSixOfAKinds Int Card.Rank
 
 
 type Bomb
@@ -60,18 +60,23 @@ type Bomb
 set : Cards -> Maybe (Set Card.Rank)
 set cards =
     let
-        ( spotcards, wildcards ) =
-            List.partition isSpotCard cards
+        ( naturals, wilds ) =
+            split cards
 
         rank =
             Result.withDefault Two (findRank cards)
     in
-        if allSameRank spotcards then
+        if allSameRank naturals then
             makeSet cards
-        else if List.length wildcards == 1 && List.length cards == 1 then
+        else if List.length wilds == 1 && List.length cards == 1 then
             Just (Single rank)
         else
             Nothing
+
+
+split : List Card -> ( List Card, List Card )
+split cards =
+    List.partition isNatural cards
 
 
 allSameRank : Cards -> Bool
@@ -218,16 +223,16 @@ dropDuplicates_ existing remaining =
 -- SEQUENCE
 
 
-sequence : Cards -> List (Maybe (Sequence Int Card.Order))
+sequence : Cards -> List (Maybe (Sequence Int Card.Rank))
 sequence cards =
     let
-        ( spotcards, wildcards ) =
-            List.partition isSpotCard cards
+        ( naturals, wilds ) =
+            split cards
 
         sequenceWidths =
-            range (countSuits spotcards) (countSuits cards)
+            range (countSuits naturals) (countSuits cards)
     in
-        if List.length spotcards == 0 then
+        if List.length naturals == 0 then
             [ Nothing ]
         else
             sequenceWidths
@@ -235,17 +240,17 @@ sequence cards =
                 |> keepJustSequences
 
 
-maybeSequenceOfWidth : Cards -> Int -> Maybe (Sequence Int Card.Order)
+maybeSequenceOfWidth : Cards -> Int -> Maybe (Sequence Int Card.Rank)
 maybeSequenceOfWidth cards sequenceWidth =
     let
-        ( spotcards, wildcards ) =
-            List.partition isSpotCard cards
+        ( naturals, wilds ) =
+            split cards
 
         numberOfCards =
             List.length cards
 
         lowRank =
-            findLowestRank spotcards
+            findLowestRank naturals
 
         sequenceLength =
             numberOfCards // sequenceWidth
@@ -280,16 +285,16 @@ hasEnoughCards sequenceWidth numberOfCards =
 canFormSequence : Int -> List Int -> Cards -> Bool
 canFormSequence sequenceWidth ranks cards =
     let
-        ( spotcards, wildcards ) =
-            List.partition isSpotCard cards
+        ( naturals, wilds ) =
+            split cards
 
-        wildsNeedToCompleteSets =
+        wildsNeeded =
             countWildsNeeded sequenceWidth (collectCardsWithRanks ranks cards)
 
-        wildsUsedAsNaturals =
-            List.length (List.filter (\w -> member w.order ranks) wildcards)
+        wildsUsed =
+            List.length (List.filter (\w -> member w.order ranks) wilds)
     in
-        wildsNeedToCompleteSets == (List.length wildcards - wildsUsedAsNaturals)
+        wildsNeeded == (List.length wilds - wildsUsed)
 
 
 countWildsNeeded : Int -> Sets -> Int
@@ -302,32 +307,36 @@ collectCardsWithRanks ranks cards =
     List.map (\rank -> List.filter (\c -> c.order == rank) cards) ranks
 
 
-makeSequence : Int -> Int -> Card.Order -> Maybe (Sequence Int Card.Order)
-makeSequence sequenceLength sequenceWidth rank =
-    case sequenceWidth of
-        1 ->
-            Just (RunOfSingles sequenceLength rank)
+makeSequence : Int -> Int -> Card.Order -> Maybe (Sequence Int Card.Rank)
+makeSequence sequenceLength sequenceWidth order =
+    let
+        rank =
+            Maybe.withDefault Two (toRank order)
+    in
+        case sequenceWidth of
+            1 ->
+                Just (RunOfSingles sequenceLength rank)
 
-        2 ->
-            Just (RunOfPairs sequenceLength rank)
+            2 ->
+                Just (RunOfPairs sequenceLength rank)
 
-        3 ->
-            Just (RunOfTriples sequenceLength rank)
+            3 ->
+                Just (RunOfTriples sequenceLength rank)
 
-        4 ->
-            Just (RunOfFourOfAKinds sequenceLength rank)
+            4 ->
+                Just (RunOfFourOfAKinds sequenceLength rank)
 
-        5 ->
-            Just (RunOfFiveOfAKinds sequenceLength rank)
+            5 ->
+                Just (RunOfFiveOfAKinds sequenceLength rank)
 
-        6 ->
-            Just (RunOfSixOfAKinds sequenceLength rank)
+            6 ->
+                Just (RunOfSixOfAKinds sequenceLength rank)
 
-        otherwise ->
-            Nothing
+            otherwise ->
+                Nothing
 
 
-keepJustSequences : List (Maybe (Sequence Int Card.Order)) -> List (Maybe (Sequence Int Card.Order))
+keepJustSequences : List (Maybe (Sequence Int Card.Rank)) -> List (Maybe (Sequence Int Card.Rank))
 keepJustSequences sequences =
     let
         justSequences =
@@ -341,7 +350,7 @@ keepJustSequences sequences =
                 justSequences
 
 
-isSequence : Maybe (Sequence Int Card.Order) -> Bool
+isSequence : Maybe (Sequence Int Card.Rank) -> Bool
 isSequence s =
     case s of
         Nothing ->

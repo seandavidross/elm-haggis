@@ -66,7 +66,7 @@ var _user$project$Haggis_Card$Card = F4(
 		return {suit: a, rank: b, order: c, points: d};
 	});
 var _user$project$Haggis_Card$Wild = {ctor: 'Wild'};
-var _user$project$Haggis_Card$isSpotCard = function (card) {
+var _user$project$Haggis_Card$isNatural = function (card) {
 	return !_elm_lang$core$Native_Utils.eq(card.suit, _user$project$Haggis_Card$Wild);
 };
 var _user$project$Haggis_Card$Blue = {ctor: 'Blue'};
@@ -86,3 +86,34 @@ var _user$project$Haggis_Card$Five = {ctor: 'Five'};
 var _user$project$Haggis_Card$Four = {ctor: 'Four'};
 var _user$project$Haggis_Card$Three = {ctor: 'Three'};
 var _user$project$Haggis_Card$Two = {ctor: 'Two'};
+var _user$project$Haggis_Card$toRank = function (order) {
+	var _p6 = order;
+	switch (_p6) {
+		case 2:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Two);
+		case 3:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Three);
+		case 4:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Four);
+		case 5:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Five);
+		case 6:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Six);
+		case 7:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Seven);
+		case 8:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Eight);
+		case 9:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Nine);
+		case 10:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Ten);
+		case 11:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Jack);
+		case 12:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Queen);
+		case 13:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$King);
+		default:
+			return _elm_lang$core$Maybe$Nothing;
+	}
+};
