@@ -1,0 +1,45 @@
+var _elm_community$random_extra$Random_Float$standardNormal = A3(
+	_elm_lang$core$Random$map2,
+	F2(
+		function (u, theta) {
+			return _elm_lang$core$Basics$sqrt(
+				-2 * A2(
+					_elm_lang$core$Basics$logBase,
+					_elm_lang$core$Basics$e,
+					1 - A2(_elm_lang$core$Basics$max, 0, u))) * _elm_lang$core$Basics$cos(theta);
+		}),
+	A2(_elm_lang$core$Random$float, 0, 1),
+	A2(_elm_lang$core$Random$float, 0, 2 * _elm_lang$core$Basics$pi));
+var _elm_community$random_extra$Random_Float$normal = F2(
+	function (mean, stdDev) {
+		return A2(
+			_elm_lang$core$Random$map,
+			function (u) {
+				return (u * stdDev) + mean;
+			},
+			_elm_community$random_extra$Random_Float$standardNormal);
+	});
+var _elm_community$random_extra$Random_Float$floatLessThan = function (value) {
+	return A2(
+		_elm_lang$core$Random$float,
+		_elm_lang$core$Basics$toFloat(_elm_lang$core$Random$minInt),
+		value);
+};
+var _elm_community$random_extra$Random_Float$floatGreaterThan = function (value) {
+	return A2(
+		_elm_lang$core$Random$float,
+		value,
+		_elm_lang$core$Basics$toFloat(_elm_lang$core$Random$maxInt));
+};
+var _elm_community$random_extra$Random_Float$negativeFloat = A2(
+	_elm_lang$core$Random$float,
+	_elm_lang$core$Basics$toFloat(_elm_lang$core$Random$minInt),
+	0);
+var _elm_community$random_extra$Random_Float$positiveFloat = A2(
+	_elm_lang$core$Random$float,
+	0,
+	_elm_lang$core$Basics$toFloat(_elm_lang$core$Random$maxInt));
+var _elm_community$random_extra$Random_Float$anyFloat = A2(
+	_elm_lang$core$Random$float,
+	_elm_lang$core$Basics$toFloat(_elm_lang$core$Random$minInt),
+	_elm_lang$core$Basics$toFloat(_elm_lang$core$Random$maxInt));

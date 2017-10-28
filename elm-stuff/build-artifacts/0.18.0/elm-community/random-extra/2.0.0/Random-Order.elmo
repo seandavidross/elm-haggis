@@ -1,0 +1,17 @@
+var _elm_community$random_extra$Random_Order$order = A2(
+	_elm_lang$core$Random$map,
+	_elm_lang$core$Maybe$withDefault(_elm_lang$core$Basics$EQ),
+	_elm_community$random_extra$Random_Extra$sample(
+		{
+			ctor: '::',
+			_0: _elm_lang$core$Basics$LT,
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Basics$EQ,
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$core$Basics$GT,
+					_1: {ctor: '[]'}
+				}
+			}
+		}));
