@@ -230,7 +230,7 @@ sequence cards =
             split cards
 
         sequenceWidths =
-            range (countSuits naturals) (countSuits cards)
+            List.range (countSuits naturals) (countSuits cards)
     in
         if List.length naturals == 0 then
             [ Nothing ]
@@ -259,7 +259,7 @@ maybeSequenceOfWidth cards sequenceWidth =
             lowRank + sequenceLength - 1
 
         ranks =
-            range lowRank highRank
+            List.range lowRank highRank
     in
         if
             hasEnoughCards sequenceWidth numberOfCards
@@ -358,18 +358,3 @@ isSequence s =
 
         otherwise ->
             True
-
-
-{-| It seems the version of Elm I'm using doesn't expose List.range...??
--}
-range : Int -> Int -> List Int
-range lo hi =
-    rangeHelp lo hi []
-
-
-rangeHelp : Int -> Int -> List Int -> List Int
-rangeHelp lo hi list =
-    if lo <= hi then
-        rangeHelp lo (hi - 1) (hi :: list)
-    else
-        list

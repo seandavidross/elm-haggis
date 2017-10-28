@@ -1,0 +1,102 @@
+var _elm_community$random_extra$Random_Date$date = F2(
+	function (startDate, endDate) {
+		return A2(
+			_elm_lang$core$Random$map,
+			_elm_lang$core$Date$fromTime,
+			A2(
+				_elm_lang$core$Random$float,
+				_elm_lang$core$Date$toTime(startDate),
+				_elm_lang$core$Date$toTime(endDate)));
+	});
+var _elm_community$random_extra$Random_Date$second = A2(_elm_lang$core$Random$int, 0, 59);
+var _elm_community$random_extra$Random_Date$minute = A2(_elm_lang$core$Random$int, 0, 59);
+var _elm_community$random_extra$Random_Date$hour12 = A2(_elm_lang$core$Random$int, 0, 11);
+var _elm_community$random_extra$Random_Date$hour24 = A2(_elm_lang$core$Random$int, 0, 23);
+var _elm_community$random_extra$Random_Date$hour = A2(_elm_lang$core$Random$int, 0, 23);
+var _elm_community$random_extra$Random_Date$year = _elm_lang$core$Random$int;
+var _elm_community$random_extra$Random_Date$month = A2(
+	_elm_lang$core$Random$map,
+	_elm_lang$core$Maybe$withDefault(_elm_lang$core$Date$Jan),
+	_elm_community$random_extra$Random_Extra$sample(
+		{
+			ctor: '::',
+			_0: _elm_lang$core$Date$Jan,
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Date$Feb,
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$core$Date$Mar,
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$core$Date$Apr,
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$core$Date$May,
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$core$Date$Jun,
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$core$Date$Jul,
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$core$Date$Aug,
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$core$Date$Sep,
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$core$Date$Oct,
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$core$Date$Nov,
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$core$Date$Dec,
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}));
+var _elm_community$random_extra$Random_Date$day = A2(
+	_elm_lang$core$Random$map,
+	_elm_lang$core$Maybe$withDefault(_elm_lang$core$Date$Mon),
+	_elm_community$random_extra$Random_Extra$sample(
+		{
+			ctor: '::',
+			_0: _elm_lang$core$Date$Mon,
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Date$Tue,
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$core$Date$Wed,
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$core$Date$Thu,
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$core$Date$Fri,
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$core$Date$Sat,
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$core$Date$Sun,
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			}
+		}));

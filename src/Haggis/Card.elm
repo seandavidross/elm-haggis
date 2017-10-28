@@ -87,7 +87,7 @@ equal card card_ =
 
 {-| A "spot card" is a card game term for any card that is not
 a Jack, Queen, or King which are called face cards. In Haggis,
-face cards are wildcards: so, any non-wildcard is a spot card.
+since face cards are wild, all spot cards are natural.
 -}
 isNatural : Card -> Bool
 isNatural card =
