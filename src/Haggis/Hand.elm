@@ -16,7 +16,7 @@ collectSets hand =
 
 collectSequences : Hand -> List (Combination.Sequence Int Card.Rank)
 collectSequences hand =
-    List.filterMap
+    List.map
         identity
         (List.concatMap Combination.sequence (Cards.subsets hand))
 

@@ -233,7 +233,7 @@ dropDuplicates_ existing remaining =
 -- SEQUENCE
 
 
-sequence : Cards -> List (Maybe (Sequence Int Card.Rank))
+sequence : Cards -> List (Sequence Int Card.Rank)
 sequence cards =
     let
         ( naturals, wilds ) =
@@ -243,11 +243,9 @@ sequence cards =
             List.range (countSuits naturals) (countSuits cards)
     in
         if List.length naturals == 0 then
-            [ Nothing ]
+            []
         else
-            setSizes
-                |> List.map (maybeRunOfSets cards)
-                |> keepJustSequences
+            List.filterMap (maybeRunOfSets cards) setSizes
 
 
 maybeRunOfSets : Cards -> Int -> Maybe (Sequence Int Card.Rank)
@@ -367,27 +365,3 @@ makeSequence runLength setSize rank =
 
         otherwise ->
             Nothing
-
-
-keepJustSequences : List (Maybe (Sequence Int Card.Rank)) -> List (Maybe (Sequence Int Card.Rank))
-keepJustSequences sequences =
-    let
-        justSequences =
-            List.filter isSequence sequences
-    in
-        case justSequences of
-            [] ->
-                [ Nothing ]
-
-            otherwise ->
-                justSequences
-
-
-isSequence : Maybe (Sequence Int Card.Rank) -> Bool
-isSequence s =
-    case s of
-        Nothing ->
-            False
-
-        otherwise ->
-            True
