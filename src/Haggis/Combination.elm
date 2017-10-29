@@ -259,42 +259,58 @@ maybeRunOfSets cards setSize =
         cardCount =
             List.length cards
 
-        lowestOrder =
-            findLowestOrder naturals
-
         runLength =
             cardCount // setSize
 
-        highestOrder =
-            lowestOrder + runLength - 1
-
-        highestRank =
-            Card.toRank highestOrder
-
-        ranks =
-            List.range lowestOrder highestOrder
+        ranksInRun =
+            collectRanksInRun runLength naturals
     in
-        if
-            hasEnoughCards setSize cardCount
-                && (cardCount == (runLength * setSize))
-                && canFormSequence setSize ranks cards
-        then
-            case highestRank of
-                Just rank ->
-                    makeSequence runLength setSize rank
-
-                otherwise ->
+        case ranksInRun of
+            Just ( highestRank, ranks ) ->
+                if
+                    hasEnoughCards setSize cardCount
+                        && (cardCount == (runLength * setSize))
+                        && canFormSequence setSize ranks cards
+                then
+                    makeSequence runLength setSize highestRank
+                else
                     Nothing
-        else
-            Nothing
+
+            otherwise ->
+                Nothing
 
 
-findLowestOrder : Cards -> Card.Order
+collectRanksInRun : Int -> List Card -> Maybe ( Rank, List Card.Order )
+collectRanksInRun runLength cards =
+    let
+        lowestOrder =
+            findLowestOrder cards
+    in
+        case lowestOrder of
+            Just low ->
+                let
+                    high =
+                        low + runLength - 1
+
+                    highestRank =
+                        Card.toRank high
+                in
+                    case highestRank of
+                        Just rank ->
+                            Just ( rank, List.range low high )
+
+                        otherwise ->
+                            Nothing
+
+            otherwise ->
+                Nothing
+
+
+findLowestOrder : Cards -> Maybe Card.Order
 findLowestOrder cards =
     cards
         |> List.map Card.order
         |> List.minimum
-        |> Maybe.withDefault 2
 
 
 hasEnoughCards : Int -> Int -> Bool

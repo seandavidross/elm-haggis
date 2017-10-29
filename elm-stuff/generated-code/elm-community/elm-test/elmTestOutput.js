@@ -12625,36 +12625,56 @@ var _user$project$Haggis_Combination$hasEnoughCards = F2(
 		return (_elm_lang$core$Native_Utils.eq(setSize, 1) && (_elm_lang$core$Native_Utils.cmp(cardCount, 3) > -1)) || ((_elm_lang$core$Native_Utils.cmp(setSize, 1) > 0) && (_elm_lang$core$Native_Utils.cmp(cardCount, setSize * 2) > -1));
 	});
 var _user$project$Haggis_Combination$findLowestOrder = function (cards) {
-	return A2(
-		_elm_lang$core$Maybe$withDefault,
-		2,
-		_elm_lang$core$List$minimum(
-			A2(_elm_lang$core$List$map, _user$project$Haggis_Card$order, cards)));
+	return _elm_lang$core$List$minimum(
+		A2(_elm_lang$core$List$map, _user$project$Haggis_Card$order, cards));
 };
+var _user$project$Haggis_Combination$collectRanksInRun = F2(
+	function (runLength, cards) {
+		var lowestOrder = _user$project$Haggis_Combination$findLowestOrder(cards);
+		var _p2 = lowestOrder;
+		if (_p2.ctor === 'Just') {
+			var _p4 = _p2._0;
+			var high = (_p4 + runLength) - 1;
+			var highestRank = _user$project$Haggis_Card$toRank(high);
+			var _p3 = highestRank;
+			if (_p3.ctor === 'Just') {
+				return _elm_lang$core$Maybe$Just(
+					{
+						ctor: '_Tuple2',
+						_0: _p3._0,
+						_1: A2(_elm_lang$core$List$range, _p4, high)
+					});
+			} else {
+				return _elm_lang$core$Maybe$Nothing;
+			}
+		} else {
+			return _elm_lang$core$Maybe$Nothing;
+		}
+	});
 var _user$project$Haggis_Combination$dropDuplicates_ = F2(
 	function (existing, remaining) {
 		dropDuplicates_:
 		while (true) {
-			var _p2 = remaining;
-			if (_p2.ctor === '[]') {
+			var _p5 = remaining;
+			if (_p5.ctor === '[]') {
 				return {ctor: '[]'};
 			} else {
-				var _p4 = _p2._1;
-				var _p3 = _p2._0;
-				if (A2(_elm_lang$core$List$member, _p3, existing)) {
-					var _v3 = existing,
-						_v4 = _p4;
-					existing = _v3;
-					remaining = _v4;
+				var _p7 = _p5._1;
+				var _p6 = _p5._0;
+				if (A2(_elm_lang$core$List$member, _p6, existing)) {
+					var _v5 = existing,
+						_v6 = _p7;
+					existing = _v5;
+					remaining = _v6;
 					continue dropDuplicates_;
 				} else {
 					return {
 						ctor: '::',
-						_0: _p3,
+						_0: _p6,
 						_1: A2(
 							_user$project$Haggis_Combination$dropDuplicates_,
-							{ctor: '::', _0: _p3, _1: existing},
-							_p4)
+							{ctor: '::', _0: _p6, _1: existing},
+							_p7)
 					};
 				}
 			}
@@ -12683,12 +12703,12 @@ var _user$project$Haggis_Combination$hasSameSuit = F2(
 			_user$project$Haggis_Card$suit(c2));
 	});
 var _user$project$Haggis_Combination$allSameSuit = function (cards) {
-	var _p5 = cards;
-	if (_p5.ctor === '::') {
+	var _p8 = cards;
+	if (_p8.ctor === '::') {
 		return A2(
 			_elm_lang$core$List$all,
-			_user$project$Haggis_Combination$hasSameSuit(_p5._0),
-			_p5._1);
+			_user$project$Haggis_Combination$hasSameSuit(_p8._0),
+			_p8._1);
 	} else {
 		return false;
 	}
@@ -12696,37 +12716,37 @@ var _user$project$Haggis_Combination$allSameSuit = function (cards) {
 var _user$project$Haggis_Combination$findRank = function (cards) {
 	findRank:
 	while (true) {
-		var _p6 = cards;
-		if (_p6.ctor === '[]') {
+		var _p9 = cards;
+		if (_p9.ctor === '[]') {
 			return _elm_lang$core$Maybe$Nothing;
 		} else {
-			if (_p6._1.ctor === '[]') {
+			if (_p9._1.ctor === '[]') {
 				return _elm_lang$core$Maybe$Just(
-					_user$project$Haggis_Card$rank(_p6._0));
+					_user$project$Haggis_Card$rank(_p9._0));
 			} else {
-				var _p8 = _p6._0;
-				var _p7 = _p8.suit;
-				if (_p7.ctor === 'Wild') {
-					var _v8 = _p6._1;
-					cards = _v8;
+				var _p11 = _p9._0;
+				var _p10 = _p11.suit;
+				if (_p10.ctor === 'Wild') {
+					var _v10 = _p9._1;
+					cards = _v10;
 					continue findRank;
 				} else {
 					return _elm_lang$core$Maybe$Just(
-						_user$project$Haggis_Card$rank(_p8));
+						_user$project$Haggis_Card$rank(_p11));
 				}
 			}
 		}
 	}
 };
 var _user$project$Haggis_Combination$allSameRank = function (cards) {
-	var _p9 = cards;
-	if (_p9.ctor === '[]') {
+	var _p12 = cards;
+	if (_p12.ctor === '[]') {
 		return false;
 	} else {
 		return A2(
 			_elm_lang$core$List$all,
-			_user$project$Haggis_Card$equal(_p9._0),
-			_p9._1);
+			_user$project$Haggis_Card$equal(_p12._0),
+			_p12._1);
 	}
 };
 var _user$project$Haggis_Combination$split = function (cards) {
@@ -12738,9 +12758,9 @@ var _user$project$Haggis_Combination$canFormSequence = F3(
 			_user$project$Haggis_Combination$countWildsNeeded,
 			setSize,
 			A2(_user$project$Haggis_Combination$collectCardsWithRanks, ranks, cards));
-		var _p10 = _user$project$Haggis_Combination$split(cards);
-		var naturals = _p10._0;
-		var wilds = _p10._1;
+		var _p13 = _user$project$Haggis_Combination$split(cards);
+		var naturals = _p13._0;
+		var wilds = _p13._1;
 		var wildsUsed = _elm_lang$core$List$length(
 			A2(
 				_elm_lang$core$List$filter,
@@ -12784,29 +12804,29 @@ var _user$project$Haggis_Combination$Single = function (a) {
 };
 var _user$project$Haggis_Combination$makeSet = function (cards) {
 	var highestRank = _user$project$Haggis_Combination$findRank(cards);
-	var _p11 = highestRank;
-	if (_p11.ctor === 'Just') {
-		var _p13 = _p11._0;
-		var _p12 = _elm_lang$core$List$length(cards);
-		switch (_p12) {
+	var _p14 = highestRank;
+	if (_p14.ctor === 'Just') {
+		var _p16 = _p14._0;
+		var _p15 = _elm_lang$core$List$length(cards);
+		switch (_p15) {
 			case 1:
 				return _elm_lang$core$Maybe$Just(
-					_user$project$Haggis_Combination$Single(_p13));
+					_user$project$Haggis_Combination$Single(_p16));
 			case 2:
 				return _elm_lang$core$Maybe$Just(
-					_user$project$Haggis_Combination$Pair(_p13));
+					_user$project$Haggis_Combination$Pair(_p16));
 			case 3:
 				return _elm_lang$core$Maybe$Just(
-					_user$project$Haggis_Combination$Triple(_p13));
+					_user$project$Haggis_Combination$Triple(_p16));
 			case 4:
 				return _elm_lang$core$Maybe$Just(
-					_user$project$Haggis_Combination$FourOfAKind(_p13));
+					_user$project$Haggis_Combination$FourOfAKind(_p16));
 			case 5:
 				return _elm_lang$core$Maybe$Just(
-					_user$project$Haggis_Combination$FiveOfAKind(_p13));
+					_user$project$Haggis_Combination$FiveOfAKind(_p16));
 			case 6:
 				return _elm_lang$core$Maybe$Just(
-					_user$project$Haggis_Combination$SixOfAKind(_p13));
+					_user$project$Haggis_Combination$SixOfAKind(_p16));
 			default:
 				return _elm_lang$core$Maybe$Nothing;
 		}
@@ -12816,17 +12836,17 @@ var _user$project$Haggis_Combination$makeSet = function (cards) {
 };
 var _user$project$Haggis_Combination$set = function (cards) {
 	var highestRank = _user$project$Haggis_Combination$findRank(cards);
-	var _p14 = _user$project$Haggis_Combination$split(cards);
-	var naturals = _p14._0;
-	var wilds = _p14._1;
-	var _p15 = highestRank;
-	if (_p15.ctor === 'Just') {
+	var _p17 = _user$project$Haggis_Combination$split(cards);
+	var naturals = _p17._0;
+	var wilds = _p17._1;
+	var _p18 = highestRank;
+	if (_p18.ctor === 'Just') {
 		return _user$project$Haggis_Combination$allSameRank(naturals) ? _user$project$Haggis_Combination$makeSet(cards) : ((_elm_lang$core$Native_Utils.eq(
 			_elm_lang$core$List$length(wilds),
 			1) && _elm_lang$core$Native_Utils.eq(
 			_elm_lang$core$List$length(cards),
 			1)) ? _elm_lang$core$Maybe$Just(
-			_user$project$Haggis_Combination$Single(_p15._0)) : _elm_lang$core$Maybe$Nothing);
+			_user$project$Haggis_Combination$Single(_p18._0)) : _elm_lang$core$Maybe$Nothing);
 	} else {
 		return _elm_lang$core$Maybe$Nothing;
 	}
@@ -12857,8 +12877,8 @@ var _user$project$Haggis_Combination$RunOfSingles = F2(
 	});
 var _user$project$Haggis_Combination$makeSequence = F3(
 	function (runLength, setSize, rank) {
-		var _p16 = setSize;
-		switch (_p16) {
+		var _p19 = setSize;
+		switch (_p19) {
 			case 1:
 				return _elm_lang$core$Maybe$Just(
 					A2(_user$project$Haggis_Combination$RunOfSingles, runLength, rank));
@@ -12885,28 +12905,21 @@ var _user$project$Haggis_Combination$maybeRunOfSets = F2(
 	function (cards, setSize) {
 		var cardCount = _elm_lang$core$List$length(cards);
 		var runLength = (cardCount / setSize) | 0;
-		var _p17 = _user$project$Haggis_Combination$split(cards);
-		var naturals = _p17._0;
-		var wilds = _p17._1;
-		var lowestOrder = _user$project$Haggis_Combination$findLowestOrder(naturals);
-		var highestOrder = (lowestOrder + runLength) - 1;
-		var highestRank = _user$project$Haggis_Card$toRank(highestOrder);
-		var ranks = A2(_elm_lang$core$List$range, lowestOrder, highestOrder);
-		if (A2(_user$project$Haggis_Combination$hasEnoughCards, setSize, cardCount) && (_elm_lang$core$Native_Utils.eq(cardCount, runLength * setSize) && A3(_user$project$Haggis_Combination$canFormSequence, setSize, ranks, cards))) {
-			var _p18 = highestRank;
-			if (_p18.ctor === 'Just') {
-				return A3(_user$project$Haggis_Combination$makeSequence, runLength, setSize, _p18._0);
-			} else {
-				return _elm_lang$core$Maybe$Nothing;
-			}
+		var _p20 = _user$project$Haggis_Combination$split(cards);
+		var naturals = _p20._0;
+		var wilds = _p20._1;
+		var ranksInRun = A2(_user$project$Haggis_Combination$collectRanksInRun, runLength, naturals);
+		var _p21 = ranksInRun;
+		if ((_p21.ctor === 'Just') && (_p21._0.ctor === '_Tuple2')) {
+			return (A2(_user$project$Haggis_Combination$hasEnoughCards, setSize, cardCount) && (_elm_lang$core$Native_Utils.eq(cardCount, runLength * setSize) && A3(_user$project$Haggis_Combination$canFormSequence, setSize, _p21._0._1, cards))) ? A3(_user$project$Haggis_Combination$makeSequence, runLength, setSize, _p21._0._0) : _elm_lang$core$Maybe$Nothing;
 		} else {
 			return _elm_lang$core$Maybe$Nothing;
 		}
 	});
 var _user$project$Haggis_Combination$sequence = function (cards) {
-	var _p19 = _user$project$Haggis_Combination$split(cards);
-	var naturals = _p19._0;
-	var wilds = _p19._1;
+	var _p22 = _user$project$Haggis_Combination$split(cards);
+	var naturals = _p22._0;
+	var wilds = _p22._1;
 	var setSizes = A2(
 		_elm_lang$core$List$range,
 		_user$project$Haggis_Combination$countSuits(naturals),
@@ -12934,47 +12947,47 @@ var _user$project$Haggis_Combination$bomb = function (cards) {
 		_elm_lang$core$List$sortWith,
 		_user$project$Haggis_Card$byRank,
 		A2(_elm_lang$core$List$map, _user$project$Haggis_Card$rank, cards));
-	var _p20 = ranks;
-	_v15_5:
+	var _p23 = ranks;
+	_v17_5:
 	do {
-		if ((_p20.ctor === '::') && (_p20._1.ctor === '::')) {
-			if (_p20._1._1.ctor === '[]') {
-				switch (_p20._0.ctor) {
+		if ((_p23.ctor === '::') && (_p23._1.ctor === '::')) {
+			if (_p23._1._1.ctor === '[]') {
+				switch (_p23._0.ctor) {
 					case 'Jack':
-						switch (_p20._1._0.ctor) {
+						switch (_p23._1._0.ctor) {
 							case 'Queen':
 								return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$JQ);
 							case 'King':
 								return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$JK);
 							default:
-								break _v15_5;
+								break _v17_5;
 						}
 					case 'Queen':
-						if (_p20._1._0.ctor === 'King') {
+						if (_p23._1._0.ctor === 'King') {
 							return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$QK);
 						} else {
-							break _v15_5;
+							break _v17_5;
 						}
 					default:
-						break _v15_5;
+						break _v17_5;
 				}
 			} else {
-				if (_p20._1._1._1.ctor === '[]') {
-					if (((_p20._0.ctor === 'Jack') && (_p20._1._0.ctor === 'Queen')) && (_p20._1._1._0.ctor === 'King')) {
+				if (_p23._1._1._1.ctor === '[]') {
+					if (((_p23._0.ctor === 'Jack') && (_p23._1._0.ctor === 'Queen')) && (_p23._1._1._0.ctor === 'King')) {
 						return _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$JQK);
 					} else {
-						break _v15_5;
+						break _v17_5;
 					}
 				} else {
-					if (((((_p20._0.ctor === 'Three') && (_p20._1._0.ctor === 'Five')) && (_p20._1._1._0.ctor === 'Seven')) && (_p20._1._1._1._0.ctor === 'Nine')) && (_p20._1._1._1._1.ctor === '[]')) {
+					if (((((_p23._0.ctor === 'Three') && (_p23._1._0.ctor === 'Five')) && (_p23._1._1._0.ctor === 'Seven')) && (_p23._1._1._1._0.ctor === 'Nine')) && (_p23._1._1._1._1.ctor === '[]')) {
 						return _user$project$Haggis_Combination$allSameSuit(cards) ? _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Suited) : (_user$project$Haggis_Combination$hasFourSuits(cards) ? _elm_lang$core$Maybe$Just(_user$project$Haggis_Combination$Rainbow) : _elm_lang$core$Maybe$Nothing);
 					} else {
-						break _v15_5;
+						break _v17_5;
 					}
 				}
 			}
 		} else {
-			break _v15_5;
+			break _v17_5;
 		}
 	} while(false);
 	return _elm_lang$core$Maybe$Nothing;
