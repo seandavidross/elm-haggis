@@ -327,7 +327,7 @@ canFormSequence setSize ranks cards =
             countWildsNeeded setSize (collectCardsWithRanks ranks cards)
 
         wildsUsed =
-            List.length (List.filter (\w -> member (Card.order w) ranks) wilds)
+            List.length (List.filter (\w -> List.member (Card.order w) ranks) wilds)
     in
         wildsNeeded == (List.length wilds - wildsUsed)
 
