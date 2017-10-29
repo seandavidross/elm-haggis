@@ -63,15 +63,20 @@ set cards =
         ( naturals, wilds ) =
             split cards
 
-        rank =
-            Result.withDefault Two (findRank cards)
+        highestRank =
+            findRank cards
     in
-        if allSameRank naturals then
-            makeSet cards
-        else if List.length wilds == 1 && List.length cards == 1 then
-            Just (Single rank)
-        else
-            Nothing
+        case highestRank of
+            Just rank ->
+                if allSameRank naturals then
+                    makeSet cards
+                else if List.length wilds == 1 && List.length cards == 1 then
+                    Just (Single rank)
+                else
+                    Nothing
+
+            otherwise ->
+                Nothing
 
 
 split : List Card -> ( List Card, List Card )
@@ -89,14 +94,14 @@ allSameRank cards =
             List.all (Card.equal first) rest
 
 
-findRank : Cards -> Result String Card.Rank
+findRank : Cards -> Maybe Card.Rank
 findRank cards =
     case cards of
         [] ->
-            Err "Expected to get one or more cards but got zero."
+            Nothing
 
         c :: [] ->
-            Ok (Card.rank c)
+            Just (Card.rank c)
 
         c :: cs ->
             case c.suit of
@@ -104,33 +109,38 @@ findRank cards =
                     findRank cs
 
                 otherwise ->
-                    Ok (Card.rank c)
+                    Just (Card.rank c)
 
 
 makeSet : Cards -> Maybe (Set Card.Rank)
 makeSet cards =
     let
-        rank =
-            Result.withDefault Two (findRank cards)
+        highestRank =
+            findRank cards
     in
-        case length cards of
-            1 ->
-                Just (Single rank)
+        case highestRank of
+            Just rank ->
+                case length cards of
+                    1 ->
+                        Just (Single rank)
 
-            2 ->
-                Just (Pair rank)
+                    2 ->
+                        Just (Pair rank)
 
-            3 ->
-                Just (Triple rank)
+                    3 ->
+                        Just (Triple rank)
 
-            4 ->
-                Just (FourOfAKind rank)
+                    4 ->
+                        Just (FourOfAKind rank)
 
-            5 ->
-                Just (FiveOfAKind rank)
+                    5 ->
+                        Just (FiveOfAKind rank)
 
-            6 ->
-                Just (SixOfAKind rank)
+                    6 ->
+                        Just (SixOfAKind rank)
+
+                    otherwise ->
+                        Nothing
 
             otherwise ->
                 Nothing
