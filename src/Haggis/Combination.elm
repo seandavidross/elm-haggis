@@ -229,19 +229,19 @@ sequence cards =
         ( naturals, wilds ) =
             split cards
 
-        widths =
+        setSizes =
             List.range (countSuits naturals) (countSuits cards)
     in
         if List.length naturals == 0 then
             [ Nothing ]
         else
-            widths
-                |> List.map (maybeSequenceOfWidth cards)
+            setSizes
+                |> List.map (maybeRunOfSets cards)
                 |> keepJustSequences
 
 
-maybeSequenceOfWidth : Cards -> Int -> Maybe (Sequence Int Card.Rank)
-maybeSequenceOfWidth cards setSize =
+maybeRunOfSets : Cards -> Int -> Maybe (Sequence Int Card.Rank)
+maybeRunOfSets cards setSize =
     let
         ( naturals, wilds ) =
             split cards
@@ -298,20 +298,20 @@ canFormSequence setSize ranks cards =
 
 
 countWildsNeeded : Int -> Sets -> Int
-countWildsNeeded sizeOfSets sets =
-    List.sum (List.map (\set -> sizeOfSets - List.length set) sets)
+countWildsNeeded setSize sets =
+    List.sum (List.map (\s -> setSize - List.length s) sets)
 
 
 collectCardsWithRanks : List Int -> Cards -> Sets
 collectCardsWithRanks ranks cards =
-    List.map (\rank -> List.filter (\c -> (Card.order c) == rank) cards) ranks
+    List.map (\r -> List.filter (\c -> (Card.order c) == r) cards) ranks
 
 
 makeSequence : Int -> Int -> Card.Order -> Maybe (Sequence Int Card.Rank)
 makeSequence runLength setSize order =
     let
         rank =
-            Maybe.withDefault Two (toRank order)
+            Maybe.withDefault Two (Card.toRank order)
     in
         case setSize of
             1 ->

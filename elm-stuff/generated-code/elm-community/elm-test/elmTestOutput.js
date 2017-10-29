@@ -12374,12 +12374,33 @@ var _user$project$Haggis_Card$equal = F2(
 			_user$project$Haggis_Card$rank(card),
 			_user$project$Haggis_Card$rank(card_));
 	});
+var _user$project$Haggis_Card$points = function (card) {
+	var _p0 = _user$project$Haggis_Card$rank(card);
+	switch (_p0.ctor) {
+		case 'Three':
+			return 1;
+		case 'Five':
+			return 1;
+		case 'Seven':
+			return 1;
+		case 'Nine':
+			return 1;
+		case 'Jack':
+			return 2;
+		case 'Queen':
+			return 3;
+		case 'King':
+			return 5;
+		default:
+			return 0;
+	}
+};
 var _user$project$Haggis_Card$suit = function (card) {
 	return card.suit;
 };
-var _user$project$Haggis_Card$Card = F4(
-	function (a, b, c, d) {
-		return {suit: a, rank: b, order: c, points: d};
+var _user$project$Haggis_Card$Card = F3(
+	function (a, b, c) {
+		return {suit: a, rank: b, order: c};
 	});
 var _user$project$Haggis_Card$Wild = {ctor: 'Wild'};
 var _user$project$Haggis_Card$isNatural = function (card) {
@@ -12498,8 +12519,8 @@ var _user$project$Haggis_Card$cardOrdering = A2(
 				_user$project$Haggis_Card$rank(c2));
 		}));
 var _user$project$Haggis_Card$toRank = function (order) {
-	var _p0 = order;
-	switch (_p0) {
+	var _p1 = order;
+	switch (_p1) {
 		case 2:
 			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Two);
 		case 3:
@@ -12577,25 +12598,25 @@ var _user$project$Haggis_Combination$collectCardsWithRanks = F2(
 	function (ranks, cards) {
 		return A2(
 			_elm_lang$core$List$map,
-			function (rank) {
+			function (r) {
 				return A2(
 					_elm_lang$core$List$filter,
 					function (c) {
 						return _elm_lang$core$Native_Utils.eq(
 							_user$project$Haggis_Card$order(c),
-							rank);
+							r);
 					},
 					cards);
 			},
 			ranks);
 	});
 var _user$project$Haggis_Combination$countWildsNeeded = F2(
-	function (sizeOfSets, sets) {
+	function (setSize, sets) {
 		return _elm_lang$core$List$sum(
 			A2(
 				_elm_lang$core$List$map,
-				function (set) {
-					return sizeOfSets - _elm_lang$core$List$length(set);
+				function (s) {
+					return setSize - _elm_lang$core$List$length(s);
 				},
 				sets));
 	});
@@ -12859,7 +12880,7 @@ var _user$project$Haggis_Combination$makeSequence = F3(
 				return _elm_lang$core$Maybe$Nothing;
 		}
 	});
-var _user$project$Haggis_Combination$maybeSequenceOfWidth = F2(
+var _user$project$Haggis_Combination$maybeRunOfSets = F2(
 	function (cards, setSize) {
 		var cardCount = _elm_lang$core$List$length(cards);
 		var runLength = (cardCount / setSize) | 0;
@@ -12875,7 +12896,7 @@ var _user$project$Haggis_Combination$sequence = function (cards) {
 	var _p15 = _user$project$Haggis_Combination$split(cards);
 	var naturals = _p15._0;
 	var wilds = _p15._1;
-	var widths = A2(
+	var setSizes = A2(
 		_elm_lang$core$List$range,
 		_user$project$Haggis_Combination$countSuits(naturals),
 		_user$project$Haggis_Combination$countSuits(cards));
@@ -12888,8 +12909,8 @@ var _user$project$Haggis_Combination$sequence = function (cards) {
 	} : _user$project$Haggis_Combination$keepJustSequences(
 		A2(
 			_elm_lang$core$List$map,
-			_user$project$Haggis_Combination$maybeSequenceOfWidth(cards),
-			widths));
+			_user$project$Haggis_Combination$maybeRunOfSets(cards),
+			setSizes));
 };
 var _user$project$Haggis_Combination$Suited = {ctor: 'Suited'};
 var _user$project$Haggis_Combination$JQK = {ctor: 'JQK'};
@@ -12990,23 +13011,23 @@ var _user$project$Native_RunTest = (function() {
   };
 })();
 
-var _user$project$Tests$king = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$King, order: 13, points: 5};
-var _user$project$Tests$queen = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$Queen, order: 12, points: 3};
-var _user$project$Tests$jack = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$Jack, order: 11, points: 2};
-var _user$project$Tests$greenTen = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Ten, order: 10, points: 0};
-var _user$project$Tests$blueTen = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Ten, order: 10, points: 0};
-var _user$project$Tests$yellowNine = {suit: _user$project$Haggis_Card$Yellow, rank: _user$project$Haggis_Card$Nine, order: 9, points: 1};
-var _user$project$Tests$redNine = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Nine, order: 9, points: 1};
-var _user$project$Tests$orangeSeven = {suit: _user$project$Haggis_Card$Orange, rank: _user$project$Haggis_Card$Seven, order: 7, points: 1};
-var _user$project$Tests$redSeven = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Seven, order: 7, points: 1};
-var _user$project$Tests$greenFive = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Five, order: 5, points: 1};
-var _user$project$Tests$redFive = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Five, order: 5, points: 1};
-var _user$project$Tests$blueFour = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Four, order: 4, points: 1};
-var _user$project$Tests$redThree = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Three, order: 3, points: 1};
-var _user$project$Tests$greenThree = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Three, order: 3, points: 1};
-var _user$project$Tests$blueThree = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Three, order: 3, points: 1};
-var _user$project$Tests$greenTwo = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Two, order: 2, points: 0};
-var _user$project$Tests$blueTwo = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Two, order: 2, points: 0};
+var _user$project$Tests$king = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$King, order: 13};
+var _user$project$Tests$queen = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$Queen, order: 12};
+var _user$project$Tests$jack = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$Jack, order: 11};
+var _user$project$Tests$greenTen = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Ten, order: 10};
+var _user$project$Tests$blueTen = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Ten, order: 10};
+var _user$project$Tests$yellowNine = {suit: _user$project$Haggis_Card$Yellow, rank: _user$project$Haggis_Card$Nine, order: 9};
+var _user$project$Tests$redNine = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Nine, order: 9};
+var _user$project$Tests$orangeSeven = {suit: _user$project$Haggis_Card$Orange, rank: _user$project$Haggis_Card$Seven, order: 7};
+var _user$project$Tests$redSeven = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Seven, order: 7};
+var _user$project$Tests$greenFive = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Five, order: 5};
+var _user$project$Tests$redFive = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Five, order: 5};
+var _user$project$Tests$blueFour = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Four, order: 4};
+var _user$project$Tests$redThree = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Three, order: 3};
+var _user$project$Tests$greenThree = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Three, order: 3};
+var _user$project$Tests$blueThree = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Three, order: 3};
+var _user$project$Tests$greenTwo = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Two, order: 2};
+var _user$project$Tests$blueTwo = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Two, order: 2};
 var _user$project$Tests$hand = {
 	ctor: '::',
 	_0: _user$project$Tests$blueTwo,
@@ -13097,7 +13118,10 @@ var _user$project$Tests$all = A2(
 							'new card has correct points',
 							function (_p4) {
 								var _p5 = _p4;
-								return A2(_elm_community$elm_test$Expect$equal, _user$project$Tests$redSeven.points, 1);
+								return A2(
+									_elm_community$elm_test$Expect$equal,
+									_user$project$Haggis_Card$points(_user$project$Tests$redSeven),
+									1);
 							}),
 						_1: {
 							ctor: '::',

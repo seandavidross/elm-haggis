@@ -23,25 +23,25 @@ var _user$project$Haggis_Combination$collectCardsWithRanks = F2(
 	function (ranks, cards) {
 		return A2(
 			_elm_lang$core$List$map,
-			function (rank) {
+			function (r) {
 				return A2(
 					_elm_lang$core$List$filter,
 					function (c) {
 						return _elm_lang$core$Native_Utils.eq(
 							_user$project$Haggis_Card$order(c),
-							rank);
+							r);
 					},
 					cards);
 			},
 			ranks);
 	});
 var _user$project$Haggis_Combination$countWildsNeeded = F2(
-	function (sizeOfSets, sets) {
+	function (setSize, sets) {
 		return _elm_lang$core$List$sum(
 			A2(
 				_elm_lang$core$List$map,
-				function (set) {
-					return sizeOfSets - _elm_lang$core$List$length(set);
+				function (s) {
+					return setSize - _elm_lang$core$List$length(s);
 				},
 				sets));
 	});
@@ -305,7 +305,7 @@ var _user$project$Haggis_Combination$makeSequence = F3(
 				return _elm_lang$core$Maybe$Nothing;
 		}
 	});
-var _user$project$Haggis_Combination$maybeSequenceOfWidth = F2(
+var _user$project$Haggis_Combination$maybeRunOfSets = F2(
 	function (cards, setSize) {
 		var cardCount = _elm_lang$core$List$length(cards);
 		var runLength = (cardCount / setSize) | 0;
@@ -321,7 +321,7 @@ var _user$project$Haggis_Combination$sequence = function (cards) {
 	var _p15 = _user$project$Haggis_Combination$split(cards);
 	var naturals = _p15._0;
 	var wilds = _p15._1;
-	var widths = A2(
+	var setSizes = A2(
 		_elm_lang$core$List$range,
 		_user$project$Haggis_Combination$countSuits(naturals),
 		_user$project$Haggis_Combination$countSuits(cards));
@@ -334,8 +334,8 @@ var _user$project$Haggis_Combination$sequence = function (cards) {
 	} : _user$project$Haggis_Combination$keepJustSequences(
 		A2(
 			_elm_lang$core$List$map,
-			_user$project$Haggis_Combination$maybeSequenceOfWidth(cards),
-			widths));
+			_user$project$Haggis_Combination$maybeRunOfSets(cards),
+			setSizes));
 };
 var _user$project$Haggis_Combination$Suited = {ctor: 'Suited'};
 var _user$project$Haggis_Combination$JQK = {ctor: 'JQK'};
