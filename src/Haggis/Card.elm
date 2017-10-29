@@ -8,7 +8,6 @@ type alias Card =
     { suit : Suit
     , rank : Rank
     , order : Order
-    , points : Points
     }
 
 
@@ -93,6 +92,11 @@ rankOrdering =
     Ordering.explicit (Array.toList ranks)
 
 
+byRank : Rank -> Rank -> Basics.Order
+byRank r1 r2 =
+    rankOrdering r1 r2
+
+
 cardOrdering : Ordering Card
 cardOrdering =
     Ordering.byRank
@@ -159,3 +163,31 @@ since face cards are wild, all spot cards are natural.
 isNatural : Card -> Bool
 isNatural card =
     (suit card) /= Wild
+
+
+points : Card -> Points
+points card =
+    case rank card of
+        Three ->
+            1
+
+        Five ->
+            1
+
+        Seven ->
+            1
+
+        Nine ->
+            1
+
+        Jack ->
+            2
+
+        Queen ->
+            3
+
+        King ->
+            5
+
+        otherwise ->
+            0

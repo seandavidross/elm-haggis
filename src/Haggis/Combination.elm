@@ -76,7 +76,7 @@ set cards =
 
 split : List Card -> ( List Card, List Card )
 split cards =
-    List.partition isNatural cards
+    List.partition Card.isNatural cards
 
 
 allSameRank : Cards -> Bool
@@ -86,7 +86,7 @@ allSameRank cards =
             False
 
         first :: rest ->
-            List.all (equal first) rest
+            List.all (Card.equal first) rest
 
 
 findRank : Cards -> Result String Card.Rank
@@ -96,7 +96,7 @@ findRank cards =
             Err "Expected to get one or more cards but got zero."
 
         c :: [] ->
-            Ok c.rank
+            Ok (Card.rank c)
 
         c :: cs ->
             case c.suit of
@@ -104,7 +104,7 @@ findRank cards =
                     findRank cs
 
                 otherwise ->
-                    Ok c.rank
+                    Ok (Card.rank c)
 
 
 makeSet : Cards -> Maybe (Set Card.Rank)
@@ -144,7 +144,7 @@ bomb : Cards -> Maybe Bomb
 bomb cards =
     let
         ranks =
-            cards |> List.sortBy .order |> List.map .rank
+            cards |> List.map Card.rank |> List.sortWith Card.byRank
     in
         case ranks of
             [ Jack, Queen ] ->
@@ -182,8 +182,8 @@ allSameSuit cards =
 
 
 hasSameSuit : Card -> Card -> Bool
-hasSameSuit card card_ =
-    card.suit == card_.suit
+hasSameSuit c1 c2 =
+    Card.suit c1 == Card.suit c2
 
 
 hasFourSuits : Cards -> Bool
@@ -194,19 +194,19 @@ hasFourSuits cards =
 countSuits : Cards -> Int
 countSuits cards =
     cards
-        |> List.map .suit
+        |> List.map Card.suit
         |> dropDuplicates
         |> List.length
 
 
 {-| dropDuplicates is based on code from elm-community/elm-list-extras
 -}
-dropDuplicates : List Suit -> List Suit
+dropDuplicates : List Card.Suit -> List Card.Suit
 dropDuplicates suits =
     dropDuplicates_ [] suits
 
 
-dropDuplicates_ : List Suit -> List Suit -> List Suit
+dropDuplicates_ : List Card.Suit -> List Card.Suit -> List Card.Suit
 dropDuplicates_ existing remaining =
     case remaining of
         [] ->
@@ -229,111 +229,118 @@ sequence cards =
         ( naturals, wilds ) =
             split cards
 
-        sequenceWidths =
+        setSizes =
             List.range (countSuits naturals) (countSuits cards)
     in
         if List.length naturals == 0 then
             [ Nothing ]
         else
-            sequenceWidths
-                |> List.map (maybeSequenceOfWidth cards)
+            setSizes
+                |> List.map (maybeRunOfSets cards)
                 |> keepJustSequences
 
 
-maybeSequenceOfWidth : Cards -> Int -> Maybe (Sequence Int Card.Rank)
-maybeSequenceOfWidth cards sequenceWidth =
+maybeRunOfSets : Cards -> Int -> Maybe (Sequence Int Card.Rank)
+maybeRunOfSets cards setSize =
     let
         ( naturals, wilds ) =
             split cards
 
-        numberOfCards =
+        cardCount =
             List.length cards
 
-        lowRank =
-            findLowestRank naturals
+        lowestOrder =
+            findLowestOrder naturals
 
-        sequenceLength =
-            numberOfCards // sequenceWidth
+        runLength =
+            cardCount // setSize
 
-        highRank =
-            lowRank + sequenceLength - 1
+        highestOrder =
+            lowestOrder + runLength - 1
+
+        highestRank =
+            Card.toRank highestOrder
 
         ranks =
-            List.range lowRank highRank
+            List.range lowestOrder highestOrder
     in
         if
-            hasEnoughCards sequenceWidth numberOfCards
-                && (numberOfCards == (sequenceLength * sequenceWidth))
-                && canFormSequence sequenceWidth ranks cards
+            hasEnoughCards setSize cardCount
+                && (cardCount == (runLength * setSize))
+                && canFormSequence setSize ranks cards
         then
-            makeSequence sequenceLength sequenceWidth highRank
+            case highestRank of
+                Just rank ->
+                    makeSequence runLength setSize rank
+
+                otherwise ->
+                    Nothing
         else
             Nothing
 
 
-findLowestRank : Cards -> Card.Order
-findLowestRank cards =
-    cards |> List.map .order |> List.minimum |> Maybe.withDefault 2
+findLowestOrder : Cards -> Card.Order
+findLowestOrder cards =
+    cards
+        |> List.map Card.order
+        |> List.minimum
+        |> Maybe.withDefault 2
 
 
 hasEnoughCards : Int -> Int -> Bool
-hasEnoughCards sequenceWidth numberOfCards =
-    (sequenceWidth == 1 && numberOfCards >= 3)
-        || (sequenceWidth > 1 && numberOfCards >= sequenceWidth * 2)
+hasEnoughCards setSize cardCount =
+    (setSize == 1 && cardCount >= 3)
+        || (setSize > 1 && cardCount >= setSize * 2)
 
 
 canFormSequence : Int -> List Int -> Cards -> Bool
-canFormSequence sequenceWidth ranks cards =
+canFormSequence setSize ranks cards =
     let
         ( naturals, wilds ) =
             split cards
 
         wildsNeeded =
-            countWildsNeeded sequenceWidth (collectCardsWithRanks ranks cards)
+            countWildsNeeded setSize (collectCardsWithRanks ranks cards)
 
         wildsUsed =
-            List.length (List.filter (\w -> member w.order ranks) wilds)
+            List.length (List.filter (\w -> member (Card.order w) ranks) wilds)
     in
         wildsNeeded == (List.length wilds - wildsUsed)
 
 
 countWildsNeeded : Int -> Sets -> Int
-countWildsNeeded sizeOfSets sets =
-    List.sum (List.map (\set -> sizeOfSets - List.length set) sets)
+countWildsNeeded setSize sets =
+    List.sum (List.map (\s -> setSize - List.length s) sets)
 
 
 collectCardsWithRanks : List Int -> Cards -> Sets
 collectCardsWithRanks ranks cards =
-    List.map (\rank -> List.filter (\c -> c.order == rank) cards) ranks
+    List.map (\r -> List.filter (\c -> (Card.order c) == r) cards) ranks
 
 
-makeSequence : Int -> Int -> Card.Order -> Maybe (Sequence Int Card.Rank)
-makeSequence sequenceLength sequenceWidth order =
-    let
-        rank =
-            Maybe.withDefault Two (toRank order)
-    in
-        case sequenceWidth of
-            1 ->
-                Just (RunOfSingles sequenceLength rank)
+makeSequence : Int -> Int -> Card.Rank -> Maybe (Sequence Int Card.Rank)
+makeSequence runLength setSize rank =
+    case setSize of
+        1 ->
+            Just (RunOfSingles runLength rank)
 
-            2 ->
-                Just (RunOfPairs sequenceLength rank)
+        2 ->
+            Just (RunOfPairs runLength rank)
 
-            3 ->
-                Just (RunOfTriples sequenceLength rank)
+        3 ->
+            Just (RunOfTriples runLength rank)
 
-            4 ->
-                Just (RunOfFourOfAKinds sequenceLength rank)
+        4 ->
+            Just (RunOfFourOfAKinds runLength rank)
 
-            5 ->
-                Just (RunOfFiveOfAKinds sequenceLength rank)
+        5 ->
+            Just (RunOfFiveOfAKinds runLength rank)
 
-            6 ->
-                Just (RunOfSixOfAKinds sequenceLength rank)
+        6 ->
+            Just (RunOfSixOfAKinds runLength rank)
 
-            otherwise ->
-                Nothing
+        otherwise ->
+            Nothing
 
 
 keepJustSequences : List (Maybe (Sequence Int Card.Rank)) -> List (Maybe (Sequence Int Card.Rank))

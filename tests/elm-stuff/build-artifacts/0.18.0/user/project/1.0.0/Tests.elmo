@@ -1,20 +1,20 @@
-var _user$project$Tests$king = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$King, order: 13, points: 5};
-var _user$project$Tests$queen = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$Queen, order: 12, points: 3};
-var _user$project$Tests$jack = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$Jack, order: 11, points: 2};
-var _user$project$Tests$greenTen = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Ten, order: 10, points: 0};
-var _user$project$Tests$blueTen = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Ten, order: 10, points: 0};
-var _user$project$Tests$yellowNine = {suit: _user$project$Haggis_Card$Yellow, rank: _user$project$Haggis_Card$Nine, order: 9, points: 1};
-var _user$project$Tests$redNine = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Nine, order: 9, points: 1};
-var _user$project$Tests$orangeSeven = {suit: _user$project$Haggis_Card$Orange, rank: _user$project$Haggis_Card$Seven, order: 7, points: 1};
-var _user$project$Tests$redSeven = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Seven, order: 7, points: 1};
-var _user$project$Tests$greenFive = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Five, order: 5, points: 1};
-var _user$project$Tests$redFive = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Five, order: 5, points: 1};
-var _user$project$Tests$blueFour = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Four, order: 4, points: 1};
-var _user$project$Tests$redThree = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Three, order: 3, points: 1};
-var _user$project$Tests$greenThree = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Three, order: 3, points: 1};
-var _user$project$Tests$blueThree = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Three, order: 3, points: 1};
-var _user$project$Tests$greenTwo = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Two, order: 2, points: 0};
-var _user$project$Tests$blueTwo = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Two, order: 2, points: 0};
+var _user$project$Tests$king = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$King, order: 13};
+var _user$project$Tests$queen = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$Queen, order: 12};
+var _user$project$Tests$jack = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$Jack, order: 11};
+var _user$project$Tests$greenTen = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Ten, order: 10};
+var _user$project$Tests$blueTen = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Ten, order: 10};
+var _user$project$Tests$yellowNine = {suit: _user$project$Haggis_Card$Yellow, rank: _user$project$Haggis_Card$Nine, order: 9};
+var _user$project$Tests$redNine = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Nine, order: 9};
+var _user$project$Tests$orangeSeven = {suit: _user$project$Haggis_Card$Orange, rank: _user$project$Haggis_Card$Seven, order: 7};
+var _user$project$Tests$redSeven = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Seven, order: 7};
+var _user$project$Tests$greenFive = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Five, order: 5};
+var _user$project$Tests$redFive = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Five, order: 5};
+var _user$project$Tests$blueFour = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Four, order: 4};
+var _user$project$Tests$redThree = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Three, order: 3};
+var _user$project$Tests$greenThree = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Three, order: 3};
+var _user$project$Tests$blueThree = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Three, order: 3};
+var _user$project$Tests$greenTwo = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Two, order: 2};
+var _user$project$Tests$blueTwo = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Two, order: 2};
 var _user$project$Tests$hand = {
 	ctor: '::',
 	_0: _user$project$Tests$blueTwo,
@@ -87,7 +87,10 @@ var _user$project$Tests$all = A2(
 					'new card has correct suit',
 					function (_p0) {
 						var _p1 = _p0;
-						return A2(_elm_community$elm_test$Expect$equal, _user$project$Tests$blueTwo.suit, _user$project$Haggis_Card$Blue);
+						return A2(
+							_elm_community$elm_test$Expect$equal,
+							_user$project$Haggis_Card$suit(_user$project$Tests$blueTwo),
+							_user$project$Haggis_Card$Blue);
 					}),
 				_1: {
 					ctor: '::',
@@ -96,7 +99,10 @@ var _user$project$Tests$all = A2(
 						'new card has correct rank',
 						function (_p2) {
 							var _p3 = _p2;
-							return A2(_elm_community$elm_test$Expect$equal, _user$project$Tests$blueTwo.rank, _user$project$Haggis_Card$Two);
+							return A2(
+								_elm_community$elm_test$Expect$equal,
+								_user$project$Haggis_Card$rank(_user$project$Tests$blueTwo),
+								_user$project$Haggis_Card$Two);
 						}),
 					_1: {
 						ctor: '::',
@@ -105,7 +111,10 @@ var _user$project$Tests$all = A2(
 							'new card has correct points',
 							function (_p4) {
 								var _p5 = _p4;
-								return A2(_elm_community$elm_test$Expect$equal, _user$project$Tests$redSeven.points, 1);
+								return A2(
+									_elm_community$elm_test$Expect$equal,
+									_user$project$Haggis_Card$points(_user$project$Tests$redSeven),
+									1);
 							}),
 						_1: {
 							ctor: '::',
@@ -114,7 +123,10 @@ var _user$project$Tests$all = A2(
 								'card with lower rank less than card with higher rank',
 								function (_p6) {
 									var _p7 = _p6;
-									return A2(_elm_community$elm_test$Expect$lessThan, _user$project$Tests$redSeven.order, _user$project$Tests$blueTwo.order);
+									return A2(
+										_elm_community$elm_test$Expect$lessThan,
+										_user$project$Haggis_Card$order(_user$project$Tests$redSeven),
+										_user$project$Haggis_Card$order(_user$project$Tests$blueTwo));
 								}),
 							_1: {
 								ctor: '::',
@@ -123,7 +135,10 @@ var _user$project$Tests$all = A2(
 									'two cards with the same rank are equal',
 									function (_p8) {
 										var _p9 = _p8;
-										return A2(_elm_community$elm_test$Expect$equal, _user$project$Tests$blueTwo.order, _user$project$Tests$greenTwo.order);
+										return A2(
+											_elm_community$elm_test$Expect$equal,
+											_user$project$Haggis_Card$order(_user$project$Tests$blueTwo),
+											_user$project$Haggis_Card$order(_user$project$Tests$greenTwo));
 									}),
 								_1: {
 									ctor: '::',

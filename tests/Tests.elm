@@ -14,19 +14,19 @@ all =
         [ describe "Haggis.Card"
             [ test "new card has correct suit" <|
                 \() ->
-                    Expect.equal blueTwo.suit Blue
+                    Expect.equal (Card.suit blueTwo) Blue
             , test "new card has correct rank" <|
                 \() ->
-                    Expect.equal blueTwo.rank Two
+                    Expect.equal (Card.rank blueTwo) Two
             , test "new card has correct points" <|
                 \() ->
-                    Expect.equal redSeven.points 1
+                    Expect.equal (Card.points redSeven) 1
             , test "card with lower rank less than card with higher rank" <|
                 \() ->
-                    Expect.lessThan redSeven.order blueTwo.order
+                    Expect.lessThan (Card.order redSeven) (Card.order blueTwo)
             , test "two cards with the same rank are equal" <|
                 \() ->
-                    Expect.equal blueTwo.order greenTwo.order
+                    Expect.equal (Card.order blueTwo) (Card.order greenTwo)
             , test "non-matching single cards do not match" <|
                 \() ->
                     Expect.notEqual blueTwo redSeven
@@ -240,7 +240,14 @@ all =
                     \() ->
                         Expect.equal
                             (Hand.collectBombs
-                                [ redThree, greenThree, redFive, redSeven, orangeSeven, redNine, yellowNine ]
+                                [ redThree
+                                , greenThree
+                                , redFive
+                                , redSeven
+                                , orangeSeven
+                                , redNine
+                                , yellowNine
+                                ]
                             )
                             [ Suited, Rainbow ]
                 , test "can find all sets contained in a full hand of cards" <|
@@ -295,87 +302,87 @@ all =
 
 blueTwo : Card
 blueTwo =
-    { suit = Blue, rank = Two, order = 2, points = 0 }
+    { suit = Blue, rank = Two, order = 2 }
 
 
 greenTwo : Card
 greenTwo =
-    { suit = Green, rank = Two, order = 2, points = 0 }
+    { suit = Green, rank = Two, order = 2 }
 
 
 blueThree : Card
 blueThree =
-    { suit = Blue, rank = Three, order = 3, points = 1 }
+    { suit = Blue, rank = Three, order = 3 }
 
 
 greenThree : Card
 greenThree =
-    { suit = Green, rank = Three, order = 3, points = 1 }
+    { suit = Green, rank = Three, order = 3 }
 
 
 redThree : Card
 redThree =
-    { suit = Red, rank = Three, order = 3, points = 1 }
+    { suit = Red, rank = Three, order = 3 }
 
 
 blueFour : Card
 blueFour =
-    { suit = Blue, rank = Four, order = 4, points = 1 }
+    { suit = Blue, rank = Four, order = 4 }
 
 
 redFive : Card
 redFive =
-    { suit = Red, rank = Five, order = 5, points = 1 }
+    { suit = Red, rank = Five, order = 5 }
 
 
 greenFive : Card
 greenFive =
-    { suit = Green, rank = Five, order = 5, points = 1 }
+    { suit = Green, rank = Five, order = 5 }
 
 
 redSeven : Card
 redSeven =
-    { suit = Red, rank = Seven, order = 7, points = 1 }
+    { suit = Red, rank = Seven, order = 7 }
 
 
 orangeSeven : Card
 orangeSeven =
-    { suit = Orange, rank = Seven, order = 7, points = 1 }
+    { suit = Orange, rank = Seven, order = 7 }
 
 
 redNine : Card
 redNine =
-    { suit = Red, rank = Nine, order = 9, points = 1 }
+    { suit = Red, rank = Nine, order = 9 }
 
 
 yellowNine : Card
 yellowNine =
-    { suit = Yellow, rank = Nine, order = 9, points = 1 }
+    { suit = Yellow, rank = Nine, order = 9 }
 
 
 blueTen : Card
 blueTen =
-    { suit = Blue, rank = Ten, order = 10, points = 0 }
+    { suit = Blue, rank = Ten, order = 10 }
 
 
 greenTen : Card
 greenTen =
-    { suit = Green, rank = Ten, order = 10, points = 0 }
+    { suit = Green, rank = Ten, order = 10 }
 
 
 jack : Card
 jack =
-    { suit = Wild, rank = Jack, order = 11, points = 2 }
+    { suit = Wild, rank = Jack, order = 11 }
 
 
 queen : Card
 queen =
-    { suit = Wild, rank = Queen, order = 12, points = 3 }
+    { suit = Wild, rank = Queen, order = 12 }
 
 
 king : Card
 king =
-    { suit = Wild, rank = King, order = 13, points = 5 }
+    { suit = Wild, rank = King, order = 13 }
 
 
 hand : Hand
