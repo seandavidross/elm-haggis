@@ -11488,6 +11488,170 @@ var _elm_community$elm_test$Test_Runner$shrink = F2(
 		}
 	});
 
+var _matthewsj$elm_ordering$Ordering$greaterThanBy = F3(
+	function (ordering, x, y) {
+		var _p0 = A2(ordering, x, y);
+		if (_p0.ctor === 'GT') {
+			return true;
+		} else {
+			return false;
+		}
+	});
+var _matthewsj$elm_ordering$Ordering$lessThanBy = F3(
+	function (ordering, x, y) {
+		var _p1 = A2(ordering, x, y);
+		if (_p1.ctor === 'LT') {
+			return true;
+		} else {
+			return false;
+		}
+	});
+var _matthewsj$elm_ordering$Ordering$isOrdered = F2(
+	function (ordering, items) {
+		isOrdered:
+		while (true) {
+			var _p2 = items;
+			if ((_p2.ctor === '::') && (_p2._1.ctor === '::')) {
+				var _p4 = _p2._1;
+				var _p3 = A2(ordering, _p2._0, _p2._1._0);
+				switch (_p3.ctor) {
+					case 'LT':
+						var _v4 = ordering,
+							_v5 = _p4;
+						ordering = _v4;
+						items = _v5;
+						continue isOrdered;
+					case 'EQ':
+						var _v6 = ordering,
+							_v7 = _p4;
+						ordering = _v6;
+						items = _v7;
+						continue isOrdered;
+					default:
+						return false;
+				}
+			} else {
+				return true;
+			}
+		}
+	});
+var _matthewsj$elm_ordering$Ordering$reverse = F3(
+	function (ordering, x, y) {
+		var _p5 = A2(ordering, x, y);
+		switch (_p5.ctor) {
+			case 'LT':
+				return _elm_lang$core$Basics$GT;
+			case 'EQ':
+				return _elm_lang$core$Basics$EQ;
+			default:
+				return _elm_lang$core$Basics$LT;
+		}
+	});
+var _matthewsj$elm_ordering$Ordering$noConflicts = _elm_lang$core$Basics$EQ;
+var _matthewsj$elm_ordering$Ordering$ifStillTiedThen = F2(
+	function (tiebreaker, mainOrder) {
+		var _p6 = mainOrder;
+		if (_p6.ctor === 'EQ') {
+			return tiebreaker;
+		} else {
+			return mainOrder;
+		}
+	});
+var _matthewsj$elm_ordering$Ordering$breakTiesWith = F4(
+	function (tiebreaker, mainOrdering, x, y) {
+		var _p7 = A2(mainOrdering, x, y);
+		switch (_p7.ctor) {
+			case 'LT':
+				return _elm_lang$core$Basics$LT;
+			case 'GT':
+				return _elm_lang$core$Basics$GT;
+			default:
+				return A2(tiebreaker, x, y);
+		}
+	});
+var _matthewsj$elm_ordering$Ordering$byFieldWith = F4(
+	function (compareField, extractField, x, y) {
+		return A2(
+			compareField,
+			extractField(x),
+			extractField(y));
+	});
+var _matthewsj$elm_ordering$Ordering$explicit = F3(
+	function (items, x, y) {
+		var scanForY = function (items) {
+			scanForY:
+			while (true) {
+				var _p8 = items;
+				if (_p8.ctor === '::') {
+					if (_elm_lang$core$Native_Utils.eq(_p8._0, y)) {
+						return _elm_lang$core$Basics$LT;
+					} else {
+						var _v12 = _p8._1;
+						items = _v12;
+						continue scanForY;
+					}
+				} else {
+					return _elm_lang$core$Basics$GT;
+				}
+			}
+		};
+		var scanForX = function (items) {
+			scanForX:
+			while (true) {
+				var _p9 = items;
+				if (_p9.ctor === '::') {
+					if (_elm_lang$core$Native_Utils.eq(_p9._0, x)) {
+						return _elm_lang$core$Basics$GT;
+					} else {
+						var _v14 = _p9._1;
+						items = _v14;
+						continue scanForX;
+					}
+				} else {
+					return _elm_lang$core$Basics$LT;
+				}
+			}
+		};
+		var scanForEither = function (items) {
+			scanForEither:
+			while (true) {
+				var _p10 = items;
+				if (_p10.ctor === '::') {
+					var _p12 = _p10._1;
+					var _p11 = _p10._0;
+					if (_elm_lang$core$Native_Utils.eq(_p11, x)) {
+						return scanForY(_p12);
+					} else {
+						if (_elm_lang$core$Native_Utils.eq(_p11, y)) {
+							return scanForX(_p12);
+						} else {
+							var _v16 = _p12;
+							items = _v16;
+							continue scanForEither;
+						}
+					}
+				} else {
+					return _elm_lang$core$Basics$EQ;
+				}
+			}
+		};
+		return _elm_lang$core$Native_Utils.eq(x, y) ? _elm_lang$core$Basics$EQ : scanForEither(items);
+	});
+var _matthewsj$elm_ordering$Ordering$fromLessThan = F3(
+	function (lt, x, y) {
+		return A2(lt, x, y) ? _elm_lang$core$Basics$LT : (A2(lt, y, x) ? _elm_lang$core$Basics$GT : _elm_lang$core$Basics$EQ);
+	});
+var _matthewsj$elm_ordering$Ordering$natural = _elm_lang$core$Basics$compare;
+var _matthewsj$elm_ordering$Ordering$byField = _matthewsj$elm_ordering$Ordering$byFieldWith(_matthewsj$elm_ordering$Ordering$natural);
+var _matthewsj$elm_ordering$Ordering$byToString = _matthewsj$elm_ordering$Ordering$byField(_elm_lang$core$Basics$toString);
+var _matthewsj$elm_ordering$Ordering$byRank = F2(
+	function (rank, withinRankOrdering) {
+		return A2(
+			_matthewsj$elm_ordering$Ordering$breakTiesWith,
+			withinRankOrdering,
+			_matthewsj$elm_ordering$Ordering$byField(rank));
+	});
+
 var _user$project$Test_Runner_Node_Vendor_Console$bgWhite = function (str) {
 	return A2(
 		_elm_lang$core$String$join,
@@ -12198,82 +12362,61 @@ var _user$project$Console_Text$normal = function (txt) {
 	}
 };
 
-var _user$project$Haggis_Card$compareSuits = F2(
-	function (s, s_) {
-		var _p0 = s;
-		switch (_p0.ctor) {
-			case 'Red':
-				var _p1 = s_;
-				if (_p1.ctor === 'Red') {
-					return _elm_lang$core$Basics$EQ;
-				} else {
-					return _elm_lang$core$Basics$LT;
-				}
-			case 'Orange':
-				var _p2 = s_;
-				switch (_p2.ctor) {
-					case 'Red':
-						return _elm_lang$core$Basics$GT;
-					case 'Orange':
-						return _elm_lang$core$Basics$EQ;
-					default:
-						return _elm_lang$core$Basics$LT;
-				}
-			case 'Yellow':
-				var _p3 = s_;
-				switch (_p3.ctor) {
-					case 'Red':
-						return _elm_lang$core$Basics$GT;
-					case 'Orange':
-						return _elm_lang$core$Basics$GT;
-					case 'Yellow':
-						return _elm_lang$core$Basics$EQ;
-					default:
-						return _elm_lang$core$Basics$LT;
-				}
-			case 'Green':
-				var _p4 = s_;
-				switch (_p4.ctor) {
-					case 'Wild':
-						return _elm_lang$core$Basics$LT;
-					case 'Blue':
-						return _elm_lang$core$Basics$LT;
-					case 'Green':
-						return _elm_lang$core$Basics$EQ;
-					default:
-						return _elm_lang$core$Basics$GT;
-				}
-			case 'Blue':
-				var _p5 = s_;
-				switch (_p5.ctor) {
-					case 'Wild':
-						return _elm_lang$core$Basics$LT;
-					case 'Blue':
-						return _elm_lang$core$Basics$EQ;
-					default:
-						return _elm_lang$core$Basics$GT;
-				}
-			default:
-				return _elm_lang$core$Basics$GT;
-		}
-	});
+var _user$project$Haggis_Card$order = function (card) {
+	return card.order;
+};
+var _user$project$Haggis_Card$rank = function (card) {
+	return card.rank;
+};
 var _user$project$Haggis_Card$equal = F2(
 	function (card, card_) {
-		return _elm_lang$core$Native_Utils.eq(card.order, card_.order);
+		return _elm_lang$core$Native_Utils.eq(
+			_user$project$Haggis_Card$rank(card),
+			_user$project$Haggis_Card$rank(card_));
 	});
+var _user$project$Haggis_Card$suit = function (card) {
+	return card.suit;
+};
 var _user$project$Haggis_Card$Card = F4(
 	function (a, b, c, d) {
 		return {suit: a, rank: b, order: c, points: d};
 	});
 var _user$project$Haggis_Card$Wild = {ctor: 'Wild'};
 var _user$project$Haggis_Card$isNatural = function (card) {
-	return !_elm_lang$core$Native_Utils.eq(card.suit, _user$project$Haggis_Card$Wild);
+	return !_elm_lang$core$Native_Utils.eq(
+		_user$project$Haggis_Card$suit(card),
+		_user$project$Haggis_Card$Wild);
 };
 var _user$project$Haggis_Card$Blue = {ctor: 'Blue'};
 var _user$project$Haggis_Card$Green = {ctor: 'Green'};
 var _user$project$Haggis_Card$Yellow = {ctor: 'Yellow'};
 var _user$project$Haggis_Card$Orange = {ctor: 'Orange'};
 var _user$project$Haggis_Card$Red = {ctor: 'Red'};
+var _user$project$Haggis_Card$suits = {
+	ctor: '::',
+	_0: _user$project$Haggis_Card$Red,
+	_1: {
+		ctor: '::',
+		_0: _user$project$Haggis_Card$Orange,
+		_1: {
+			ctor: '::',
+			_0: _user$project$Haggis_Card$Yellow,
+			_1: {
+				ctor: '::',
+				_0: _user$project$Haggis_Card$Green,
+				_1: {
+					ctor: '::',
+					_0: _user$project$Haggis_Card$Blue,
+					_1: {
+						ctor: '::',
+						_0: _user$project$Haggis_Card$Wild,
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		}
+	}
+};
 var _user$project$Haggis_Card$King = {ctor: 'King'};
 var _user$project$Haggis_Card$Queen = {ctor: 'Queen'};
 var _user$project$Haggis_Card$Jack = {ctor: 'Jack'};
@@ -12286,9 +12429,73 @@ var _user$project$Haggis_Card$Five = {ctor: 'Five'};
 var _user$project$Haggis_Card$Four = {ctor: 'Four'};
 var _user$project$Haggis_Card$Three = {ctor: 'Three'};
 var _user$project$Haggis_Card$Two = {ctor: 'Two'};
+var _user$project$Haggis_Card$ranks = _elm_lang$core$Array$fromList(
+	{
+		ctor: '::',
+		_0: _user$project$Haggis_Card$Two,
+		_1: {
+			ctor: '::',
+			_0: _user$project$Haggis_Card$Three,
+			_1: {
+				ctor: '::',
+				_0: _user$project$Haggis_Card$Four,
+				_1: {
+					ctor: '::',
+					_0: _user$project$Haggis_Card$Five,
+					_1: {
+						ctor: '::',
+						_0: _user$project$Haggis_Card$Six,
+						_1: {
+							ctor: '::',
+							_0: _user$project$Haggis_Card$Seven,
+							_1: {
+								ctor: '::',
+								_0: _user$project$Haggis_Card$Eight,
+								_1: {
+									ctor: '::',
+									_0: _user$project$Haggis_Card$Nine,
+									_1: {
+										ctor: '::',
+										_0: _user$project$Haggis_Card$Ten,
+										_1: {
+											ctor: '::',
+											_0: _user$project$Haggis_Card$Jack,
+											_1: {
+												ctor: '::',
+												_0: _user$project$Haggis_Card$Queen,
+												_1: {
+													ctor: '::',
+													_0: _user$project$Haggis_Card$King,
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	});
+var _user$project$Haggis_Card$rankOrdering = _matthewsj$elm_ordering$Ordering$explicit(
+	_elm_lang$core$Array$toList(_user$project$Haggis_Card$ranks));
+var _user$project$Haggis_Card$cardOrdering = A2(
+	_matthewsj$elm_ordering$Ordering$byRank,
+	function (card) {
+		return 1;
+	},
+	F2(
+		function (c1, c2) {
+			return A2(
+				_user$project$Haggis_Card$rankOrdering,
+				_user$project$Haggis_Card$rank(c1),
+				_user$project$Haggis_Card$rank(c2));
+		}));
 var _user$project$Haggis_Card$toRank = function (order) {
-	var _p6 = order;
-	switch (_p6) {
+	var _p0 = order;
+	switch (_p0) {
 		case 2:
 			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Two);
 		case 3:

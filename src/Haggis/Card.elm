@@ -1,11 +1,14 @@
 module Haggis.Card exposing (..)
 
+import Array exposing (Array)
+import Ordering exposing (..)
+
 
 type alias Card =
     { suit : Suit
     , rank : Rank
     , order : Order
-    , points : Int
+    , points : Points
     }
 
 
@@ -35,6 +38,70 @@ type Rank
 
 type alias Order =
     Int
+
+
+type alias Points =
+    Int
+
+
+suit : Card -> Suit
+suit card =
+    card.suit
+
+
+suits : List Suit
+suits =
+    [ Red
+    , Orange
+    , Yellow
+    , Green
+    , Blue
+    , Wild
+    ]
+
+
+rank : Card -> Rank
+rank card =
+    card.rank
+
+
+ranks : Array Rank
+ranks =
+    Array.fromList
+        [ Two
+        , Three
+        , Four
+        , Five
+        , Six
+        , Seven
+        , Eight
+        , Nine
+        , Ten
+        , Jack
+        , Queen
+        , King
+        ]
+
+
+order : Card -> Order
+order card =
+    card.order
+
+
+rankOrdering : Ordering Rank
+rankOrdering =
+    Ordering.explicit (Array.toList ranks)
+
+
+cardOrdering : Ordering Card
+cardOrdering =
+    Ordering.byRank
+        (\card ->
+            1
+        )
+        (\c1 c2 ->
+            rankOrdering (rank c1) (rank c2)
+        )
 
 
 toRank : Int -> Maybe Rank
@@ -82,7 +149,7 @@ toRank order =
 
 equal : Card -> Card -> Bool
 equal card card_ =
-    card.order == card_.order
+    (rank card) == (rank card_)
 
 
 {-| A "spot card" is a card game term for any card that is not
@@ -91,73 +158,4 @@ since face cards are wild, all spot cards are natural.
 -}
 isNatural : Card -> Bool
 isNatural card =
-    card.suit /= Wild
-
-
-{-| We need to be able to sort cards by rank (order) or by suit (or both)
-so, Suits need to be compareable. This seems like an instance
-where we could benefit from using Haskell-like typeclasses...
--}
-compareSuits : Suit -> Suit -> Basics.Order
-compareSuits s s_ =
-    case s of
-        Red ->
-            case s_ of
-                Red ->
-                    EQ
-
-                otherwise ->
-                    LT
-
-        Orange ->
-            case s_ of
-                Red ->
-                    GT
-
-                Orange ->
-                    EQ
-
-                otherwise ->
-                    LT
-
-        Yellow ->
-            case s_ of
-                Red ->
-                    GT
-
-                Orange ->
-                    GT
-
-                Yellow ->
-                    EQ
-
-                otherwise ->
-                    LT
-
-        Green ->
-            case s_ of
-                Wild ->
-                    LT
-
-                Blue ->
-                    LT
-
-                Green ->
-                    EQ
-
-                otherwise ->
-                    GT
-
-        Blue ->
-            case s_ of
-                Wild ->
-                    LT
-
-                Blue ->
-                    EQ
-
-                otherwise ->
-                    GT
-
-        Wild ->
-            GT
+    (suit card) /= Wild
