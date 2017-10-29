@@ -6,7 +6,7 @@ var _user$project$Haggis_Hand$collectBombs = function (hand) {
 };
 var _user$project$Haggis_Hand$collectSequences = function (hand) {
 	return A2(
-		_elm_lang$core$List$filterMap,
+		_elm_lang$core$List$map,
 		_elm_lang$core$Basics$identity,
 		A2(
 			_elm_lang$core$List$concatMap,

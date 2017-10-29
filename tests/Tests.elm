@@ -35,183 +35,183 @@ all =
             [ describe "Haggis.Combination.Set"
                 [ test "one card is a single" <|
                     \() ->
-                        Expect.equal (set [ redSeven ]) (Just (Single Seven))
+                        Expect.equal (Combo.set [ redSeven ]) (Just (Single Seven))
                 , test "two cards of matching rank are a pair" <|
                     \() ->
-                        Expect.equal (set [ blueTwo, greenTwo ]) (Just (Pair Two))
+                        Expect.equal (Combo.set [ blueTwo, greenTwo ]) (Just (Pair Two))
                 , test "two cards with unmatched ranks are not a combination" <|
                     \() ->
-                        Expect.equal (set [ blueTwo, redSeven ]) Nothing
+                        Expect.equal (Combo.set [ blueTwo, redSeven ]) Nothing
                 , test "two matched number cards with one wild is a triple" <|
                     \() ->
                         Expect.equal
-                            (set [ blueTwo, greenTwo, jack ])
+                            (Combo.set [ blueTwo, greenTwo, jack ])
                             (Just (Triple Two))
                 , test "a wild with a number card is a pair with the number card's rank" <|
                     \() ->
                         Expect.equal
-                            (set [ jack, blueTwo ])
+                            (Combo.set [ jack, blueTwo ])
                             (Just (Pair Two))
                 , test "two wild cards is NOT a pair" <|
                     \() ->
-                        Expect.notEqual (set [ jack, queen ]) (Just (Pair Jack))
+                        Expect.notEqual (Combo.set [ jack, queen ]) (Just (Pair Jack))
                 , test "one wild card is a single" <|
                     \() ->
-                        Expect.equal (set [ jack ]) (Just (Single Jack))
+                        Expect.equal (Combo.set [ jack ]) (Just (Single Jack))
                 , test "two matched spot cards plus three wilds is a five-of-a-kind" <|
                     \() ->
                         Expect.equal
-                            (set [ blueTwo, greenTwo, jack, queen, king ])
+                            (Combo.set [ blueTwo, greenTwo, jack, queen, king ])
                             (Just (FiveOfAKind Two))
                 , test "a pair of tens plus two wilds is a four-of-a-kind" <|
                     \() ->
                         Expect.equal
-                            (set [ blueTen, greenTen, jack, king ])
+                            (Combo.set [ blueTen, greenTen, jack, king ])
                             (Just (FourOfAKind Ten))
                 ]
             , describe "Haggis.Combination.Bomb"
                 [ test "one wild card is not a bomb" <|
                     \() ->
-                        Expect.equal (bomb [ king ]) Nothing
+                        Expect.equal (Combo.bomb [ king ]) Nothing
                 , test "two wild cards is a bomb" <|
                     \() ->
-                        Expect.equal (bomb [ queen, king ]) (Just QK)
+                        Expect.equal (Combo.bomb [ queen, king ]) (Just QK)
                 , test "two wild cards is a bomb, order does not matter" <|
                     \() ->
-                        Expect.equal (bomb [ king, jack ]) (Just JK)
+                        Expect.equal (Combo.bomb [ king, jack ]) (Just JK)
                 , test "three wild cards is a bomb" <|
                     \() ->
-                        Expect.equal (bomb [ jack, queen, king ]) (Just JQK)
+                        Expect.equal (Combo.bomb [ jack, queen, king ]) (Just JQK)
                 , test "three wild cards is not a set" <|
                     \() ->
-                        Expect.equal (set [ jack, queen, king ]) Nothing
+                        Expect.equal (Combo.set [ jack, queen, king ]) Nothing
                 , test "four distinct, same-suited odd cards is a bomb" <|
                     \() ->
                         Expect.equal
-                            (bomb [ redThree, redFive, redSeven, redNine ])
+                            (Combo.bomb [ redThree, redFive, redSeven, redNine ])
                             (Just Suited)
                 , test "A suited bomb is a suited bomb regardless of card order" <|
                     \() ->
                         Expect.equal
-                            (bomb [ redFive, redNine, redThree, redSeven ])
+                            (Combo.bomb [ redFive, redNine, redThree, redSeven ])
                             (Just Suited)
                 , test "four distinct odd cards, with distinct suits, is a bomb" <|
                     \() ->
                         Expect.equal
-                            (bomb [ blueThree, greenFive, redSeven, yellowNine ])
+                            (Combo.bomb [ blueThree, greenFive, redSeven, yellowNine ])
                             (Just Rainbow)
                 , test "four distinct odd cards, with 2-3 suits, is a not bomb" <|
                     \() ->
                         Expect.equal
-                            (bomb [ blueThree, redFive, redSeven, yellowNine ])
+                            (Combo.bomb [ blueThree, redFive, redSeven, yellowNine ])
                             Nothing
                 ]
             , describe "Haggis.Combination.Sequence"
                 [ test "empty set of cards is not a sequence" <|
                     \() ->
-                        Expect.equal (sequence []) [ Nothing ]
+                        Expect.equal (Combo.sequence []) []
                 , test "three consecutive singles is a sequence" <|
                     \() ->
                         Expect.equal
-                            (sequence [ blueTwo, blueThree, blueFour ])
-                            [ Just (RunOfSingles 3 Four) ]
+                            (Combo.sequence [ blueTwo, blueThree, blueFour ])
+                            [ RunOfSingles 3 Four ]
                 , test "three nonconsecutive singles is not a sequence" <|
                     \() ->
                         Expect.equal
-                            (sequence [ blueTwo, blueThree, redThree ])
-                            [ Nothing ]
+                            (Combo.sequence [ blueTwo, blueThree, redThree ])
+                            []
                 , test "two consecutive singles is not a sequence" <|
                     \() ->
                         Expect.equal
-                            (sequence [ blueTwo, blueThree ])
-                            [ Nothing ]
+                            (Combo.sequence [ blueTwo, blueThree ])
+                            []
                 , test "three wildcards is not a sequence" <|
                     \() ->
                         Expect.equal
-                            (sequence [ jack, queen, king ])
-                            [ Nothing ]
+                            (Combo.sequence [ jack, queen, king ])
+                            []
                 , test "two consecutive pairs is a sequence" <|
                     \() ->
                         Expect.equal
-                            (sequence [ blueTwo, greenTwo, blueThree, greenThree ])
-                            [ Just (RunOfPairs 2 Three) ]
+                            (Combo.sequence [ blueTwo, greenTwo, blueThree, greenThree ])
+                            [ RunOfPairs 2 Three ]
                 , test "card order should not affect sequence identification" <|
                     \() ->
                         Expect.equal
-                            (sequence [ greenTwo, blueThree, greenThree, blueTwo ])
-                            [ Just (RunOfPairs 2 Three) ]
+                            (Combo.sequence [ greenTwo, blueThree, greenThree, blueTwo ])
+                            [ RunOfPairs 2 Three ]
                 , test "one spot card and two wildcards is a run of singles" <|
                     \() ->
                         Expect.equal
-                            (sequence [ blueTwo, jack, king ])
-                            [ Just (RunOfSingles 3 Four) ]
+                            (Combo.sequence [ blueTwo, jack, king ])
+                            [ RunOfSingles 3 Four ]
                 , test "a ten and three wildcards is a run of singles and a run of pairs" <|
                     \() ->
                         Expect.equal
-                            (sequence [ blueTen, jack, queen, king ])
-                            [ Just (RunOfSingles 4 King), Just (RunOfPairs 2 Jack) ]
+                            (Combo.sequence [ blueTen, jack, queen, king ])
+                            [ RunOfSingles 4 King, RunOfPairs 2 Jack ]
                 , test "one wildcard can fill a one rank gap between two singles to form a run" <|
                     \() ->
                         Expect.equal
-                            (sequence [ blueTwo, blueFour, king ])
-                            [ Just (RunOfSingles 3 Four) ]
+                            (Combo.sequence [ blueTwo, blueFour, king ])
+                            [ RunOfSingles 3 Four ]
                 , test "one wildcard CANNOT fill a 2+ rank gap between two singles to form a run" <|
                     \() ->
                         Expect.equal
-                            (sequence [ greenTwo, greenFive, king ])
-                            [ Nothing ]
+                            (Combo.sequence [ greenTwo, greenFive, king ])
+                            []
                 , test "two wildcards can fill a 2 rank gap between two singles to form a run" <|
                     \() ->
                         Expect.equal
-                            (sequence [ greenTwo, greenFive, king, jack ])
-                            [ Just (RunOfSingles 4 Five) ]
+                            (Combo.sequence [ greenTwo, greenFive, king, jack ])
+                            [ RunOfSingles 4 Five ]
                 , test "one spot card and three wildcards could be a run of singles or a run of pairs" <|
                     \() ->
                         Expect.equal
-                            (sequence [ blueTwo, jack, queen, king ])
-                            [ Just (RunOfSingles 4 Five), Just (RunOfPairs 2 Three) ]
+                            (Combo.sequence [ blueTwo, jack, queen, king ])
+                            [ RunOfSingles 4 Five, RunOfPairs 2 Three ]
                 , test "wild card should sub for missing card in run of pairs" <|
                     \() ->
                         Expect.equal
-                            (sequence [ blueTwo, greenTwo, jack, greenThree ])
-                            [ Just (RunOfPairs 2 Three) ]
+                            (Combo.sequence [ blueTwo, greenTwo, jack, greenThree ])
+                            [ RunOfPairs 2 Three ]
                 , test "a pair of tens plus two wilds is a run of pairs (T-T-J-J)" <|
                     \() ->
                         Expect.equal
-                            (sequence [ blueTen, greenTen, jack, king ])
-                            [ Just (RunOfPairs 2 Jack) ]
+                            (Combo.sequence [ blueTen, greenTen, jack, king ])
+                            [ RunOfPairs 2 Jack ]
                 , test "can fill holes in run of pairs that is longer than 3 ranks" <|
                     \() ->
                         Expect.equal
-                            (sequence [ blueTwo, greenTwo, blueThree, greenThree, blueFour, greenFive, jack, king ])
-                            [ Just (RunOfPairs 4 Five) ]
+                            (Combo.sequence [ blueTwo, greenTwo, blueThree, greenThree, blueFour, greenFive, jack, king ])
+                            [ RunOfPairs 4 Five ]
                 , test "a consecutive single and a pair of spot cards, plus 3 wildcards, could be a run of pairs or a run of triples" <|
                     \() ->
                         Expect.equal
-                            (sequence [ blueTwo, greenTwo, greenThree, jack, queen, king ])
-                            [ Just (RunOfPairs 3 Four), Just (RunOfTriples 2 Three) ]
+                            (Combo.sequence [ blueTwo, greenTwo, greenThree, jack, queen, king ])
+                            [ RunOfPairs 3 Four, RunOfTriples 2 Three ]
                 , test "two consecutive pairs and two wildcards could be a run of pairs or a run of triples" <|
                     \() ->
                         Expect.equal
-                            (sequence [ blueTwo, blueThree, greenTwo, greenThree, jack, queen ])
-                            [ Just (RunOfPairs 3 Four), Just (RunOfTriples 2 Three) ]
+                            (Combo.sequence [ blueTwo, blueThree, greenTwo, greenThree, jack, queen ])
+                            [ RunOfPairs 3 Four, RunOfTriples 2 Three ]
                 ]
             , describe "Haggis.Cards.subsets"
                 [ test "the subsets of no cards is a set containing the set with no cards" <|
                     \() ->
-                        Expect.equal (subsets []) [ [] ]
+                        Expect.equal (Cards.subsets []) [ [] ]
                 , test "the subsets of one card is a set with no cards and a set with the one card" <|
                     \() ->
-                        Expect.equal (subsets [ blueTwo ]) [ [ blueTwo ], [] ]
+                        Expect.equal (Cards.subsets [ blueTwo ]) [ [ blueTwo ], [] ]
                 , test "the subsets of a pair is the pair, each of its singles, and the empty set" <|
                     \() ->
                         Expect.equal
-                            (subsets [ blueTwo, greenTwo ])
+                            (Cards.subsets [ blueTwo, greenTwo ])
                             [ [ blueTwo, greenTwo ], [ blueTwo ], [ greenTwo ], [] ]
                 , test "the subsets of 3 cards is the 3 cards, each card paired, each card alone, and the empty set" <|
                     \() ->
                         Expect.equal
-                            (subsets [ greenTwo, greenThree, jack ])
+                            (Cards.subsets [ greenTwo, greenThree, jack ])
                             [ [ greenTwo, greenThree, jack ]
                             , [ greenTwo, greenThree ]
                             , [ greenTwo, jack ]

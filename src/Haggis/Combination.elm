@@ -63,15 +63,20 @@ set cards =
         ( naturals, wilds ) =
             split cards
 
-        rank =
-            Result.withDefault Two (findRank cards)
+        highestRank =
+            findRank cards
     in
-        if allSameRank naturals then
-            makeSet cards
-        else if List.length wilds == 1 && List.length cards == 1 then
-            Just (Single rank)
-        else
-            Nothing
+        case highestRank of
+            Just rank ->
+                if allSameRank naturals then
+                    makeSet cards
+                else if List.length wilds == 1 && List.length cards == 1 then
+                    Just (Single rank)
+                else
+                    Nothing
+
+            otherwise ->
+                Nothing
 
 
 split : List Card -> ( List Card, List Card )
@@ -89,14 +94,14 @@ allSameRank cards =
             List.all (Card.equal first) rest
 
 
-findRank : Cards -> Result String Card.Rank
+findRank : Cards -> Maybe Card.Rank
 findRank cards =
     case cards of
         [] ->
-            Err "Expected to get one or more cards but got zero."
+            Nothing
 
         c :: [] ->
-            Ok (Card.rank c)
+            Just (Card.rank c)
 
         c :: cs ->
             case c.suit of
@@ -104,33 +109,38 @@ findRank cards =
                     findRank cs
 
                 otherwise ->
-                    Ok (Card.rank c)
+                    Just (Card.rank c)
 
 
 makeSet : Cards -> Maybe (Set Card.Rank)
 makeSet cards =
     let
-        rank =
-            Result.withDefault Two (findRank cards)
+        highestRank =
+            findRank cards
     in
-        case length cards of
-            1 ->
-                Just (Single rank)
+        case highestRank of
+            Just rank ->
+                case length cards of
+                    1 ->
+                        Just (Single rank)
 
-            2 ->
-                Just (Pair rank)
+                    2 ->
+                        Just (Pair rank)
 
-            3 ->
-                Just (Triple rank)
+                    3 ->
+                        Just (Triple rank)
 
-            4 ->
-                Just (FourOfAKind rank)
+                    4 ->
+                        Just (FourOfAKind rank)
 
-            5 ->
-                Just (FiveOfAKind rank)
+                    5 ->
+                        Just (FiveOfAKind rank)
 
-            6 ->
-                Just (SixOfAKind rank)
+                    6 ->
+                        Just (SixOfAKind rank)
+
+                    otherwise ->
+                        Nothing
 
             otherwise ->
                 Nothing
@@ -223,7 +233,7 @@ dropDuplicates_ existing remaining =
 -- SEQUENCE
 
 
-sequence : Cards -> List (Maybe (Sequence Int Card.Rank))
+sequence : Cards -> List (Sequence Int Card.Rank)
 sequence cards =
     let
         ( naturals, wilds ) =
@@ -233,11 +243,9 @@ sequence cards =
             List.range (countSuits naturals) (countSuits cards)
     in
         if List.length naturals == 0 then
-            [ Nothing ]
+            []
         else
-            setSizes
-                |> List.map (maybeRunOfSets cards)
-                |> keepJustSequences
+            List.filterMap (maybeRunOfSets cards) setSizes
 
 
 maybeRunOfSets : Cards -> Int -> Maybe (Sequence Int Card.Rank)
@@ -249,42 +257,58 @@ maybeRunOfSets cards setSize =
         cardCount =
             List.length cards
 
-        lowestOrder =
-            findLowestOrder naturals
-
         runLength =
             cardCount // setSize
 
-        highestOrder =
-            lowestOrder + runLength - 1
-
-        highestRank =
-            Card.toRank highestOrder
-
-        ranks =
-            List.range lowestOrder highestOrder
+        ranksInRun =
+            collectRanksInRun runLength naturals
     in
-        if
-            hasEnoughCards setSize cardCount
-                && (cardCount == (runLength * setSize))
-                && canFormSequence setSize ranks cards
-        then
-            case highestRank of
-                Just rank ->
-                    makeSequence runLength setSize rank
-
-                otherwise ->
+        case ranksInRun of
+            Just ( highestRank, ranks ) ->
+                if
+                    hasEnoughCards setSize cardCount
+                        && (cardCount == (runLength * setSize))
+                        && canFormSequence setSize ranks cards
+                then
+                    makeSequence runLength setSize highestRank
+                else
                     Nothing
-        else
-            Nothing
+
+            otherwise ->
+                Nothing
 
 
-findLowestOrder : Cards -> Card.Order
+collectRanksInRun : Int -> List Card -> Maybe ( Rank, List Card.Order )
+collectRanksInRun runLength cards =
+    let
+        lowestOrder =
+            findLowestOrder cards
+    in
+        case lowestOrder of
+            Just low ->
+                let
+                    high =
+                        low + runLength - 1
+
+                    highestRank =
+                        Card.toRank high
+                in
+                    case highestRank of
+                        Just rank ->
+                            Just ( rank, List.range low high )
+
+                        otherwise ->
+                            Nothing
+
+            otherwise ->
+                Nothing
+
+
+findLowestOrder : Cards -> Maybe Card.Order
 findLowestOrder cards =
     cards
         |> List.map Card.order
         |> List.minimum
-        |> Maybe.withDefault 2
 
 
 hasEnoughCards : Int -> Int -> Bool
@@ -341,27 +365,3 @@ makeSequence runLength setSize rank =
 
         otherwise ->
             Nothing
-
-
-keepJustSequences : List (Maybe (Sequence Int Card.Rank)) -> List (Maybe (Sequence Int Card.Rank))
-keepJustSequences sequences =
-    let
-        justSequences =
-            List.filter isSequence sequences
-    in
-        case justSequences of
-            [] ->
-                [ Nothing ]
-
-            otherwise ->
-                justSequences
-
-
-isSequence : Maybe (Sequence Int Card.Rank) -> Bool
-isSequence s =
-    case s of
-        Nothing ->
-            False
-
-        otherwise ->
-            True
