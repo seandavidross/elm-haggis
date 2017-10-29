@@ -313,8 +313,15 @@ findLowestOrder cards =
 
 hasEnoughCards : Int -> Int -> Bool
 hasEnoughCards setSize cardCount =
-    (setSize == 1 && cardCount >= 3)
-        || (setSize > 1 && cardCount >= setSize * 2)
+    let
+        shortestSinglesRun =
+            3
+
+        shortestOfAKindRun =
+            2
+    in
+        (setSize == 1 && cardCount >= shortestSinglesRun)
+            || (setSize > 1 && cardCount >= setSize * shortestOfAKindRun)
 
 
 canFormSequence : Int -> List Int -> Cards -> Bool

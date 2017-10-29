@@ -26,7 +26,9 @@ var _user$project$Haggis_Combination$countWildsNeeded = F2(
 	});
 var _user$project$Haggis_Combination$hasEnoughCards = F2(
 	function (setSize, cardCount) {
-		return (_elm_lang$core$Native_Utils.eq(setSize, 1) && (_elm_lang$core$Native_Utils.cmp(cardCount, 3) > -1)) || ((_elm_lang$core$Native_Utils.cmp(setSize, 1) > 0) && (_elm_lang$core$Native_Utils.cmp(cardCount, setSize * 2) > -1));
+		var shortestOfAKindRun = 2;
+		var shortestSinglesRun = 3;
+		return (_elm_lang$core$Native_Utils.eq(setSize, 1) && (_elm_lang$core$Native_Utils.cmp(cardCount, shortestSinglesRun) > -1)) || ((_elm_lang$core$Native_Utils.cmp(setSize, 1) > 0) && (_elm_lang$core$Native_Utils.cmp(cardCount, setSize * shortestOfAKindRun) > -1));
 	});
 var _user$project$Haggis_Combination$findLowestOrder = function (cards) {
 	return _elm_lang$core$List$minimum(
