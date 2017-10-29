@@ -110,6 +110,16 @@ all =
                 [ test "empty set of cards is not a sequence" <|
                     \() ->
                         Expect.equal (Combo.sequence []) []
+                , test "three consecutive singles with mixed suits is NOT a sequence" <|
+                    \() ->
+                        Expect.equal
+                            (Combo.sequence [ blueTwo, redThree, blueFour ])
+                            []
+                , test "two consecutive pairs with mixed suits is NOT a sequence" <|
+                    \() ->
+                        Expect.equal
+                            (Combo.sequence [ blueTwo, greenTwo, redThree, blueThree ])
+                            []
                 , test "three consecutive singles is a sequence" <|
                     \() ->
                         Expect.equal
