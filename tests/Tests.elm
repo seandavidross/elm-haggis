@@ -199,19 +199,19 @@ all =
             , describe "Haggis.Cards.subsets"
                 [ test "the subsets of no cards is a set containing the set with no cards" <|
                     \() ->
-                        Expect.equal (subsets []) [ [] ]
+                        Expect.equal (Cards.subsets []) [ [] ]
                 , test "the subsets of one card is a set with no cards and a set with the one card" <|
                     \() ->
-                        Expect.equal (subsets [ blueTwo ]) [ [ blueTwo ], [] ]
+                        Expect.equal (Cards.subsets [ blueTwo ]) [ [ blueTwo ], [] ]
                 , test "the subsets of a pair is the pair, each of its singles, and the empty set" <|
                     \() ->
                         Expect.equal
-                            (subsets [ blueTwo, greenTwo ])
+                            (Cards.subsets [ blueTwo, greenTwo ])
                             [ [ blueTwo, greenTwo ], [ blueTwo ], [ greenTwo ], [] ]
                 , test "the subsets of 3 cards is the 3 cards, each card paired, each card alone, and the empty set" <|
                     \() ->
                         Expect.equal
-                            (subsets [ greenTwo, greenThree, jack ])
+                            (Cards.subsets [ greenTwo, greenThree, jack ])
                             [ [ greenTwo, greenThree, jack ]
                             , [ greenTwo, greenThree ]
                             , [ greenTwo, jack ]
