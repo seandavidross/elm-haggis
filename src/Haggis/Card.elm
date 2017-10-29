@@ -93,6 +93,11 @@ rankOrdering =
     Ordering.explicit (Array.toList ranks)
 
 
+byRank : Rank -> Rank -> Basics.Order
+byRank r1 r2 =
+    rankOrdering r1 r2
+
+
 cardOrdering : Ordering Card
 cardOrdering =
     Ordering.byRank

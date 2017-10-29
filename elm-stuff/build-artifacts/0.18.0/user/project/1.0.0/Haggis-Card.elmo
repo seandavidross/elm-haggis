@@ -117,6 +117,10 @@ var _user$project$Haggis_Card$ranks = _elm_lang$core$Array$fromList(
 	});
 var _user$project$Haggis_Card$rankOrdering = _matthewsj$elm_ordering$Ordering$explicit(
 	_elm_lang$core$Array$toList(_user$project$Haggis_Card$ranks));
+var _user$project$Haggis_Card$byRank = F2(
+	function (r1, r2) {
+		return A2(_user$project$Haggis_Card$rankOrdering, r1, r2);
+	});
 var _user$project$Haggis_Card$cardOrdering = A2(
 	_matthewsj$elm_ordering$Ordering$byRank,
 	function (card) {
