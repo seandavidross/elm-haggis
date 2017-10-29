@@ -87,7 +87,10 @@ var _user$project$Tests$all = A2(
 					'new card has correct suit',
 					function (_p0) {
 						var _p1 = _p0;
-						return A2(_elm_community$elm_test$Expect$equal, _user$project$Tests$blueTwo.suit, _user$project$Haggis_Card$Blue);
+						return A2(
+							_elm_community$elm_test$Expect$equal,
+							_user$project$Haggis_Card$suit(_user$project$Tests$blueTwo),
+							_user$project$Haggis_Card$Blue);
 					}),
 				_1: {
 					ctor: '::',
@@ -96,7 +99,10 @@ var _user$project$Tests$all = A2(
 						'new card has correct rank',
 						function (_p2) {
 							var _p3 = _p2;
-							return A2(_elm_community$elm_test$Expect$equal, _user$project$Tests$blueTwo.rank, _user$project$Haggis_Card$Two);
+							return A2(
+								_elm_community$elm_test$Expect$equal,
+								_user$project$Haggis_Card$rank(_user$project$Tests$blueTwo),
+								_user$project$Haggis_Card$Two);
 						}),
 					_1: {
 						ctor: '::',
@@ -117,7 +123,10 @@ var _user$project$Tests$all = A2(
 								'card with lower rank less than card with higher rank',
 								function (_p6) {
 									var _p7 = _p6;
-									return A2(_elm_community$elm_test$Expect$lessThan, _user$project$Tests$redSeven.order, _user$project$Tests$blueTwo.order);
+									return A2(
+										_elm_community$elm_test$Expect$lessThan,
+										_user$project$Haggis_Card$order(_user$project$Tests$redSeven),
+										_user$project$Haggis_Card$order(_user$project$Tests$blueTwo));
 								}),
 							_1: {
 								ctor: '::',
@@ -126,7 +135,10 @@ var _user$project$Tests$all = A2(
 									'two cards with the same rank are equal',
 									function (_p8) {
 										var _p9 = _p8;
-										return A2(_elm_community$elm_test$Expect$equal, _user$project$Tests$blueTwo.order, _user$project$Tests$greenTwo.order);
+										return A2(
+											_elm_community$elm_test$Expect$equal,
+											_user$project$Haggis_Card$order(_user$project$Tests$blueTwo),
+											_user$project$Haggis_Card$order(_user$project$Tests$greenTwo));
 									}),
 								_1: {
 									ctor: '::',

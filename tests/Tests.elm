@@ -14,19 +14,19 @@ all =
         [ describe "Haggis.Card"
             [ test "new card has correct suit" <|
                 \() ->
-                    Expect.equal blueTwo.suit Blue
+                    Expect.equal (Card.suit blueTwo) Blue
             , test "new card has correct rank" <|
                 \() ->
-                    Expect.equal blueTwo.rank Two
+                    Expect.equal (Card.rank blueTwo) Two
             , test "new card has correct points" <|
                 \() ->
                     Expect.equal (Card.points redSeven) 1
             , test "card with lower rank less than card with higher rank" <|
                 \() ->
-                    Expect.lessThan redSeven.order blueTwo.order
+                    Expect.lessThan (Card.order redSeven) (Card.order blueTwo)
             , test "two cards with the same rank are equal" <|
                 \() ->
-                    Expect.equal blueTwo.order greenTwo.order
+                    Expect.equal (Card.order blueTwo) (Card.order greenTwo)
             , test "non-matching single cards do not match" <|
                 \() ->
                     Expect.notEqual blueTwo redSeven
@@ -240,7 +240,14 @@ all =
                     \() ->
                         Expect.equal
                             (Hand.collectBombs
-                                [ redThree, greenThree, redFive, redSeven, orangeSeven, redNine, yellowNine ]
+                                [ redThree
+                                , greenThree
+                                , redFive
+                                , redSeven
+                                , orangeSeven
+                                , redNine
+                                , yellowNine
+                                ]
                             )
                             [ Suited, Rainbow ]
                 , test "can find all sets contained in a full hand of cards" <|
