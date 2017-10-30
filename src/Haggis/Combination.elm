@@ -120,7 +120,7 @@ makeSet cards =
     in
     case highestRank of
         Just rank ->
-            case length cards of
+            case List.length cards of
                 1 ->
                     Just (Single rank)
 
