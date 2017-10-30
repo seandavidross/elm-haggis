@@ -8,6 +8,7 @@ type alias Card =
     { suit : Suit
     , rank : Rank
     , order : Order
+    , points : Points
     }
 
 
@@ -167,27 +168,4 @@ isNatural card =
 
 points : Card -> Points
 points card =
-    case rank card of
-        Three ->
-            1
-
-        Five ->
-            1
-
-        Seven ->
-            1
-
-        Nine ->
-            1
-
-        Jack ->
-            2
-
-        Queen ->
-            3
-
-        King ->
-            5
-
-        otherwise ->
-            0
+    card.points
