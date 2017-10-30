@@ -12688,7 +12688,7 @@ var _user$project$Haggis_Combination$findRank = function (cards) {
 					_user$project$Haggis_Card$rank(_p7._0));
 			} else {
 				var _p9 = _p7._0;
-				var _p8 = _p9.suit;
+				var _p8 = _user$project$Haggis_Card$suit(_p9);
 				if (_p8.ctor === 'Wild') {
 					var _v8 = _p7._1;
 					cards = _v8;

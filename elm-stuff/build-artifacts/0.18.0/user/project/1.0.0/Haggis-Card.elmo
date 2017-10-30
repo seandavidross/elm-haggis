@@ -1,0 +1,169 @@
+var _user$project$Haggis_Card$points = function (card) {
+	return card.points;
+};
+var _user$project$Haggis_Card$order = function (card) {
+	return card.order;
+};
+var _user$project$Haggis_Card$rank = function (card) {
+	return card.rank;
+};
+var _user$project$Haggis_Card$equal = F2(
+	function (card, card_) {
+		return _elm_lang$core$Native_Utils.eq(
+			_user$project$Haggis_Card$rank(card),
+			_user$project$Haggis_Card$rank(card_));
+	});
+var _user$project$Haggis_Card$suit = function (card) {
+	return card.suit;
+};
+var _user$project$Haggis_Card$Card = F4(
+	function (a, b, c, d) {
+		return {suit: a, rank: b, order: c, points: d};
+	});
+var _user$project$Haggis_Card$Wild = {ctor: 'Wild'};
+var _user$project$Haggis_Card$isNatural = function (card) {
+	return !_elm_lang$core$Native_Utils.eq(
+		_user$project$Haggis_Card$suit(card),
+		_user$project$Haggis_Card$Wild);
+};
+var _user$project$Haggis_Card$Blue = {ctor: 'Blue'};
+var _user$project$Haggis_Card$Green = {ctor: 'Green'};
+var _user$project$Haggis_Card$Yellow = {ctor: 'Yellow'};
+var _user$project$Haggis_Card$Orange = {ctor: 'Orange'};
+var _user$project$Haggis_Card$Red = {ctor: 'Red'};
+var _user$project$Haggis_Card$suits = {
+	ctor: '::',
+	_0: _user$project$Haggis_Card$Red,
+	_1: {
+		ctor: '::',
+		_0: _user$project$Haggis_Card$Orange,
+		_1: {
+			ctor: '::',
+			_0: _user$project$Haggis_Card$Yellow,
+			_1: {
+				ctor: '::',
+				_0: _user$project$Haggis_Card$Green,
+				_1: {
+					ctor: '::',
+					_0: _user$project$Haggis_Card$Blue,
+					_1: {
+						ctor: '::',
+						_0: _user$project$Haggis_Card$Wild,
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		}
+	}
+};
+var _user$project$Haggis_Card$King = {ctor: 'King'};
+var _user$project$Haggis_Card$Queen = {ctor: 'Queen'};
+var _user$project$Haggis_Card$Jack = {ctor: 'Jack'};
+var _user$project$Haggis_Card$Ten = {ctor: 'Ten'};
+var _user$project$Haggis_Card$Nine = {ctor: 'Nine'};
+var _user$project$Haggis_Card$Eight = {ctor: 'Eight'};
+var _user$project$Haggis_Card$Seven = {ctor: 'Seven'};
+var _user$project$Haggis_Card$Six = {ctor: 'Six'};
+var _user$project$Haggis_Card$Five = {ctor: 'Five'};
+var _user$project$Haggis_Card$Four = {ctor: 'Four'};
+var _user$project$Haggis_Card$Three = {ctor: 'Three'};
+var _user$project$Haggis_Card$Two = {ctor: 'Two'};
+var _user$project$Haggis_Card$ranks = _elm_lang$core$Array$fromList(
+	{
+		ctor: '::',
+		_0: _user$project$Haggis_Card$Two,
+		_1: {
+			ctor: '::',
+			_0: _user$project$Haggis_Card$Three,
+			_1: {
+				ctor: '::',
+				_0: _user$project$Haggis_Card$Four,
+				_1: {
+					ctor: '::',
+					_0: _user$project$Haggis_Card$Five,
+					_1: {
+						ctor: '::',
+						_0: _user$project$Haggis_Card$Six,
+						_1: {
+							ctor: '::',
+							_0: _user$project$Haggis_Card$Seven,
+							_1: {
+								ctor: '::',
+								_0: _user$project$Haggis_Card$Eight,
+								_1: {
+									ctor: '::',
+									_0: _user$project$Haggis_Card$Nine,
+									_1: {
+										ctor: '::',
+										_0: _user$project$Haggis_Card$Ten,
+										_1: {
+											ctor: '::',
+											_0: _user$project$Haggis_Card$Jack,
+											_1: {
+												ctor: '::',
+												_0: _user$project$Haggis_Card$Queen,
+												_1: {
+													ctor: '::',
+													_0: _user$project$Haggis_Card$King,
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	});
+var _user$project$Haggis_Card$rankOrdering = _matthewsj$elm_ordering$Ordering$explicit(
+	_elm_lang$core$Array$toList(_user$project$Haggis_Card$ranks));
+var _user$project$Haggis_Card$byRank = F2(
+	function (r1, r2) {
+		return A2(_user$project$Haggis_Card$rankOrdering, r1, r2);
+	});
+var _user$project$Haggis_Card$cardOrdering = A2(
+	_matthewsj$elm_ordering$Ordering$byRank,
+	function (card) {
+		return 1;
+	},
+	F2(
+		function (c1, c2) {
+			return A2(
+				_user$project$Haggis_Card$rankOrdering,
+				_user$project$Haggis_Card$rank(c1),
+				_user$project$Haggis_Card$rank(c2));
+		}));
+var _user$project$Haggis_Card$toRank = function (order) {
+	var _p0 = order;
+	switch (_p0) {
+		case 2:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Two);
+		case 3:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Three);
+		case 4:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Four);
+		case 5:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Five);
+		case 6:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Six);
+		case 7:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Seven);
+		case 8:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Eight);
+		case 9:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Nine);
+		case 10:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Ten);
+		case 11:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Jack);
+		case 12:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Queen);
+		case 13:
+			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$King);
+		default:
+			return _elm_lang$core$Maybe$Nothing;
+	}
+};

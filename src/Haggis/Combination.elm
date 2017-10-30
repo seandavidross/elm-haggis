@@ -66,17 +66,17 @@ set cards =
         highestRank =
             findRank cards
     in
-        case highestRank of
-            Just rank ->
-                if allSameRank naturals then
-                    makeSet cards
-                else if List.length wilds == 1 && List.length cards == 1 then
-                    Just (Single rank)
-                else
-                    Nothing
-
-            otherwise ->
+    case highestRank of
+        Just rank ->
+            if allSameRank naturals then
+                makeSet cards
+            else if List.length wilds == 1 && List.length cards == 1 then
+                Just (Single rank)
+            else
                 Nothing
+
+        otherwise ->
+            Nothing
 
 
 split : List Card -> ( List Card, List Card )
@@ -100,16 +100,16 @@ findRank cards =
         [] ->
             Nothing
 
-        c :: [] ->
-            Just (Card.rank c)
+        first :: [] ->
+            Just (Card.rank first)
 
-        c :: cs ->
-            case c.suit of
+        first :: rest ->
+            case Card.suit first of
                 Wild ->
-                    findRank cs
+                    findRank rest
 
                 otherwise ->
-                    Just (Card.rank c)
+                    Just (Card.rank first)
 
 
 makeSet : Cards -> Maybe (Set Card.Rank)
@@ -118,32 +118,32 @@ makeSet cards =
         highestRank =
             findRank cards
     in
-        case highestRank of
-            Just rank ->
-                case length cards of
-                    1 ->
-                        Just (Single rank)
+    case highestRank of
+        Just rank ->
+            case length cards of
+                1 ->
+                    Just (Single rank)
 
-                    2 ->
-                        Just (Pair rank)
+                2 ->
+                    Just (Pair rank)
 
-                    3 ->
-                        Just (Triple rank)
+                3 ->
+                    Just (Triple rank)
 
-                    4 ->
-                        Just (FourOfAKind rank)
+                4 ->
+                    Just (FourOfAKind rank)
 
-                    5 ->
-                        Just (FiveOfAKind rank)
+                5 ->
+                    Just (FiveOfAKind rank)
 
-                    6 ->
-                        Just (SixOfAKind rank)
+                6 ->
+                    Just (SixOfAKind rank)
 
-                    otherwise ->
-                        Nothing
+                otherwise ->
+                    Nothing
 
-            otherwise ->
-                Nothing
+        otherwise ->
+            Nothing
 
 
 
@@ -156,29 +156,29 @@ bomb cards =
         ranks =
             cards |> List.map Card.rank |> List.sortWith Card.byRank
     in
-        case ranks of
-            [ Jack, Queen ] ->
-                Just JQ
+    case ranks of
+        [ Jack, Queen ] ->
+            Just JQ
 
-            [ Jack, King ] ->
-                Just JK
+        [ Jack, King ] ->
+            Just JK
 
-            [ Queen, King ] ->
-                Just QK
+        [ Queen, King ] ->
+            Just QK
 
-            [ Jack, Queen, King ] ->
-                Just JQK
+        [ Jack, Queen, King ] ->
+            Just JQK
 
-            [ Three, Five, Seven, Nine ] ->
-                if allSameSuit cards then
-                    Just Suited
-                else if hasFourSuits cards then
-                    Just Rainbow
-                else
-                    Nothing
-
-            otherwise ->
+        [ Three, Five, Seven, Nine ] ->
+            if allSameSuit cards then
+                Just Suited
+            else if hasFourSuits cards then
+                Just Rainbow
+            else
                 Nothing
+
+        otherwise ->
+            Nothing
 
 
 allSameSuit : Cards -> Bool
@@ -242,10 +242,10 @@ sequence cards =
         setSizes =
             List.range (countSuits naturals) (countSuits cards)
     in
-        if List.length naturals == 0 then
-            []
-        else
-            List.filterMap (maybeRunOfSets cards) setSizes
+    if List.length naturals == 0 then
+        []
+    else
+        List.filterMap (maybeRunOfSets cards) setSizes
 
 
 maybeRunOfSets : Cards -> Int -> Maybe (Sequence Int Card.Rank)
@@ -263,19 +263,19 @@ maybeRunOfSets cards setSize =
         ranksInRun =
             collectRanksInRun runLength naturals
     in
-        case ranksInRun of
-            Just ( highestRank, ranks ) ->
-                if
-                    hasEnoughCards setSize cardCount
-                        && (cardCount == (runLength * setSize))
-                        && canFormSequence setSize ranks cards
-                then
-                    makeSequence runLength setSize highestRank
-                else
-                    Nothing
-
-            otherwise ->
+    case ranksInRun of
+        Just ( highestRank, ranks ) ->
+            if
+                hasEnoughCards setSize cardCount
+                    && (cardCount == (runLength * setSize))
+                    && canFormSequence setSize ranks cards
+            then
+                makeSequence runLength setSize highestRank
+            else
                 Nothing
+
+        otherwise ->
+            Nothing
 
 
 collectRanksInRun : Int -> List Card -> Maybe ( Rank, List Card.Order )
@@ -284,24 +284,24 @@ collectRanksInRun runLength cards =
         lowestOrder =
             findLowestOrder cards
     in
-        case lowestOrder of
-            Just low ->
-                let
-                    high =
-                        low + runLength - 1
+    case lowestOrder of
+        Just low ->
+            let
+                high =
+                    low + runLength - 1
 
-                    highestRank =
-                        Card.toRank high
-                in
-                    case highestRank of
-                        Just rank ->
-                            Just ( rank, List.range low high )
+                highestRank =
+                    Card.toRank high
+            in
+            case highestRank of
+                Just rank ->
+                    Just ( rank, List.range low high )
 
-                        otherwise ->
-                            Nothing
+                otherwise ->
+                    Nothing
 
-            otherwise ->
-                Nothing
+        otherwise ->
+            Nothing
 
 
 findLowestOrder : Cards -> Maybe Card.Order
@@ -320,8 +320,8 @@ hasEnoughCards setSize cardCount =
         shortestOfAKindRun =
             2
     in
-        (setSize == 1 && cardCount >= shortestSinglesRun)
-            || (setSize > 1 && cardCount >= setSize * shortestOfAKindRun)
+    (setSize == 1 && cardCount >= shortestSinglesRun)
+        || (setSize > 1 && cardCount >= setSize * shortestOfAKindRun)
 
 
 canFormSequence : Int -> List Int -> Cards -> Bool
@@ -336,7 +336,7 @@ canFormSequence setSize ranks cards =
         wildsUsed =
             List.length (List.filter (\w -> List.member (Card.order w) ranks) wilds)
     in
-        wildsNeeded == (List.length wilds - wildsUsed)
+    wildsNeeded == (List.length wilds - wildsUsed)
 
 
 countWildsNeeded : Int -> Sets -> Int
@@ -346,7 +346,7 @@ countWildsNeeded setSize sets =
 
 collectCardsWithRanks : List Int -> Cards -> Sets
 collectCardsWithRanks ranks cards =
-    List.map (\r -> List.filter (\c -> (Card.order c) == r) cards) ranks
+    List.map (\r -> List.filter (\c -> Card.order c == r) cards) ranks
 
 
 makeSequence : Int -> Int -> Card.Rank -> Maybe (Sequence Int Card.Rank)
