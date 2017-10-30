@@ -1,4 +1,4 @@
-module Test.Generated.Main45040372 exposing (main)
+module Test.Generated.Main166733720 exposing (main)
 
 import Tests
 
@@ -12,4 +12,4 @@ main : Test.Runner.Node.TestProgram
 main =
     [     Test.describe "Tests" [Tests.all] ]
         |> Test.concat
-        |> Test.Runner.Node.runWithOptions { runs = Nothing, report = (ConsoleReport UseColor), seed = Nothing, processes = 2, paths = []}
+        |> Test.Runner.Node.runWithOptions { runs = Nothing, report = (ConsoleReport UseColor), seed = Nothing, processes = 8, paths = []}
