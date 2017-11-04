@@ -13544,7 +13544,11 @@ var _user$project$Haggis_Deck$stock = {
 };
 var _user$project$Haggis_Deck$deal = F2(
 	function (handSize, deck) {
-		return deck;
+		return {
+			ctor: '_Tuple2',
+			_0: A2(_elm_lang$core$List$drop, handSize, deck),
+			_1: A2(_elm_lang$core$List$take, handSize, deck)
+		};
 	});
 var _user$project$Haggis_Deck$shuffle = F2(
 	function (seed, deck) {
@@ -15457,7 +15461,140 @@ var _user$project$Tests$all = A2(
 														var _p113 = A2(_user$project$Haggis_Deck$shuffle, seed, stock);
 														return A2(_elm_community$elm_test$Expect$equal, _p113._0, shuffled);
 													}),
-												_1: {ctor: '[]'}
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_elm_community$elm_test$Test$test,
+														'can deal a hand of 3 cards',
+														function (_p114) {
+															var _p115 = _p114;
+															var stock = _user$project$Tests$hand;
+															var seed = _elm_lang$core$Random$initialSeed(1);
+															var _p116 = A2(_user$project$Haggis_Deck$deal, 3, stock);
+															return A2(
+																_elm_community$elm_test$Expect$equal,
+																_p116._1,
+																{
+																	ctor: '::',
+																	_0: _user$project$Tests$blueTwo,
+																	_1: {
+																		ctor: '::',
+																		_0: _user$project$Tests$greenTwo,
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$Tests$blueThree,
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																});
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_elm_community$elm_test$Test$test,
+															'dealing 3 cards removes those cards from deck',
+															function (_p117) {
+																var _p118 = _p117;
+																var stock = _user$project$Tests$hand;
+																var seed = _elm_lang$core$Random$initialSeed(1);
+																var _p119 = A2(_user$project$Haggis_Deck$deal, 3, stock);
+																return A2(
+																	_elm_community$elm_test$Expect$equal,
+																	_p119._0,
+																	{
+																		ctor: '::',
+																		_0: _user$project$Tests$redThree,
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$Tests$greenThree,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Tests$blueFour,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Tests$redFive,
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Tests$greenFive,
+																						_1: {
+																							ctor: '::',
+																							_0: _user$project$Tests$redSeven,
+																							_1: {
+																								ctor: '::',
+																								_0: _user$project$Tests$orangeSeven,
+																								_1: {
+																									ctor: '::',
+																									_0: _user$project$Tests$redNine,
+																									_1: {
+																										ctor: '::',
+																										_0: _user$project$Tests$yellowNine,
+																										_1: {
+																											ctor: '::',
+																											_0: _user$project$Tests$blueTen,
+																											_1: {
+																												ctor: '::',
+																												_0: _user$project$Tests$greenTen,
+																												_1: {ctor: '[]'}
+																											}
+																										}
+																									}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	});
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_elm_community$elm_test$Test$test,
+																'dealing a negative hand size gets an empty hand',
+																function (_p120) {
+																	var _p121 = _p120;
+																	var stock = _user$project$Tests$hand;
+																	var seed = _elm_lang$core$Random$initialSeed(1);
+																	var _p122 = A2(_user$project$Haggis_Deck$deal, -3, stock);
+																	return A2(
+																		_elm_community$elm_test$Expect$equal,
+																		_p122._1,
+																		{ctor: '[]'});
+																}),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_elm_community$elm_test$Test$test,
+																	'dealing more cards than are in the deck makes a hand of all cards',
+																	function (_p123) {
+																		var _p124 = _p123;
+																		var stock = _user$project$Tests$hand;
+																		var seed = _elm_lang$core$Random$initialSeed(1);
+																		var _p125 = A2(_user$project$Haggis_Deck$deal, 15, stock);
+																		return A2(_elm_community$elm_test$Expect$equal, _p125._1, stock);
+																	}),
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_elm_community$elm_test$Test$test,
+																		'dealing more cards than are in the deck makes an empty deck',
+																		function (_p126) {
+																			var _p127 = _p126;
+																			var stock = _user$project$Tests$hand;
+																			var seed = _elm_lang$core$Random$initialSeed(1);
+																			var _p128 = A2(_user$project$Haggis_Deck$deal, 15, stock);
+																			return A2(
+																				_elm_community$elm_test$Expect$equal,
+																				_p128._0,
+																				{ctor: '[]'});
+																		}),
+																	_1: {ctor: '[]'}
+																}
+															}
+														}
+													}
+												}
 											}
 										}),
 									_1: {ctor: '[]'}

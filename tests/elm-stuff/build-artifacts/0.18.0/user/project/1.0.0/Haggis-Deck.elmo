@@ -193,7 +193,11 @@ var _user$project$Haggis_Deck$stock = {
 };
 var _user$project$Haggis_Deck$deal = F2(
 	function (handSize, deck) {
-		return deck;
+		return {
+			ctor: '_Tuple2',
+			_0: A2(_elm_lang$core$List$drop, handSize, deck),
+			_1: A2(_elm_lang$core$List$take, handSize, deck)
+		};
 	});
 var _user$project$Haggis_Deck$shuffle = F2(
 	function (seed, deck) {

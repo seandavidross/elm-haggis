@@ -347,6 +347,79 @@ all =
                             case Deck.shuffle seed stock of
                                 ( deck, _ ) ->
                                     Expect.equal deck shuffled
+                , test "can deal a hand of 3 cards" <|
+                    \() ->
+                        let
+                            seed =
+                                Random.initialSeed 1
+
+                            stock =
+                                hand
+                        in
+                            case Deck.deal 3 stock of
+                                ( _, h ) ->
+                                    Expect.equal h [ blueTwo, greenTwo, blueThree ]
+                , test "dealing 3 cards removes those cards from deck" <|
+                    \() ->
+                        let
+                            seed =
+                                Random.initialSeed 1
+
+                            stock =
+                                hand
+                        in
+                            case Deck.deal 3 stock of
+                                ( deck, _ ) ->
+                                    Expect.equal
+                                        deck
+                                        [ redThree
+                                        , greenThree
+                                        , blueFour
+                                        , redFive
+                                        , greenFive
+                                        , redSeven
+                                        , orangeSeven
+                                        , redNine
+                                        , yellowNine
+                                        , blueTen
+                                        , greenTen
+                                        ]
+                , test "dealing a negative hand size gets an empty hand" <|
+                    \() ->
+                        let
+                            seed =
+                                Random.initialSeed 1
+
+                            stock =
+                                hand
+                        in
+                            case Deck.deal -3 stock of
+                                ( _, h ) ->
+                                    Expect.equal h []
+                , test "dealing more cards than are in the deck makes a hand of all cards" <|
+                    \() ->
+                        let
+                            seed =
+                                Random.initialSeed 1
+
+                            stock =
+                                hand
+                        in
+                            case Deck.deal 15 stock of
+                                ( _, h ) ->
+                                    Expect.equal h stock
+                , test "dealing more cards than are in the deck makes an empty deck" <|
+                    \() ->
+                        let
+                            seed =
+                                Random.initialSeed 1
+
+                            stock =
+                                hand
+                        in
+                            case Deck.deal 15 stock of
+                                ( deck, _ ) ->
+                                    Expect.equal deck []
                 ]
             ]
         ]
