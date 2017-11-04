@@ -4,12 +4,8 @@ import Array exposing (Array)
 import Ordering exposing (..)
 
 
-type alias Card =
-    { suit : Suit
-    , rank : Rank
-    , order : Order
-    , points : Points
-    }
+type Card
+    = Card Suit Rank Order Points
 
 
 type Suit
@@ -45,8 +41,8 @@ type alias Points =
 
 
 suit : Card -> Suit
-suit card =
-    card.suit
+suit (Card suit _ _ _) =
+    suit
 
 
 suits : List Suit
@@ -61,8 +57,8 @@ suits =
 
 
 rank : Card -> Rank
-rank card =
-    card.rank
+rank (Card _ rank _ _) =
+    rank
 
 
 ranks : Array Rank
@@ -84,8 +80,8 @@ ranks =
 
 
 order : Card -> Order
-order card =
-    card.order
+order (Card _ _ order _) =
+    order
 
 
 rankOrdering : Ordering Rank
@@ -167,5 +163,5 @@ isNatural card =
 
 
 points : Card -> Points
-points card =
-    card.points
+points (Card _ _ _ points) =
+    points
