@@ -396,6 +396,18 @@ all =
                             case Deck.deal -3 stock of
                                 ( _, h ) ->
                                     Expect.equal h []
+                , test "dealing a negative hand size removes no cards from deck" <|
+                    \() ->
+                        let
+                            seed =
+                                Random.initialSeed 1
+
+                            stock =
+                                hand
+                        in
+                            case Deck.deal -3 stock of
+                                ( deck, _ ) ->
+                                    Expect.equal deck stock
                 , test "dealing more cards than are in the deck makes a hand of all cards" <|
                     \() ->
                         let

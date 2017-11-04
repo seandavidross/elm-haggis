@@ -15566,30 +15566,43 @@ var _user$project$Tests$all = A2(
 																ctor: '::',
 																_0: A2(
 																	_elm_community$elm_test$Test$test,
-																	'dealing more cards than are in the deck makes a hand of all cards',
+																	'dealing a negative hand size removes no cards from deck',
 																	function (_p123) {
 																		var _p124 = _p123;
 																		var stock = _user$project$Tests$hand;
 																		var seed = _elm_lang$core$Random$initialSeed(1);
-																		var _p125 = A2(_user$project$Haggis_Deck$deal, 15, stock);
-																		return A2(_elm_community$elm_test$Expect$equal, _p125._1, stock);
+																		var _p125 = A2(_user$project$Haggis_Deck$deal, -3, stock);
+																		return A2(_elm_community$elm_test$Expect$equal, _p125._0, stock);
 																	}),
 																_1: {
 																	ctor: '::',
 																	_0: A2(
 																		_elm_community$elm_test$Test$test,
-																		'dealing more cards than are in the deck makes an empty deck',
+																		'dealing more cards than are in the deck makes a hand of all cards',
 																		function (_p126) {
 																			var _p127 = _p126;
 																			var stock = _user$project$Tests$hand;
 																			var seed = _elm_lang$core$Random$initialSeed(1);
 																			var _p128 = A2(_user$project$Haggis_Deck$deal, 15, stock);
-																			return A2(
-																				_elm_community$elm_test$Expect$equal,
-																				_p128._0,
-																				{ctor: '[]'});
+																			return A2(_elm_community$elm_test$Expect$equal, _p128._1, stock);
 																		}),
-																	_1: {ctor: '[]'}
+																	_1: {
+																		ctor: '::',
+																		_0: A2(
+																			_elm_community$elm_test$Test$test,
+																			'dealing more cards than are in the deck makes an empty deck',
+																			function (_p129) {
+																				var _p130 = _p129;
+																				var stock = _user$project$Tests$hand;
+																				var seed = _elm_lang$core$Random$initialSeed(1);
+																				var _p131 = A2(_user$project$Haggis_Deck$deal, 15, stock);
+																				return A2(
+																					_elm_community$elm_test$Expect$equal,
+																					_p131._0,
+																					{ctor: '[]'});
+																			}),
+																		_1: {ctor: '[]'}
+																	}
 																}
 															}
 														}
