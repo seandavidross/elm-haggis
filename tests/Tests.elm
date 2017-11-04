@@ -315,7 +315,7 @@ all =
                             seed =
                                 Random.initialSeed 1
                         in
-                            case Deck.shuffle [] seed of
+                            case Deck.shuffle seed [] of
                                 ( deck, _ ) ->
                                     Expect.equal deck []
                 , test "can shuffle a deck" <|
@@ -323,6 +323,9 @@ all =
                         let
                             seed =
                                 Random.initialSeed 1
+
+                            stock =
+                                hand
 
                             shuffled =
                                 [ greenThree
@@ -341,7 +344,7 @@ all =
                                 , orangeSeven
                                 ]
                         in
-                            case Deck.shuffle hand seed of
+                            case Deck.shuffle seed stock of
                                 ( deck, _ ) ->
                                     Expect.equal deck shuffled
                 ]
@@ -351,87 +354,87 @@ all =
 
 blueTwo : Card
 blueTwo =
-    { suit = Blue, rank = Two, order = 2, points = 0 }
+    Card Blue Two 2 0
 
 
 greenTwo : Card
 greenTwo =
-    { suit = Green, rank = Two, order = 2, points = 0 }
+    Card Green Two 2 0
 
 
 blueThree : Card
 blueThree =
-    { suit = Blue, rank = Three, order = 3, points = 1 }
+    Card Blue Three 3 1
 
 
 greenThree : Card
 greenThree =
-    { suit = Green, rank = Three, order = 3, points = 1 }
+    Card Green Three 3 1
 
 
 redThree : Card
 redThree =
-    { suit = Red, rank = Three, order = 3, points = 1 }
+    Card Red Three 3 1
 
 
 blueFour : Card
 blueFour =
-    { suit = Blue, rank = Four, order = 4, points = 0 }
+    Card Blue Four 4 0
 
 
 redFive : Card
 redFive =
-    { suit = Red, rank = Five, order = 5, points = 1 }
+    Card Red Five 5 1
 
 
 greenFive : Card
 greenFive =
-    { suit = Green, rank = Five, order = 5, points = 1 }
+    Card Green Five 5 1
 
 
 redSeven : Card
 redSeven =
-    { suit = Red, rank = Seven, order = 7, points = 1 }
+    Card Red Seven 7 1
 
 
 orangeSeven : Card
 orangeSeven =
-    { suit = Orange, rank = Seven, order = 7, points = 1 }
+    Card Orange Seven 7 1
 
 
 redNine : Card
 redNine =
-    { suit = Red, rank = Nine, order = 9, points = 1 }
+    Card Red Nine 9 1
 
 
 yellowNine : Card
 yellowNine =
-    { suit = Yellow, rank = Nine, order = 9, points = 1 }
+    Card Yellow Nine 9 1
 
 
 blueTen : Card
 blueTen =
-    { suit = Blue, rank = Ten, order = 10, points = 0 }
+    Card Blue Ten 10 0
 
 
 greenTen : Card
 greenTen =
-    { suit = Green, rank = Ten, order = 10, points = 0 }
+    Card Green Ten 10 0
 
 
 jack : Card
 jack =
-    { suit = Wild, rank = Jack, order = 11, points = 2 }
+    Card Wild Jack 11 2
 
 
 queen : Card
 queen =
-    { suit = Wild, rank = Queen, order = 12, points = 3 }
+    Card Wild Queen 12 3
 
 
 king : Card
 king =
-    { suit = Wild, rank = King, order = 13, points = 5 }
+    Card Wild King 13 5
 
 
 hand : Hand

@@ -12734,14 +12734,17 @@ var _user$project$Console_Text$normal = function (txt) {
 	}
 };
 
-var _user$project$Haggis_Card$points = function (card) {
-	return card.points;
+var _user$project$Haggis_Card$points = function (_p0) {
+	var _p1 = _p0;
+	return _p1._3;
 };
-var _user$project$Haggis_Card$order = function (card) {
-	return card.order;
+var _user$project$Haggis_Card$order = function (_p2) {
+	var _p3 = _p2;
+	return _p3._2;
 };
-var _user$project$Haggis_Card$rank = function (card) {
-	return card.rank;
+var _user$project$Haggis_Card$rank = function (_p4) {
+	var _p5 = _p4;
+	return _p5._1;
 };
 var _user$project$Haggis_Card$equal = F2(
 	function (card, card_) {
@@ -12749,12 +12752,13 @@ var _user$project$Haggis_Card$equal = F2(
 			_user$project$Haggis_Card$rank(card),
 			_user$project$Haggis_Card$rank(card_));
 	});
-var _user$project$Haggis_Card$suit = function (card) {
-	return card.suit;
+var _user$project$Haggis_Card$suit = function (_p6) {
+	var _p7 = _p6;
+	return _p7._0;
 };
 var _user$project$Haggis_Card$Card = F4(
 	function (a, b, c, d) {
-		return {suit: a, rank: b, order: c, points: d};
+		return {ctor: 'Card', _0: a, _1: b, _2: c, _3: d};
 	});
 var _user$project$Haggis_Card$Wild = {ctor: 'Wild'};
 var _user$project$Haggis_Card$isNatural = function (card) {
@@ -12873,8 +12877,8 @@ var _user$project$Haggis_Card$cardOrdering = A2(
 				_user$project$Haggis_Card$rank(c2));
 		}));
 var _user$project$Haggis_Card$toRank = function (order) {
-	var _p0 = order;
-	switch (_p0) {
+	var _p8 = order;
+	switch (_p8) {
 		case 2:
 			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Two);
 		case 3:
@@ -13345,8 +13349,205 @@ var _user$project$Haggis_Hand$collectSets = function (hand) {
 		_user$project$Haggis_Cards$subsets(hand));
 };
 
+var _user$project$Haggis_Deck$stock = {
+	ctor: '::',
+	_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Red, _user$project$Haggis_Card$Two, 2, 0),
+	_1: {
+		ctor: '::',
+		_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Red, _user$project$Haggis_Card$Three, 3, 1),
+		_1: {
+			ctor: '::',
+			_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Red, _user$project$Haggis_Card$Four, 4, 0),
+			_1: {
+				ctor: '::',
+				_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Red, _user$project$Haggis_Card$Five, 5, 1),
+				_1: {
+					ctor: '::',
+					_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Red, _user$project$Haggis_Card$Six, 6, 0),
+					_1: {
+						ctor: '::',
+						_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Red, _user$project$Haggis_Card$Seven, 7, 1),
+						_1: {
+							ctor: '::',
+							_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Red, _user$project$Haggis_Card$Eight, 8, 0),
+							_1: {
+								ctor: '::',
+								_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Red, _user$project$Haggis_Card$Nine, 9, 1),
+								_1: {
+									ctor: '::',
+									_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Red, _user$project$Haggis_Card$Ten, 10, 0),
+									_1: {
+										ctor: '::',
+										_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Orange, _user$project$Haggis_Card$Two, 2, 0),
+										_1: {
+											ctor: '::',
+											_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Orange, _user$project$Haggis_Card$Three, 3, 1),
+											_1: {
+												ctor: '::',
+												_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Orange, _user$project$Haggis_Card$Four, 4, 0),
+												_1: {
+													ctor: '::',
+													_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Orange, _user$project$Haggis_Card$Five, 5, 1),
+													_1: {
+														ctor: '::',
+														_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Orange, _user$project$Haggis_Card$Six, 6, 0),
+														_1: {
+															ctor: '::',
+															_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Orange, _user$project$Haggis_Card$Seven, 7, 1),
+															_1: {
+																ctor: '::',
+																_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Orange, _user$project$Haggis_Card$Eight, 8, 0),
+																_1: {
+																	ctor: '::',
+																	_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Orange, _user$project$Haggis_Card$Nine, 9, 1),
+																	_1: {
+																		ctor: '::',
+																		_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Orange, _user$project$Haggis_Card$Ten, 10, 0),
+																		_1: {
+																			ctor: '::',
+																			_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Yellow, _user$project$Haggis_Card$Two, 2, 0),
+																			_1: {
+																				ctor: '::',
+																				_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Yellow, _user$project$Haggis_Card$Three, 3, 1),
+																				_1: {
+																					ctor: '::',
+																					_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Yellow, _user$project$Haggis_Card$Four, 4, 0),
+																					_1: {
+																						ctor: '::',
+																						_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Yellow, _user$project$Haggis_Card$Five, 5, 1),
+																						_1: {
+																							ctor: '::',
+																							_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Yellow, _user$project$Haggis_Card$Six, 6, 0),
+																							_1: {
+																								ctor: '::',
+																								_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Yellow, _user$project$Haggis_Card$Seven, 7, 1),
+																								_1: {
+																									ctor: '::',
+																									_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Yellow, _user$project$Haggis_Card$Eight, 8, 0),
+																									_1: {
+																										ctor: '::',
+																										_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Yellow, _user$project$Haggis_Card$Nine, 9, 1),
+																										_1: {
+																											ctor: '::',
+																											_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Yellow, _user$project$Haggis_Card$Ten, 10, 0),
+																											_1: {
+																												ctor: '::',
+																												_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Green, _user$project$Haggis_Card$Two, 2, 0),
+																												_1: {
+																													ctor: '::',
+																													_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Green, _user$project$Haggis_Card$Three, 3, 1),
+																													_1: {
+																														ctor: '::',
+																														_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Green, _user$project$Haggis_Card$Four, 4, 0),
+																														_1: {
+																															ctor: '::',
+																															_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Green, _user$project$Haggis_Card$Five, 5, 1),
+																															_1: {
+																																ctor: '::',
+																																_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Green, _user$project$Haggis_Card$Six, 6, 0),
+																																_1: {
+																																	ctor: '::',
+																																	_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Green, _user$project$Haggis_Card$Seven, 7, 1),
+																																	_1: {
+																																		ctor: '::',
+																																		_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Green, _user$project$Haggis_Card$Eight, 8, 0),
+																																		_1: {
+																																			ctor: '::',
+																																			_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Green, _user$project$Haggis_Card$Nine, 9, 1),
+																																			_1: {
+																																				ctor: '::',
+																																				_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Green, _user$project$Haggis_Card$Ten, 10, 0),
+																																				_1: {
+																																					ctor: '::',
+																																					_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Blue, _user$project$Haggis_Card$Two, 2, 0),
+																																					_1: {
+																																						ctor: '::',
+																																						_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Blue, _user$project$Haggis_Card$Three, 3, 1),
+																																						_1: {
+																																							ctor: '::',
+																																							_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Blue, _user$project$Haggis_Card$Four, 4, 0),
+																																							_1: {
+																																								ctor: '::',
+																																								_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Blue, _user$project$Haggis_Card$Five, 5, 1),
+																																								_1: {
+																																									ctor: '::',
+																																									_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Blue, _user$project$Haggis_Card$Six, 6, 0),
+																																									_1: {
+																																										ctor: '::',
+																																										_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Blue, _user$project$Haggis_Card$Seven, 7, 1),
+																																										_1: {
+																																											ctor: '::',
+																																											_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Blue, _user$project$Haggis_Card$Eight, 8, 0),
+																																											_1: {
+																																												ctor: '::',
+																																												_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Blue, _user$project$Haggis_Card$Nine, 9, 1),
+																																												_1: {
+																																													ctor: '::',
+																																													_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Blue, _user$project$Haggis_Card$Ten, 10, 0),
+																																													_1: {
+																																														ctor: '::',
+																																														_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Wild, _user$project$Haggis_Card$Jack, 11, 2),
+																																														_1: {
+																																															ctor: '::',
+																																															_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Wild, _user$project$Haggis_Card$Queen, 12, 3),
+																																															_1: {
+																																																ctor: '::',
+																																																_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Wild, _user$project$Haggis_Card$King, 13, 5),
+																																																_1: {ctor: '[]'}
+																																															}
+																																														}
+																																													}
+																																												}
+																																											}
+																																										}
+																																									}
+																																								}
+																																							}
+																																						}
+																																					}
+																																				}
+																																			}
+																																		}
+																																	}
+																																}
+																															}
+																														}
+																													}
+																												}
+																											}
+																										}
+																									}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+};
+var _user$project$Haggis_Deck$deal = F2(
+	function (handSize, deck) {
+		return deck;
+	});
 var _user$project$Haggis_Deck$shuffle = F2(
-	function (deck, seed) {
+	function (seed, deck) {
 		return A2(
 			_elm_lang$core$Random$step,
 			_elm_community$random_extra$Random_List$shuffle(deck),
@@ -13373,23 +13574,23 @@ var _user$project$Native_RunTest = (function() {
   };
 })();
 
-var _user$project$Tests$king = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$King, order: 13, points: 5};
-var _user$project$Tests$queen = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$Queen, order: 12, points: 3};
-var _user$project$Tests$jack = {suit: _user$project$Haggis_Card$Wild, rank: _user$project$Haggis_Card$Jack, order: 11, points: 2};
-var _user$project$Tests$greenTen = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Ten, order: 10, points: 0};
-var _user$project$Tests$blueTen = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Ten, order: 10, points: 0};
-var _user$project$Tests$yellowNine = {suit: _user$project$Haggis_Card$Yellow, rank: _user$project$Haggis_Card$Nine, order: 9, points: 1};
-var _user$project$Tests$redNine = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Nine, order: 9, points: 1};
-var _user$project$Tests$orangeSeven = {suit: _user$project$Haggis_Card$Orange, rank: _user$project$Haggis_Card$Seven, order: 7, points: 1};
-var _user$project$Tests$redSeven = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Seven, order: 7, points: 1};
-var _user$project$Tests$greenFive = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Five, order: 5, points: 1};
-var _user$project$Tests$redFive = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Five, order: 5, points: 1};
-var _user$project$Tests$blueFour = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Four, order: 4, points: 0};
-var _user$project$Tests$redThree = {suit: _user$project$Haggis_Card$Red, rank: _user$project$Haggis_Card$Three, order: 3, points: 1};
-var _user$project$Tests$greenThree = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Three, order: 3, points: 1};
-var _user$project$Tests$blueThree = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Three, order: 3, points: 1};
-var _user$project$Tests$greenTwo = {suit: _user$project$Haggis_Card$Green, rank: _user$project$Haggis_Card$Two, order: 2, points: 0};
-var _user$project$Tests$blueTwo = {suit: _user$project$Haggis_Card$Blue, rank: _user$project$Haggis_Card$Two, order: 2, points: 0};
+var _user$project$Tests$king = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Wild, _user$project$Haggis_Card$King, 13, 5);
+var _user$project$Tests$queen = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Wild, _user$project$Haggis_Card$Queen, 12, 3);
+var _user$project$Tests$jack = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Wild, _user$project$Haggis_Card$Jack, 11, 2);
+var _user$project$Tests$greenTen = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Green, _user$project$Haggis_Card$Ten, 10, 0);
+var _user$project$Tests$blueTen = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Blue, _user$project$Haggis_Card$Ten, 10, 0);
+var _user$project$Tests$yellowNine = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Yellow, _user$project$Haggis_Card$Nine, 9, 1);
+var _user$project$Tests$redNine = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Red, _user$project$Haggis_Card$Nine, 9, 1);
+var _user$project$Tests$orangeSeven = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Orange, _user$project$Haggis_Card$Seven, 7, 1);
+var _user$project$Tests$redSeven = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Red, _user$project$Haggis_Card$Seven, 7, 1);
+var _user$project$Tests$greenFive = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Green, _user$project$Haggis_Card$Five, 5, 1);
+var _user$project$Tests$redFive = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Red, _user$project$Haggis_Card$Five, 5, 1);
+var _user$project$Tests$blueFour = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Blue, _user$project$Haggis_Card$Four, 4, 0);
+var _user$project$Tests$redThree = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Red, _user$project$Haggis_Card$Three, 3, 1);
+var _user$project$Tests$greenThree = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Green, _user$project$Haggis_Card$Three, 3, 1);
+var _user$project$Tests$blueThree = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Blue, _user$project$Haggis_Card$Three, 3, 1);
+var _user$project$Tests$greenTwo = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Green, _user$project$Haggis_Card$Two, 2, 0);
+var _user$project$Tests$blueTwo = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Blue, _user$project$Haggis_Card$Two, 2, 0);
 var _user$project$Tests$hand = {
 	ctor: '::',
 	_0: _user$project$Tests$blueTwo,
@@ -15180,8 +15381,8 @@ var _user$project$Tests$all = A2(
 													var seed = _elm_lang$core$Random$initialSeed(1);
 													var _p110 = A2(
 														_user$project$Haggis_Deck$shuffle,
-														{ctor: '[]'},
-														seed);
+														seed,
+														{ctor: '[]'});
 													return A2(
 														_elm_community$elm_test$Expect$equal,
 														_p110._0,
@@ -15251,8 +15452,9 @@ var _user$project$Tests$all = A2(
 																}
 															}
 														};
+														var stock = _user$project$Tests$hand;
 														var seed = _elm_lang$core$Random$initialSeed(1);
-														var _p113 = A2(_user$project$Haggis_Deck$shuffle, _user$project$Tests$hand, seed);
+														var _p113 = A2(_user$project$Haggis_Deck$shuffle, seed, stock);
 														return A2(_elm_community$elm_test$Expect$equal, _p113._0, shuffled);
 													}),
 												_1: {ctor: '[]'}

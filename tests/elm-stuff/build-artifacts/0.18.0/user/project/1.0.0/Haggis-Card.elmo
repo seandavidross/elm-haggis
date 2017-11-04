@@ -1,11 +1,14 @@
-var _user$project$Haggis_Card$points = function (card) {
-	return card.points;
+var _user$project$Haggis_Card$points = function (_p0) {
+	var _p1 = _p0;
+	return _p1._3;
 };
-var _user$project$Haggis_Card$order = function (card) {
-	return card.order;
+var _user$project$Haggis_Card$order = function (_p2) {
+	var _p3 = _p2;
+	return _p3._2;
 };
-var _user$project$Haggis_Card$rank = function (card) {
-	return card.rank;
+var _user$project$Haggis_Card$rank = function (_p4) {
+	var _p5 = _p4;
+	return _p5._1;
 };
 var _user$project$Haggis_Card$equal = F2(
 	function (card, card_) {
@@ -13,12 +16,13 @@ var _user$project$Haggis_Card$equal = F2(
 			_user$project$Haggis_Card$rank(card),
 			_user$project$Haggis_Card$rank(card_));
 	});
-var _user$project$Haggis_Card$suit = function (card) {
-	return card.suit;
+var _user$project$Haggis_Card$suit = function (_p6) {
+	var _p7 = _p6;
+	return _p7._0;
 };
 var _user$project$Haggis_Card$Card = F4(
 	function (a, b, c, d) {
-		return {suit: a, rank: b, order: c, points: d};
+		return {ctor: 'Card', _0: a, _1: b, _2: c, _3: d};
 	});
 var _user$project$Haggis_Card$Wild = {ctor: 'Wild'};
 var _user$project$Haggis_Card$isNatural = function (card) {
@@ -137,8 +141,8 @@ var _user$project$Haggis_Card$cardOrdering = A2(
 				_user$project$Haggis_Card$rank(c2));
 		}));
 var _user$project$Haggis_Card$toRank = function (order) {
-	var _p0 = order;
-	switch (_p0) {
+	var _p8 = order;
+	switch (_p8) {
 		case 2:
 			return _elm_lang$core$Maybe$Just(_user$project$Haggis_Card$Two);
 		case 3:
