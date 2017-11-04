@@ -1,0 +1,7 @@
+var _user$project$Haggis_Deck$shuffle = F2(
+	function (deck, seed) {
+		return A2(
+			_elm_lang$core$Random$step,
+			_elm_community$random_extra$Random_List$shuffle(deck),
+			seed);
+	});

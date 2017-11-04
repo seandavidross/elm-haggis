@@ -1790,7 +1790,101 @@ var _user$project$Tests$all = A2(
 											}
 										}
 									}),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_community$elm_test$Test$describe,
+										'Haggis.Deck',
+										{
+											ctor: '::',
+											_0: A2(
+												_elm_community$elm_test$Test$test,
+												'can shuffle an empty deck',
+												function (_p108) {
+													var _p109 = _p108;
+													var seed = _elm_lang$core$Random$initialSeed(1);
+													var _p110 = A2(
+														_user$project$Haggis_Deck$shuffle,
+														{ctor: '[]'},
+														seed);
+													return A2(
+														_elm_community$elm_test$Expect$equal,
+														_p110._0,
+														{ctor: '[]'});
+												}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_community$elm_test$Test$test,
+													'can shuffle a deck',
+													function (_p111) {
+														var _p112 = _p111;
+														var shuffled = {
+															ctor: '::',
+															_0: _user$project$Tests$greenThree,
+															_1: {
+																ctor: '::',
+																_0: _user$project$Tests$blueThree,
+																_1: {
+																	ctor: '::',
+																	_0: _user$project$Tests$redThree,
+																	_1: {
+																		ctor: '::',
+																		_0: _user$project$Tests$greenTen,
+																		_1: {
+																			ctor: '::',
+																			_0: _user$project$Tests$greenTwo,
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Tests$redFive,
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Tests$redNine,
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Tests$blueFour,
+																						_1: {
+																							ctor: '::',
+																							_0: _user$project$Tests$blueTen,
+																							_1: {
+																								ctor: '::',
+																								_0: _user$project$Tests$blueTwo,
+																								_1: {
+																									ctor: '::',
+																									_0: _user$project$Tests$redSeven,
+																									_1: {
+																										ctor: '::',
+																										_0: _user$project$Tests$greenFive,
+																										_1: {
+																											ctor: '::',
+																											_0: _user$project$Tests$yellowNine,
+																											_1: {
+																												ctor: '::',
+																												_0: _user$project$Tests$orangeSeven,
+																												_1: {ctor: '[]'}
+																											}
+																										}
+																									}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														};
+														var seed = _elm_lang$core$Random$initialSeed(1);
+														var _p113 = A2(_user$project$Haggis_Deck$shuffle, _user$project$Tests$hand, seed);
+														return A2(_elm_community$elm_test$Expect$equal, _p113._0, shuffled);
+													}),
+												_1: {ctor: '[]'}
+											}
+										}),
+									_1: {ctor: '[]'}
+								}
 							}
 						}
 					}

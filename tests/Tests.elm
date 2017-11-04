@@ -5,6 +5,8 @@ import Haggis.Card as Card exposing (..)
 import Haggis.Cards as Cards exposing (..)
 import Haggis.Combination as Combo exposing (..)
 import Haggis.Hand as Hand exposing (..)
+import Haggis.Deck as Deck exposing (..)
+import Random exposing (..)
 import Test exposing (..)
 
 
@@ -305,6 +307,43 @@ all =
                         Expect.equal
                             (Hand.collectSequences hand)
                             [ RunOfPairs 2 Three, RunOfSingles 3 Four ]
+                ]
+            , describe "Haggis.Deck"
+                [ test "can shuffle an empty deck" <|
+                    \() ->
+                        let
+                            seed =
+                                Random.initialSeed 1
+                        in
+                            case Deck.shuffle [] seed of
+                                ( deck, _ ) ->
+                                    Expect.equal deck []
+                , test "can shuffle a deck" <|
+                    \() ->
+                        let
+                            seed =
+                                Random.initialSeed 1
+
+                            shuffled =
+                                [ greenThree
+                                , blueThree
+                                , redThree
+                                , greenTen
+                                , greenTwo
+                                , redFive
+                                , redNine
+                                , blueFour
+                                , blueTen
+                                , blueTwo
+                                , redSeven
+                                , greenFive
+                                , yellowNine
+                                , orangeSeven
+                                ]
+                        in
+                            case Deck.shuffle hand seed of
+                                ( deck, _ ) ->
+                                    Expect.equal deck shuffled
                 ]
             ]
         ]

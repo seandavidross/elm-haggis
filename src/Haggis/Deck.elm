@@ -5,13 +5,13 @@ import Haggis.Cards exposing (..)
 import Haggis.Hand exposing (..)
 import Random exposing (generate)
 import Random.List exposing (..)
+import Time exposing (..)
 
 
 type alias Deck =
     Cards
 
 
-
--- shuffle : Deck -> Cmd Deck
--- shuffle deck =
---     Random.generate (Random.List.shuffle) deck
+shuffle : Deck -> Random.Seed -> ( Deck, Random.Seed )
+shuffle deck seed =
+    Random.step (Random.List.shuffle deck) seed
