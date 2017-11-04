@@ -16,9 +16,9 @@ shuffle seed deck =
     Random.step (Random.List.shuffle deck) seed
 
 
-deal : Int -> Deck -> Hand
+deal : Int -> Deck -> ( Deck, Hand )
 deal handSize deck =
-    List.take handSize deck
+    ( List.drop handSize deck, List.take handSize deck )
 
 
 stock : Deck
