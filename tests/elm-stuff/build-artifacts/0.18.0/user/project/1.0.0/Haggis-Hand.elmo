@@ -19,3 +19,6 @@ var _user$project$Haggis_Hand$collectSets = function (hand) {
 		_user$project$Haggis_Combination$set,
 		_user$project$Haggis_Cards$subsets(hand));
 };
+var _user$project$Haggis_Hand$sort = function (hand) {
+	return A2(_elm_lang$core$List$sortWith, _user$project$Haggis_Card$cardOrdering, hand);
+};

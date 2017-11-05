@@ -4,7 +4,7 @@ var _user$project$Tests$dealTestHand = function () {
 	var deck = _p0._0;
 	var _p1 = A2(_user$project$Haggis_Deck$deal, 14, deck);
 	var hand = _p1._1;
-	var sortedHand = A2(_elm_lang$core$List$sortWith, _user$project$Haggis_Card$cardOrdering, hand);
+	var sortedHand = _user$project$Haggis_Hand$sort(hand);
 	return {ctor: '_Tuple3', _0: seed, _1: deck, _2: sortedHand};
 }();
 var _user$project$Tests$king = A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Wild, _user$project$Haggis_Card$King, 13, 5);

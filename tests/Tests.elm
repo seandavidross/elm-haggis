@@ -617,6 +617,6 @@ dealTestHand =
             Deck.deal 14 deck
 
         sortedHand =
-            List.sortWith Card.cardOrdering hand
+            Hand.sort hand
     in
         ( seed, deck, sortedHand )

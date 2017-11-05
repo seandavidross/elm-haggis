@@ -9,6 +9,11 @@ type alias Hand =
     Cards
 
 
+sort : Hand -> Hand
+sort hand =
+    List.sortWith Card.cardOrdering hand
+
+
 collectSets : Hand -> List (Combination.Set Card.Rank)
 collectSets hand =
     List.filterMap Combination.set (Cards.subsets hand)
