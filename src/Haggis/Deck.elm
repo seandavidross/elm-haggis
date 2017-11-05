@@ -68,7 +68,12 @@ stock =
     , Card Blue Eight 8 0
     , Card Blue Nine 9 1
     , Card Blue Ten 10 0
-    , Card Wild Jack 11 2
+    ]
+
+
+wilds : Cards
+wilds =
+    [ Card Wild Jack 11 2
     , Card Wild Queen 12 3
     , Card Wild King 13 5
     ]

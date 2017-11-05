@@ -432,6 +432,69 @@ all =
                             case Deck.deal 15 stock of
                                 ( deck, _ ) ->
                                     Expect.equal deck []
+                , test "find out which cards get dealt to hand from full deck" <|
+                    \() ->
+                        let
+                            ( seed, deck, hand ) =
+                                dealTestHand
+                        in
+                            Expect.equal
+                                hand
+                                [ Card Yellow Two 2 0
+                                , Card Green Two 2 0
+                                , Card Orange Three 3 1
+                                , Card Red Three 3 1
+                                , Card Blue Three 3 1
+                                , Card Orange Four 4 0
+                                , Card Yellow Four 4 0
+                                , Card Red Six 6 0
+                                , Card Red Seven 7 1
+                                , Card Red Eight 8 0
+                                , Card Orange Eight 8 0
+                                , Card Green Nine 9 1
+                                , Card Red Ten 10 0
+                                , Card Yellow Ten 10 0
+                                ]
+                , test "find all sets in hand dealt from full deck" <|
+                    \() ->
+                        let
+                            ( seed, deck, hand ) =
+                                dealTestHand
+                        in
+                            Expect.equal
+                                (Hand.collectSets hand)
+                                [ Pair Two
+                                , Single Two
+                                , Single Two
+                                , Triple Three
+                                , Pair Three
+                                , Pair Three
+                                , Single Three
+                                , Pair Three
+                                , Single Three
+                                , Single Three
+                                , Pair Four
+                                , Single Four
+                                , Single Four
+                                , Single Six
+                                , Single Seven
+                                , Pair Eight
+                                , Single Eight
+                                , Single Eight
+                                , Single Nine
+                                , Pair Ten
+                                , Single Ten
+                                , Single Ten
+                                ]
+                , test "find all sequences in hand dealt from full deck" <|
+                    \() ->
+                        let
+                            ( seed, deck, hand ) =
+                                dealTestHand
+                        in
+                            Expect.equal
+                                (Hand.collectSequences hand)
+                                [ RunOfSingles 3 Eight ]
                 ]
             ]
         ]
@@ -539,3 +602,21 @@ hand =
     , blueTen
     , greenTen
     ]
+
+
+dealTestHand : ( Seed, Deck, Hand )
+dealTestHand =
+    let
+        seed =
+            Random.initialSeed 4
+
+        ( deck, _ ) =
+            Deck.shuffle seed Deck.stock
+
+        ( _, hand ) =
+            Deck.deal 14 deck
+
+        sortedHand =
+            List.sortWith Card.cardOrdering hand
+    in
+        ( seed, deck, sortedHand )

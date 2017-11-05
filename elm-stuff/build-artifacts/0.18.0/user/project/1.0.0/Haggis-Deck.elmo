@@ -1,3 +1,16 @@
+var _user$project$Haggis_Deck$wilds = {
+	ctor: '::',
+	_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Wild, _user$project$Haggis_Card$Jack, 11, 2),
+	_1: {
+		ctor: '::',
+		_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Wild, _user$project$Haggis_Card$Queen, 12, 3),
+		_1: {
+			ctor: '::',
+			_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Wild, _user$project$Haggis_Card$King, 13, 5),
+			_1: {ctor: '[]'}
+		}
+	}
+};
 var _user$project$Haggis_Deck$stock = {
 	ctor: '::',
 	_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Red, _user$project$Haggis_Card$Two, 2, 0),
@@ -133,19 +146,7 @@ var _user$project$Haggis_Deck$stock = {
 																																												_1: {
 																																													ctor: '::',
 																																													_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Blue, _user$project$Haggis_Card$Ten, 10, 0),
-																																													_1: {
-																																														ctor: '::',
-																																														_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Wild, _user$project$Haggis_Card$Jack, 11, 2),
-																																														_1: {
-																																															ctor: '::',
-																																															_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Wild, _user$project$Haggis_Card$Queen, 12, 3),
-																																															_1: {
-																																																ctor: '::',
-																																																_0: A4(_user$project$Haggis_Card$Card, _user$project$Haggis_Card$Wild, _user$project$Haggis_Card$King, 13, 5),
-																																																_1: {ctor: '[]'}
-																																															}
-																																														}
-																																													}
+																																													_1: {ctor: '[]'}
 																																												}
 																																											}
 																																										}
