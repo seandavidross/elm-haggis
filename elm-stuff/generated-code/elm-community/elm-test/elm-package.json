@@ -4,10 +4,10 @@
     "repository": "https://github.com/user/project.git",
     "license": "BSD3",
     "source-directories": [
-        "/home/sean/Hacks/elm/elm-haggis/elm-stuff/generated-code/elm-community/elm-test/src",
-        "/usr/local/lib/node_modules/elm-test/src",
-        "/home/sean/Hacks/elm/elm-haggis/tests",
-        "/home/sean/Hacks/elm/elm-haggis/src"
+        "/home/sean/Hacks/elm-haggis/elm-stuff/generated-code/elm-community/elm-test/src",
+        "/home/sean/node_modules/elm-test/src",
+        "/home/sean/Hacks/elm-haggis/tests",
+        "/home/sean/Hacks/elm-haggis/src"
     ],
     "exposed-modules": [],
     "dependencies": {

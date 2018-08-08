@@ -1,0 +1,22 @@
+var _user$project$Test_Generated_Main45040372$main = A2(
+	_user$project$Test_Runner_Node$runWithOptions,
+	{
+		runs: _elm_lang$core$Maybe$Nothing,
+		report: _user$project$Test_Reporter_Reporter$ConsoleReport(_user$project$Console_Text$UseColor),
+		seed: _elm_lang$core$Maybe$Nothing,
+		processes: 2,
+		paths: {ctor: '[]'}
+	},
+	_elm_community$elm_test$Test$concat(
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_community$elm_test$Test$describe,
+				'Tests',
+				{
+					ctor: '::',
+					_0: _user$project$Tests$all,
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		}))(_elm_lang$core$Json_Decode$value);

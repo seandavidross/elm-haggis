@@ -16414,23 +16414,27 @@ var _user$project$Test_Reporter_Console_Format$isFloat = function (str) {
 };
 var _user$project$Test_Reporter_Console_Format$highlightEqual = F2(
 	function (expected, actual) {
-		if (_user$project$Test_Reporter_Console_Format$isFloat(expected) && _user$project$Test_Reporter_Console_Format$isFloat(actual)) {
+		if (_elm_lang$core$Native_Utils.eq(expected, '\"\"') || _elm_lang$core$Native_Utils.eq(actual, '\"\"')) {
 			return _elm_lang$core$Maybe$Nothing;
 		} else {
-			var actualChars = _elm_lang$core$String$toList(actual);
-			var expectedChars = _elm_lang$core$String$toList(expected);
-			return _elm_lang$core$Maybe$Just(
-				{
-					ctor: '_Tuple2',
-					_0: A2(
-						_elm_lang$core$List$map,
-						_user$project$Test_Reporter_Highlightable$map(_elm_lang$core$String$fromChar),
-						A2(_user$project$Test_Reporter_Highlightable$diffLists, expectedChars, actualChars)),
-					_1: A2(
-						_elm_lang$core$List$map,
-						_user$project$Test_Reporter_Highlightable$map(_elm_lang$core$String$fromChar),
-						A2(_user$project$Test_Reporter_Highlightable$diffLists, actualChars, expectedChars))
-				});
+			if (_user$project$Test_Reporter_Console_Format$isFloat(expected) && _user$project$Test_Reporter_Console_Format$isFloat(actual)) {
+				return _elm_lang$core$Maybe$Nothing;
+			} else {
+				var actualChars = _elm_lang$core$String$toList(actual);
+				var expectedChars = _elm_lang$core$String$toList(expected);
+				return _elm_lang$core$Maybe$Just(
+					{
+						ctor: '_Tuple2',
+						_0: A2(
+							_elm_lang$core$List$map,
+							_user$project$Test_Reporter_Highlightable$map(_elm_lang$core$String$fromChar),
+							A2(_user$project$Test_Reporter_Highlightable$diffLists, expectedChars, actualChars)),
+						_1: A2(
+							_elm_lang$core$List$map,
+							_user$project$Test_Reporter_Highlightable$map(_elm_lang$core$String$fromChar),
+							A2(_user$project$Test_Reporter_Highlightable$diffLists, actualChars, expectedChars))
+					});
+			}
 		}
 	});
 var _user$project$Test_Reporter_Console_Format$format = F3(
@@ -16517,7 +16521,7 @@ var _user$project$Test_Reporter_Console_Format$format = F3(
 	});
 
 var _user$project$Test_Reporter_Console_Format_Color$fromHighlightable = _user$project$Test_Reporter_Highlightable$resolve(
-	{fromHighlighted: _user$project$Test_Runner_Node_Vendor_Console$bgCyan, fromPlain: _elm_lang$core$Basics$identity});
+	{fromHighlighted: _user$project$Test_Runner_Node_Vendor_Console$colorsInverted, fromPlain: _elm_lang$core$Basics$identity});
 var _user$project$Test_Reporter_Console_Format_Color$formatEquality = F2(
 	function (highlightedExpected, highlightedActual) {
 		var formattedActual = A2(
@@ -18325,13 +18329,13 @@ var _user$project$Test_Runner_Node$runWithOptions = function (options) {
 		});
 };
 
-var _user$project$Test_Generated_Main166733720$main = A2(
+var _user$project$Test_Generated_Main45040372$main = A2(
 	_user$project$Test_Runner_Node$runWithOptions,
 	{
 		runs: _elm_lang$core$Maybe$Nothing,
 		report: _user$project$Test_Reporter_Reporter$ConsoleReport(_user$project$Console_Text$UseColor),
 		seed: _elm_lang$core$Maybe$Nothing,
-		processes: 8,
+		processes: 2,
 		paths: {ctor: '[]'}
 	},
 	_elm_community$elm_test$Test$concat(
@@ -18351,9 +18355,9 @@ var _user$project$Test_Generated_Main166733720$main = A2(
 var Elm = {};
 Elm['Test'] = Elm['Test'] || {};
 Elm['Test']['Generated'] = Elm['Test']['Generated'] || {};
-Elm['Test']['Generated']['Main166733720'] = Elm['Test']['Generated']['Main166733720'] || {};
-if (typeof _user$project$Test_Generated_Main166733720$main !== 'undefined') {
-    _user$project$Test_Generated_Main166733720$main(Elm['Test']['Generated']['Main166733720'], 'Test.Generated.Main166733720', undefined);
+Elm['Test']['Generated']['Main45040372'] = Elm['Test']['Generated']['Main45040372'] || {};
+if (typeof _user$project$Test_Generated_Main45040372$main !== 'undefined') {
+    _user$project$Test_Generated_Main45040372$main(Elm['Test']['Generated']['Main45040372'], 'Test.Generated.Main45040372', undefined);
 }
 
 if (typeof define === "function" && define['amd'])
@@ -18391,6 +18395,7 @@ return module.exports;
 })({});
 var initialSeed = null;
 var report = "console";
+var pipeFilename = "/tmp/elm_test-29153.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === "undefined") {
   throw "test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!";
@@ -18407,16 +18412,34 @@ if (potentialModuleNames.length !== 1) {
   process.exit(1);
 }
 
+var net = require("net"),
+  client = net.createConnection(pipeFilename);
+
+client.on("error", function(error) {
+  console.error(error);
+  client.end();
+  process.exit(1);
+});
+
+client.setEncoding("utf8");
+client.setNoDelay(true);
+
 var testModule = Elm.Test.Generated[potentialModuleNames[0]];
 
 // Run the Elm app.
 var app = testModule.worker({ seed: initialSeed, report: report });
 
-// Use ports for inter-process communication.
-app.ports.send.subscribe(function(msg) {
-  process.send(msg);
+client.on("data", function(msg) {
+  app.ports.receive.send(JSON.parse(msg));
 });
 
-process.on("message", function(msg) {
-  app.ports.receive.send(msg);
+// Use ports for inter-process communication.
+app.ports.send.subscribe(function(msg) {
+  // We split incoming messages on the socket on newlines. The gist is that node
+  // is rather unpredictable in whether or not a single `write` will result in a
+  // single `on('data')` callback. Sometimes it does, sometimes multiple writes
+  // result in a single callback and - worst of all - sometimes a single read
+  // results in multiple callbacks, each receiving a piece of the data. The
+  // horror.
+  client.write(msg + "\n");
 });

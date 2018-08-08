@@ -1,5 +1,5 @@
 var _user$project$Test_Reporter_Console_Format_Color$fromHighlightable = _user$project$Test_Reporter_Highlightable$resolve(
-	{fromHighlighted: _user$project$Test_Runner_Node_Vendor_Console$bgCyan, fromPlain: _elm_lang$core$Basics$identity});
+	{fromHighlighted: _user$project$Test_Runner_Node_Vendor_Console$colorsInverted, fromPlain: _elm_lang$core$Basics$identity});
 var _user$project$Test_Reporter_Console_Format_Color$formatEquality = F2(
 	function (highlightedExpected, highlightedActual) {
 		var formattedActual = A2(

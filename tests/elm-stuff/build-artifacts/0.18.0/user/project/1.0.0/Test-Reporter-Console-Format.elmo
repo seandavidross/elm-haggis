@@ -148,23 +148,27 @@ var _user$project$Test_Reporter_Console_Format$isFloat = function (str) {
 };
 var _user$project$Test_Reporter_Console_Format$highlightEqual = F2(
 	function (expected, actual) {
-		if (_user$project$Test_Reporter_Console_Format$isFloat(expected) && _user$project$Test_Reporter_Console_Format$isFloat(actual)) {
+		if (_elm_lang$core$Native_Utils.eq(expected, '\"\"') || _elm_lang$core$Native_Utils.eq(actual, '\"\"')) {
 			return _elm_lang$core$Maybe$Nothing;
 		} else {
-			var actualChars = _elm_lang$core$String$toList(actual);
-			var expectedChars = _elm_lang$core$String$toList(expected);
-			return _elm_lang$core$Maybe$Just(
-				{
-					ctor: '_Tuple2',
-					_0: A2(
-						_elm_lang$core$List$map,
-						_user$project$Test_Reporter_Highlightable$map(_elm_lang$core$String$fromChar),
-						A2(_user$project$Test_Reporter_Highlightable$diffLists, expectedChars, actualChars)),
-					_1: A2(
-						_elm_lang$core$List$map,
-						_user$project$Test_Reporter_Highlightable$map(_elm_lang$core$String$fromChar),
-						A2(_user$project$Test_Reporter_Highlightable$diffLists, actualChars, expectedChars))
-				});
+			if (_user$project$Test_Reporter_Console_Format$isFloat(expected) && _user$project$Test_Reporter_Console_Format$isFloat(actual)) {
+				return _elm_lang$core$Maybe$Nothing;
+			} else {
+				var actualChars = _elm_lang$core$String$toList(actual);
+				var expectedChars = _elm_lang$core$String$toList(expected);
+				return _elm_lang$core$Maybe$Just(
+					{
+						ctor: '_Tuple2',
+						_0: A2(
+							_elm_lang$core$List$map,
+							_user$project$Test_Reporter_Highlightable$map(_elm_lang$core$String$fromChar),
+							A2(_user$project$Test_Reporter_Highlightable$diffLists, expectedChars, actualChars)),
+						_1: A2(
+							_elm_lang$core$List$map,
+							_user$project$Test_Reporter_Highlightable$map(_elm_lang$core$String$fromChar),
+							A2(_user$project$Test_Reporter_Highlightable$diffLists, actualChars, expectedChars))
+					});
+			}
 		}
 	});
 var _user$project$Test_Reporter_Console_Format$format = F3(
