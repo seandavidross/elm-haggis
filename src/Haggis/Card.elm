@@ -203,9 +203,9 @@ cardOrdering =
         )
 
 
-equal : Card -> Card -> Bool
-equal card card_ =
-    (rank card) == (rank card_)
+equals : Card -> Card -> Bool
+equals lhs rhs =
+    (rank lhs) == (rank rhs)
 
 
 isNatural : Card -> Bool
@@ -226,3 +226,9 @@ points card =
 
         CourtCard _ p ->
             p
+
+
+isFlush : Card -> Card -> Bool
+isFlush lhs rhs =
+    suit lhs == suit rhs
+

@@ -94,7 +94,7 @@ type BombType
     | JK
     | QK
     | JQK
-    | Suited
+    | Flush
 
 
 type Combination
@@ -182,8 +182,8 @@ bomb cards =
                 Just JQK
 
             [ Odd Three, Odd Five, Odd Seven, Odd Nine ] ->
-                if allSameSuit cards then
-                    Just Suited
+                if allFlush cards then
+                    Just Flush
                 else if hasFourSuits cards then
                     Just Rainbow
                 else
@@ -193,19 +193,14 @@ bomb cards =
                 Nothing
 
 
-allSameSuit : Cards -> Bool
-allSameSuit cards =
+allFlush : Cards -> Bool
+allFlush cards =
     case cards of
         first :: rest ->
-            List.all (hasSameSuit first) rest
+            List.all (Card.isFlush first) rest
 
         otherwise ->
             False
-
-
-hasSameSuit : Card -> Card -> Bool
-hasSameSuit c1 c2 =
-    Card.suit c1 == Card.suit c2
 
 
 hasFourSuits : Cards -> Bool
