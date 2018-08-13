@@ -109,41 +109,21 @@ type Combination
 
 set : Cards -> Maybe (SetType Card.Rank)
 set cards =
-    if List.all Card.equal cards then
+    if List.any Card.isNatural cards then
         let
             rank =
                 List.head cards |> Maybe.map Card.rank
-
-            setSize =
-                List.length cards
+                
         in
-            case setSize of
+            case List.length cards of
                 1 ->
-                    case cards of
-                        [ CourtCard ( ( rank, _ ), AsNaturalPip _ ) _ ] ->
-                            Nothing
-
-                        [ CourtCard ( ( rank, _ ), AsUnnaturalCourt _ ) _ ] ->
-                            Nothing
-
-                        otherwise ->
-                            rank |> Maybe.map Single
+                    rank |> Maybe.map Single
 
                 2 ->
-                    case cards of
-                        [ CourtCard _ _, CourtCard _ _ ] ->
-                            Nothing
-
-                        otherwise ->
-                            rank |> Maybe.map Pair
+                    rank |> Maybe.map Pair
 
                 3 ->
-                    case cards of
-                        [ CourtCard _ _, CourtCard _ _, CourtCard _ _ ] ->
-                            Nothing
-
-                        otherwise ->
-                            rank |> Maybe.map Triple
+                    rank |> Maybe.map Triple
 
                 4 ->
                     rank |> Maybe.map FourOfAKind
@@ -163,7 +143,12 @@ set cards =
                 otherwise ->
                     Nothing
     else
-        Nothing
+        case cards of
+            CourtCard ((rank, _), _) _ ->
+                rank |> Maybe.map Single
+            
+            otherwise ->
+                Nothing
 
 
 split : List Card -> ( List Card, List Card )
