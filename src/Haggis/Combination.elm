@@ -109,7 +109,7 @@ type Combination
 
 set : Cards -> Maybe (SetType Card.Rank)
 set cards =
-    if List.any Card.isNatural cards then
+    if (anyNatural cards)  &&  (allEqual cards) then
         let
             rank =
                 List.head cards |> Maybe.map Card.rank
