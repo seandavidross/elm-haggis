@@ -4,84 +4,182 @@ import Array exposing (Array)
 import Ordering exposing (..)
 
 
-type Card
-    = Card Suit Rank Order Points
-
-
-type Suit
+type NaturalSuit
     = Red
     | Orange
     | Yellow
     | Green
     | Blue
-    | Wild
 
 
-type Rank
+type WildSuit
+    = Black
+
+
+type Suit
+    = Natural NaturalSuit
+    | Wild WildSuit
+
+
+type EvenRank
     = Two
-    | Three
     | Four
-    | Five
     | Six
-    | Seven
     | Eight
-    | Nine
     | Ten
-    | Jack
+
+
+type OddRank
+    = Three
+    | Five
+    | Seven
+    | Nine
+
+
+type PipRank
+    = Even EvenRank
+    | Odd OddRank
+
+
+type CourtRank
+    = Jack
     | Queen
     | King
 
 
-type alias Order =
-    Int
+type Rank
+    = Pip PipRank
+    | Court CourtRank
 
 
-type alias Points =
-    Int
+type alias PipIndex =
+    ( PipRank, NaturalSuit )
+
+
+type alias CourtIndex =
+    ( CourtRank, WildSuit )
+
+
+type CardIndex
+    = PipCardIndex PipIndex
+    | CourtCardIndex CourtIndex
+
+
+pip : PipIndex -> CardIndex
+pip =
+    PipCardIndex
+
+
+court : CourtIndex -> CardIndex
+court =
+    CourtCardIndex
+
+
+type alias UnnaturalIndex =
+    ( CourtRank, NaturalSuit )
+
+
+type AsRoleIndex
+    = AsNaturalPip PipIndex
+    | AsNaturalCourt CourtIndex
+    | AsUnnaturalCourt UnnaturalIndex
+
+
+type alias WildIndex =
+    ( CourtIndex, AsRoleIndex )
+
+
+type Points
+    = Points Int
+
+
+type Card
+    = NaturalCard PipIndex Points
+    | CourtCard WildIndex Points
+
+
+create : CardIndex -> Card
+create cardIndex =
+    case cardIndex of
+        PipCardIndex pipIndex ->
+            case pipIndex of
+                ( Even _, _ ) ->
+                    NaturalCard pipIndex <| Points 0
+
+                ( Odd _, _ ) ->
+                    NaturalCard pipIndex <| Points 1
+
+        CourtCardIndex courtIndex ->
+            case courtIndex of
+                ( Jack, _ ) ->
+                    CourtCard ( courtIndex, AsNaturalCourt courtIndex ) <| Points 2
+
+                ( Queen, _ ) ->
+                    CourtCard ( courtIndex, AsNaturalCourt courtIndex ) <| Points 3
+
+                ( King, _ ) ->
+                    CourtCard ( courtIndex, AsNaturalCourt courtIndex ) <| Points 5
+
+
+rank : Card -> Rank
+rank card =
+    case card of
+        NaturalCard ( r, _ ) _ ->
+            Pip r
+
+        CourtCard ( _, AsNaturalPip ( r, _ ) ) _ ->
+            Pip r
+
+        CourtCard ( _, AsNaturalCourt ( r, _ ) ) _ ->
+            Court r
+
+        CourtCard ( _, AsUnnaturalCourt ( r, _ ) ) _ ->
+            Court r
 
 
 suit : Card -> Suit
-suit (Card suit _ _ _) =
-    suit
+suit card =
+    case card of
+        NaturalCard ( _, s ) _ ->
+            Natural s
+
+        CourtCard ( _, AsNaturalPip ( _, s ) ) _ ->
+            Natural s
+
+        CourtCard ( _, AsUnnaturalCourt ( _, s ) ) _ ->
+            Natural s
+
+        CourtCard ( _, AsNaturalCourt ( _, s ) ) _ ->
+            Wild s
 
 
 suits : List Suit
 suits =
-    [ Red
-    , Orange
-    , Yellow
-    , Green
-    , Blue
-    , Wild
+    [ Natural Red
+    , Natural Orange
+    , Natural Yellow
+    , Natural Green
+    , Natural Blue
+    , Wild Black
     ]
-
-
-rank : Card -> Rank
-rank (Card _ rank _ _) =
-    rank
 
 
 ranks : Array Rank
 ranks =
     Array.fromList
-        [ Two
-        , Three
-        , Four
-        , Five
-        , Six
-        , Seven
-        , Eight
-        , Nine
-        , Ten
-        , Jack
-        , Queen
-        , King
+        [ Pip <| Even Two
+        , Pip <| Odd Three
+        , Pip <| Even Four
+        , Pip <| Odd Five
+        , Pip <| Even Six
+        , Pip <| Odd Seven
+        , Pip <| Even Eight
+        , Pip <| Odd Nine
+        , Pip <| Even Ten
+        , Court Jack
+        , Court Queen
+        , Court King
         ]
-
-
-order : Card -> Order
-order (Card _ _ order _) =
-    order
 
 
 rankOrdering : Ordering Rank
@@ -105,63 +203,26 @@ cardOrdering =
         )
 
 
-toRank : Int -> Maybe Rank
-toRank order =
-    case order of
-        2 ->
-            Just Two
-
-        3 ->
-            Just Three
-
-        4 ->
-            Just Four
-
-        5 ->
-            Just Five
-
-        6 ->
-            Just Six
-
-        7 ->
-            Just Seven
-
-        8 ->
-            Just Eight
-
-        9 ->
-            Just Nine
-
-        10 ->
-            Just Ten
-
-        11 ->
-            Just Jack
-
-        12 ->
-            Just Queen
-
-        13 ->
-            Just King
-
-        otherwise ->
-            Nothing
-
-
 equal : Card -> Card -> Bool
 equal card card_ =
     (rank card) == (rank card_)
 
 
-{-| A "spot card" is a card game term for any card that is not
-a Jack, Queen, or King which are called face cards. In Haggis,
-since face cards are wild, all spot cards are natural.
--}
 isNatural : Card -> Bool
 isNatural card =
-    (suit card) /= Wild
+    case card of
+        NaturalCard _ _ ->
+            True
+
+        otherwise ->
+            False
 
 
 points : Card -> Points
-points (Card _ _ _ points) =
-    points
+points card =
+    case card of
+        NaturalCard _ p ->
+            p
+
+        CourtCard _ p ->
+            p

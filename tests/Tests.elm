@@ -19,16 +19,10 @@ all =
                     Expect.equal (Card.suit blueTwo) Blue
             , test "new card has correct rank" <|
                 \() ->
-                    Expect.equal (Card.rank blueTwo) Two
+                    Even Two |> Expect.equal (Card.rank blueTwo)
             , test "new card has correct points" <|
                 \() ->
-                    Expect.equal (Card.points redSeven) 1
-            , test "card with lower rank less than card with higher rank" <|
-                \() ->
-                    Expect.lessThan (Card.order redSeven) (Card.order blueTwo)
-            , test "two cards with the same rank are equal" <|
-                \() ->
-                    Expect.equal (Card.order blueTwo) (Card.order greenTwo)
+                    Points 1 |> Expect.equal (Card.points redSeven)
             , test "non-matching single cards do not match" <|
                 \() ->
                     Expect.notEqual blueTwo redSeven
@@ -502,87 +496,87 @@ all =
 
 blueTwo : Card
 blueTwo =
-    Card Blue Two 2 0
+    Card.create <| Card.pip ( Even Two, Blue )
 
 
 greenTwo : Card
 greenTwo =
-    Card Green Two 2 0
+    Card.create <| Card.pip ( Even Two, Green )
 
 
 blueThree : Card
 blueThree =
-    Card Blue Three 3 1
+    Card.create <| Card.pip ( Odd Three, Blue )
 
 
 greenThree : Card
 greenThree =
-    Card Green Three 3 1
+    Card.create <| Card.pip ( Odd Three, Green )
 
 
 redThree : Card
 redThree =
-    Card Red Three 3 1
+    Card.create <| Card.pip ( Odd Three, Red )
 
 
 blueFour : Card
 blueFour =
-    Card Blue Four 4 0
+    Card.create <| Card.pip ( Even Four, Blue )
 
 
 redFive : Card
 redFive =
-    Card Red Five 5 1
+    Card.create <| Card.pip ( Odd Five, Red )
 
 
 greenFive : Card
 greenFive =
-    Card Green Five 5 1
+    Card.create <| Card.pip ( Odd Five, Green )
 
 
 redSeven : Card
 redSeven =
-    Card Red Seven 7 1
+    Card.create <| Card.pip ( Odd Seven, Red )
 
 
 orangeSeven : Card
 orangeSeven =
-    Card Orange Seven 7 1
+    Card.create <| Card.pip ( Odd Seven, Orange )
 
 
 redNine : Card
 redNine =
-    Card Red Nine 9 1
+    Card.create <| Card.pip ( Odd Nine, Red )
 
 
 yellowNine : Card
 yellowNine =
-    Card Yellow Nine 9 1
+    Card.create <| Card.pip ( Odd Nine, Yellow )
 
 
 blueTen : Card
 blueTen =
-    Card Blue Ten 10 0
+    Card.create <| Card.pip ( Even Ten, Blue )
 
 
 greenTen : Card
 greenTen =
-    Card Green Ten 10 0
+    Card.create <| Card.pip ( Even Ten, Green )
 
 
 jack : Card
 jack =
-    Card Wild Jack 11 2
+    Card.create <| Card.court ( Jack, Black )
 
 
 queen : Card
 queen =
-    Card Wild Queen 12 3
+    Card.create <| Card.court ( Queen, Black )
 
 
 king : Card
 king =
-    Card Wild King 13 5
+    Card.create <| Card.court ( King, Black )
 
 
 hand : Hand

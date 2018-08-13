@@ -6,6 +6,14 @@ var _user$project$Haggis_Card$points = function (card) {
 		return _p0._1;
 	}
 };
+var _user$project$Haggis_Card$isNatural = function (card) {
+	var _p1 = card;
+	if (_p1.ctor === 'NaturalCard') {
+		return true;
+	} else {
+		return false;
+	}
+};
 var _user$project$Haggis_Card$Blue = {ctor: 'Blue'};
 var _user$project$Haggis_Card$Green = {ctor: 'Green'};
 var _user$project$Haggis_Card$Yellow = {ctor: 'Yellow'};
@@ -19,24 +27,19 @@ var _user$project$Haggis_Card$Natural = function (a) {
 	return {ctor: 'Natural', _0: a};
 };
 var _user$project$Haggis_Card$suit = function (card) {
-	var _p1 = card;
-	if (_p1.ctor === 'NaturalCard') {
-		return _user$project$Haggis_Card$Natural(_p1._0._1);
+	var _p2 = card;
+	if (_p2.ctor === 'NaturalCard') {
+		return _user$project$Haggis_Card$Natural(_p2._0._1);
 	} else {
-		switch (_p1._0._1.ctor) {
+		switch (_p2._0._1.ctor) {
 			case 'AsNaturalPip':
-				return _user$project$Haggis_Card$Natural(_p1._0._1._0._1);
+				return _user$project$Haggis_Card$Natural(_p2._0._1._0._1);
 			case 'AsUnnaturalCourt':
-				return _user$project$Haggis_Card$Natural(_p1._0._1._0._1);
+				return _user$project$Haggis_Card$Natural(_p2._0._1._0._1);
 			default:
-				return _user$project$Haggis_Card$Wild(_p1._0._1._0._1);
+				return _user$project$Haggis_Card$Wild(_p2._0._1._0._1);
 		}
 	}
-};
-var _user$project$Haggis_Card$isNatural = function (card) {
-	return !_elm_lang$core$Native_Utils.eq(
-		_user$project$Haggis_Card$suit(card),
-		_user$project$Haggis_Card$Wild(_user$project$Haggis_Card$Black));
 };
 var _user$project$Haggis_Card$suits = {
 	ctor: '::',
@@ -88,17 +91,17 @@ var _user$project$Haggis_Card$Pip = function (a) {
 	return {ctor: 'Pip', _0: a};
 };
 var _user$project$Haggis_Card$rank = function (card) {
-	var _p2 = card;
-	if (_p2.ctor === 'NaturalCard') {
-		return _user$project$Haggis_Card$Pip(_p2._0._0);
+	var _p3 = card;
+	if (_p3.ctor === 'NaturalCard') {
+		return _user$project$Haggis_Card$Pip(_p3._0._0);
 	} else {
-		switch (_p2._0._1.ctor) {
+		switch (_p3._0._1.ctor) {
 			case 'AsNaturalPip':
-				return _user$project$Haggis_Card$Pip(_p2._0._1._0._0);
+				return _user$project$Haggis_Card$Pip(_p3._0._1._0._0);
 			case 'AsNaturalCourt':
-				return _user$project$Haggis_Card$Court(_p2._0._1._0._0);
+				return _user$project$Haggis_Card$Court(_p3._0._1._0._0);
 			default:
-				return _user$project$Haggis_Card$Court(_p2._0._1._0._0);
+				return _user$project$Haggis_Card$Court(_p3._0._1._0._0);
 		}
 	}
 };
@@ -214,32 +217,32 @@ var _user$project$Haggis_Card$NaturalCard = F2(
 		return {ctor: 'NaturalCard', _0: a, _1: b};
 	});
 var _user$project$Haggis_Card$create = function (cardIndex) {
-	var _p3 = cardIndex;
-	if (_p3.ctor === 'PipCardIndex') {
-		var _p5 = _p3._0;
-		var _p4 = _p5;
-		if (_p4._0.ctor === 'Even') {
+	var _p4 = cardIndex;
+	if (_p4.ctor === 'PipCardIndex') {
+		var _p6 = _p4._0;
+		var _p5 = _p6;
+		if (_p5._0.ctor === 'Even') {
 			return A2(
 				_user$project$Haggis_Card$NaturalCard,
-				_p5,
+				_p6,
 				_user$project$Haggis_Card$Points(0));
 		} else {
 			return A2(
 				_user$project$Haggis_Card$NaturalCard,
-				_p5,
+				_p6,
 				_user$project$Haggis_Card$Points(1));
 		}
 	} else {
-		var _p7 = _p3._0;
-		var _p6 = _p7;
-		switch (_p6._0.ctor) {
+		var _p8 = _p4._0;
+		var _p7 = _p8;
+		switch (_p7._0.ctor) {
 			case 'Jack':
 				return A2(
 					_user$project$Haggis_Card$CourtCard,
 					{
 						ctor: '_Tuple2',
-						_0: _p7,
-						_1: _user$project$Haggis_Card$AsNaturalCourt(_p7)
+						_0: _p8,
+						_1: _user$project$Haggis_Card$AsNaturalCourt(_p8)
 					},
 					_user$project$Haggis_Card$Points(2));
 			case 'Queen':
@@ -247,8 +250,8 @@ var _user$project$Haggis_Card$create = function (cardIndex) {
 					_user$project$Haggis_Card$CourtCard,
 					{
 						ctor: '_Tuple2',
-						_0: _p7,
-						_1: _user$project$Haggis_Card$AsNaturalCourt(_p7)
+						_0: _p8,
+						_1: _user$project$Haggis_Card$AsNaturalCourt(_p8)
 					},
 					_user$project$Haggis_Card$Points(3));
 			default:
@@ -256,8 +259,8 @@ var _user$project$Haggis_Card$create = function (cardIndex) {
 					_user$project$Haggis_Card$CourtCard,
 					{
 						ctor: '_Tuple2',
-						_0: _p7,
-						_1: _user$project$Haggis_Card$AsNaturalCourt(_p7)
+						_0: _p8,
+						_1: _user$project$Haggis_Card$AsNaturalCourt(_p8)
 					},
 					_user$project$Haggis_Card$Points(5));
 		}

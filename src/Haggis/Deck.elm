@@ -23,57 +23,57 @@ deal handSize deck =
 
 stock : Deck
 stock =
-    [ Card Red Two 2 0
-    , Card Red Three 3 1
-    , Card Red Four 4 0
-    , Card Red Five 5 1
-    , Card Red Six 6 0
-    , Card Red Seven 7 1
-    , Card Red Eight 8 0
-    , Card Red Nine 9 1
-    , Card Red Ten 10 0
-    , Card Orange Two 2 0
-    , Card Orange Three 3 1
-    , Card Orange Four 4 0
-    , Card Orange Five 5 1
-    , Card Orange Six 6 0
-    , Card Orange Seven 7 1
-    , Card Orange Eight 8 0
-    , Card Orange Nine 9 1
-    , Card Orange Ten 10 0
-    , Card Yellow Two 2 0
-    , Card Yellow Three 3 1
-    , Card Yellow Four 4 0
-    , Card Yellow Five 5 1
-    , Card Yellow Six 6 0
-    , Card Yellow Seven 7 1
-    , Card Yellow Eight 8 0
-    , Card Yellow Nine 9 1
-    , Card Yellow Ten 10 0
-    , Card Green Two 2 0
-    , Card Green Three 3 1
-    , Card Green Four 4 0
-    , Card Green Five 5 1
-    , Card Green Six 6 0
-    , Card Green Seven 7 1
-    , Card Green Eight 8 0
-    , Card Green Nine 9 1
-    , Card Green Ten 10 0
-    , Card Blue Two 2 0
-    , Card Blue Three 3 1
-    , Card Blue Four 4 0
-    , Card Blue Five 5 1
-    , Card Blue Six 6 0
-    , Card Blue Seven 7 1
-    , Card Blue Eight 8 0
-    , Card Blue Nine 9 1
-    , Card Blue Ten 10 0
+    [ Card.create <| Card.pip ( Even Two, Red )
+    , Card.create <| Card.pip ( Odd Three, Red )
+    , Card.create <| Card.pip ( Even Four, Red )
+    , Card.create <| Card.pip ( Odd Five, Red )
+    , Card.create <| Card.pip ( Even Six, Red )
+    , Card.create <| Card.pip ( Odd Seven, Red )
+    , Card.create <| Card.pip ( Even Eight, Red )
+    , Card.create <| Card.pip ( Odd Nine, Red )
+    , Card.create <| Card.pip ( Even Ten, Red )
+    , Card.create <| Card.pip ( Even Two, Orange )
+    , Card.create <| Card.pip ( Odd Three, Orange )
+    , Card.create <| Card.pip ( Even Four, Orange )
+    , Card.create <| Card.pip ( Odd Five, Orange )
+    , Card.create <| Card.pip ( Even Six, Orange )
+    , Card.create <| Card.pip ( Odd Seven, Orange )
+    , Card.create <| Card.pip ( Even Eight, Orange )
+    , Card.create <| Card.pip ( Odd Nine, Orange )
+    , Card.create <| Card.pip ( Even Ten, Orange )
+    , Card.create <| Card.pip ( Even Two, Yellow )
+    , Card.create <| Card.pip ( Odd Three, Yellow )
+    , Card.create <| Card.pip ( Even Four, Yellow )
+    , Card.create <| Card.pip ( Odd Five, Yellow )
+    , Card.create <| Card.pip ( Even Six, Yellow )
+    , Card.create <| Card.pip ( Odd Seven, Yellow )
+    , Card.create <| Card.pip ( Even Eight, Yellow )
+    , Card.create <| Card.pip ( Odd Nine, Yellow )
+    , Card.create <| Card.pip ( Even Ten, Yellow )
+    , Card.create <| Card.pip ( Even Two, Green )
+    , Card.create <| Card.pip ( Odd Three, Green )
+    , Card.create <| Card.pip ( Even Four, Green )
+    , Card.create <| Card.pip ( Odd Five, Green )
+    , Card.create <| Card.pip ( Even Six, Green )
+    , Card.create <| Card.pip ( Odd Seven, Green )
+    , Card.create <| Card.pip ( Even Eight, Green )
+    , Card.create <| Card.pip ( Odd Nine, Green )
+    , Card.create <| Card.pip ( Even Ten, Green )
+    , Card.create <| Card.pip ( Even Two, Blue )
+    , Card.create <| Card.pip ( Odd Three, Blue )
+    , Card.create <| Card.pip ( Even Four, Blue )
+    , Card.create <| Card.pip ( Odd Five, Blue )
+    , Card.create <| Card.pip ( Even Six, Blue )
+    , Card.create <| Card.pip ( Odd Seven, Blue )
+    , Card.create <| Card.pip ( Even Eight, Blue )
+    , Card.create <| Card.pip ( Odd Nine, Blue )
+    , Card.create <| Card.pip ( Even Ten, Blue )
     ]
 
 
 wilds : Cards
 wilds =
-    [ Card Wild Jack 11 2
-    , Card Wild Queen 12 3
-    , Card Wild King 13 5
+    [ Card.create <| Card.court ( Jack, Black )
+    , Card.create <| Card.court ( Queen, Black )
+    , Card.create <| Card.court ( King, Black )
     ]

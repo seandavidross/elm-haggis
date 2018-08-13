@@ -1,9 +1,9 @@
 module Haggis.Combination
     exposing
-        ( Bomb(..)
+        ( BombType(..)
         , Combination(..)
-        , Sequence(..)
-        , Set(..)
+        , SequenceType(..)
+        , SetType(..)
         , bomb
         , sequence
         , set
@@ -14,37 +14,81 @@ import Haggis.Cards as Cards exposing (..)
 import List exposing (..)
 
 
-type Combination
-    = Set
-    | Sequence
-    | Bomb
-
-
-type Set rank
+type SetType
     = Single Card.Rank
-    | Pair Card.Rank
-    | Triple Card.Rank
-    | FourOfAKind Card.Rank
-    | FiveOfAKind Card.Rank
-    | SixOfAKind Card.Rank
-    | SevenOfAKind Card.Rank
-    | EightOfAKind Card.Rank
+    | Pair Card.PipRank
+    | Triple Card.PipRank
+    | FourOfAKind Card.PipRank
+    | FiveOfAKind Card.PipRank
+    | SixOfAKind Card.PipRank
+    | SevenOfAKind Card.PipRank
+    | EightOfAKind Card.PipRank
 
 
 type alias Sets =
     List Cards
 
 
-type Sequence qty rank
-    = RunOfSingles Int Card.Rank
-    | RunOfPairs Int Card.Rank
-    | RunOfTriples Int Card.Rank
-    | RunOfFourOfAKinds Int Card.Rank
-    | RunOfFiveOfAKinds Int Card.Rank
-    | RunOfSixOfAKinds Int Card.Rank
+type SinglesLength
+    = ThreeSingles
+    | FourSingles
+    | FiveSingles
+    | SixSingles
+    | SevenSingles
+    | EightSingles
+    | NineSingles
+    | TenSingles
+    | ElevenSingles
+    | TwelveSingles
+    | ThirteenSingles
 
 
-type Bomb
+type PairsLength
+    = TwoPairs
+    | ThreePairs
+    | FourPairs
+    | FivePairs
+    | SixPairs
+    | SevenPairs
+    | EightPairs
+
+
+type TriplesLength
+    = TwoTriples
+    | ThreeTriples
+    | FourTriples
+    | FiveTriples
+
+
+type FourOfAKindsLength
+    = TwoFourOfAKinds
+    | ThreeFourOfAKinds
+    | FourFourOfAKinds
+
+
+type FiveOfAKindsLength
+    = TwoFiveOfAKinds
+    | ThreeFiveOfAKinds
+
+
+type SixOfAKindsLength
+    = TwoSixOfAKinds
+
+
+type SequenceDimensions
+    = Singles SinglesLength
+    | Pairs PairsLength
+    | Triples TriplesLength
+    | FourOfAKinds FourOfAKindsLength
+    | FiveOfAKinds FiveOfAKindsLength
+    | SixOfAKinds SixOfAKindsLength
+
+
+type SequenceType
+    = Run SequenceDimensions Card.Rank
+
+
+type BombType
     = Rainbow
     | JQ
     | JK
@@ -53,30 +97,73 @@ type Bomb
     | Suited
 
 
+type Combination
+    = Set SetType
+    | Sequence SequenceType
+    | Bomb BombType
+
+
 
 -- SET
 
 
-set : Cards -> Maybe (Set Card.Rank)
+set : Cards -> Maybe (SetType Card.Rank)
 set cards =
-    let
-        ( naturals, wilds ) =
-            split cards
+    if List.all Card.equal cards then
+        let
+            rank =
+                List.head cards |> Maybe.map Card.rank
 
-        highestRank =
-            findRank cards
-    in
-    case highestRank of
-        Just rank ->
-            if allSameRank naturals then
-                makeSet cards
-            else if List.length wilds == 1 && List.length cards == 1 then
-                Just (Single rank)
-            else
-                Nothing
+            setSize =
+                List.length cards
+        in
+            case setSize of
+                1 ->
+                    case cards of
+                        [ CourtCard ( ( rank, _ ), AsNaturalPip _ ) _ ] ->
+                            Nothing
 
-        otherwise ->
-            Nothing
+                        [ CourtCard ( ( rank, _ ), AsUnnaturalCourt _ ) _ ] ->
+                            Nothing
+
+                        otherwise ->
+                            rank |> Maybe.map Single
+
+                2 ->
+                    case cards of
+                        [ CourtCard _ _, CourtCard _ _ ] ->
+                            Nothing
+
+                        otherwise ->
+                            rank |> Maybe.map Pair
+
+                3 ->
+                    case cards of
+                        [ CourtCard _ _, CourtCard _ _, CourtCard _ _ ] ->
+                            Nothing
+
+                        otherwise ->
+                            rank |> Maybe.map Triple
+
+                4 ->
+                    rank |> Maybe.map FourOfAKind
+
+                5 ->
+                    rank |> Maybe.map FiveOfAKind
+
+                6 ->
+                    rank |> Maybe.map SixOfAKind
+
+                7 ->
+                    rank |> Maybe.map SevenOfAKind
+
+                8 ->
+                    rank |> Maybe.map EightOfAKind
+
+                otherwise ->
+                    Nothing
+    else
+        Nothing
 
 
 split : List Card -> ( List Card, List Card )
@@ -84,101 +171,41 @@ split cards =
     List.partition Card.isNatural cards
 
 
-allSameRank : Cards -> Bool
-allSameRank cards =
-    case cards of
-        [] ->
-            False
-
-        first :: rest ->
-            List.all (Card.equal first) rest
-
-
-findRank : Cards -> Maybe Card.Rank
-findRank cards =
-    case cards of
-        [] ->
-            Nothing
-
-        first :: [] ->
-            Just (Card.rank first)
-
-        first :: rest ->
-            case Card.suit first of
-                Wild ->
-                    findRank rest
-
-                otherwise ->
-                    Just (Card.rank first)
-
-
-makeSet : Cards -> Maybe (Set Card.Rank)
-makeSet cards =
-    let
-        highestRank =
-            findRank cards
-    in
-    case highestRank of
-        Just rank ->
-            case List.length cards of
-                1 ->
-                    Just (Single rank)
-
-                2 ->
-                    Just (Pair rank)
-
-                3 ->
-                    Just (Triple rank)
-
-                4 ->
-                    Just (FourOfAKind rank)
-
-                5 ->
-                    Just (FiveOfAKind rank)
-
-                6 ->
-                    Just (SixOfAKind rank)
-
-                otherwise ->
-                    Nothing
-
-        otherwise ->
-            Nothing
-
-
 
 -- BOMB
 
 
-bomb : Cards -> Maybe Bomb
+bomb : Cards -> Maybe BombType
 bomb cards =
     let
         ranks =
-            cards |> List.map Card.rank |> List.sortWith Card.byRank
+            cards
+                |> List.map Card.rank
+                |> List.sortWith Card.byRank
     in
-    case ranks of
-        [ Jack, Queen ] ->
-            Just JQ
+        case ranks of
+            [ Jack, Queen ] ->
+                Just JQ
 
-        [ Jack, King ] ->
-            Just JK
+            [ Jack, King ] ->
+                Just JK
 
-        [ Queen, King ] ->
-            Just QK
+            [ Queen, King ] ->
+                Just QK
 
-        [ Jack, Queen, King ] ->
-            Just JQK
+            [ Jack, Queen, King ] ->
+                Just JQK
 
-        [ Three, Five, Seven, Nine ] ->
-            if allSameSuit cards then
-                Just Suited
-            else if hasFourSuits cards then
-                Just Rainbow
-            else
+            [ Odd Three, Odd Five, Odd Seven, Odd Nine ] ->
+                if allSameSuit cards then
+                    Just Suited
+                else if hasFourSuits cards then
+                    Just Rainbow
+                else
+                    Nothing
+
+            otherwise ->
                 Nothing
-
-        otherwise ->
-            Nothing
 
 
 allSameSuit : Cards -> Bool
@@ -242,72 +269,80 @@ sequence cards =
         setSizes =
             List.range (countSuits naturals) (countSuits cards)
     in
-    if List.length naturals == 0 then
-        []
-    else
-        List.filterMap (maybeRunOfSets cards) setSizes
+        if List.length naturals == 0 then
+            []
+        else
+            List.filterMap (maybeRunOfSets cards) setSizes
 
 
 maybeRunOfSets : Cards -> Int -> Maybe (Sequence Int Card.Rank)
 maybeRunOfSets cards setSize =
-    let
-        ( naturals, wilds ) =
-            split cards
-
-        cardCount =
-            List.length cards
-
-        runLength =
-            cardCount // setSize
-
-        ranksInRun =
-            collectRanksInRun runLength naturals
-    in
-    case ranksInRun of
-        Just ( highestRank, ranks ) ->
-            if
-                hasEnoughCards setSize cardCount
-                    && (cardCount == (runLength * setSize))
-                    && canFormSequence setSize ranks cards
-            then
-                makeSequence runLength setSize highestRank
-            else
-                Nothing
-
-        otherwise ->
-            Nothing
+    Nothing
 
 
-collectRanksInRun : Int -> List Card -> Maybe ( Rank, List Card.Order )
+
+-- let
+--     ( naturals, wilds ) =
+--         split cards
+--
+--     cardCount =
+--         List.length cards
+--
+--     runLength =
+--         cardCount // setSize
+--
+--     ranksInRun =
+--         collectRanksInRun runLength naturals
+-- in
+--     case ranksInRun of
+--         Just ( highestRank, ranks ) ->
+--             if
+--                 hasEnoughCards setSize cardCount
+--                     && (cardCount == (runLength * setSize))
+--                     && canFormSequence setSize ranks cards
+--             then
+--                 makeSequence runLength setSize highestRank
+--             else
+--                 Nothing
+--
+--         otherwise ->
+--             Nothing
+
+
+collectRanksInRun : Int -> List Card -> Maybe ( Rank, List Card.Rank )
 collectRanksInRun runLength cards =
-    let
-        lowestOrder =
-            findLowestOrder cards
-    in
-    case lowestOrder of
-        Just low ->
-            let
-                high =
-                    low + runLength - 1
-
-                highestRank =
-                    Card.toRank high
-            in
-            case highestRank of
-                Just rank ->
-                    Just ( rank, List.range low high )
-
-                otherwise ->
-                    Nothing
-
-        otherwise ->
-            Nothing
+    Nothing
 
 
-findLowestOrder : Cards -> Maybe Card.Order
+
+-- let
+--     lowestOrder =
+--         findLowestOrder cards
+-- in
+--     case lowestOrder of
+--         Just low ->
+--             let
+--                 high =
+--                     low + runLength - 1
+--
+--                 -- highestRank =
+--                 --     Card.toRank high
+--             in
+--                 case highestRank of
+--                     Just rank ->
+--                         Just ( rank, List.range low high )
+--
+--                     otherwise ->
+--                         Nothing
+--
+--         otherwise ->
+--             Nothing
+
+
+findLowestOrder : Cards -> Maybe Card.Rank
 findLowestOrder cards =
     cards
-        |> List.map Card.order
+        |> List.map Card.rank
         |> List.minimum
 
 
@@ -320,8 +355,8 @@ hasEnoughCards setSize cardCount =
         shortestOfAKindRun =
             2
     in
-    (setSize == 1 && cardCount >= shortestSinglesRun)
-        || (setSize > 1 && cardCount >= setSize * shortestOfAKindRun)
+        (setSize == 1 && cardCount >= shortestSinglesRun)
+            || (setSize > 1 && cardCount >= setSize * shortestOfAKindRun)
 
 
 canFormSequence : Int -> List Int -> Cards -> Bool
@@ -334,9 +369,9 @@ canFormSequence setSize ranks cards =
             countWildsNeeded setSize (collectCardsWithRanks ranks cards)
 
         wildsUsed =
-            List.length (List.filter (\w -> List.member (Card.order w) ranks) wilds)
+            List.length (List.filter (\w -> List.member (Card.rank w) ranks) wilds)
     in
-    wildsNeeded == (List.length wilds - wildsUsed)
+        wildsNeeded == (List.length wilds - wildsUsed)
 
 
 countWildsNeeded : Int -> Sets -> Int
@@ -346,29 +381,30 @@ countWildsNeeded setSize sets =
 
 collectCardsWithRanks : List Int -> Cards -> Sets
 collectCardsWithRanks ranks cards =
-    List.map (\r -> List.filter (\c -> Card.order c == r) cards) ranks
+    List.map (\r -> List.filter (\c -> Card.rank c == r) cards) ranks
 
 
-makeSequence : Int -> Int -> Card.Rank -> Maybe (Sequence Int Card.Rank)
-makeSequence runLength setSize rank =
-    case setSize of
-        1 ->
-            Just (RunOfSingles runLength rank)
 
-        2 ->
-            Just (RunOfPairs runLength rank)
-
-        3 ->
-            Just (RunOfTriples runLength rank)
-
-        4 ->
-            Just (RunOfFourOfAKinds runLength rank)
-
-        5 ->
-            Just (RunOfFiveOfAKinds runLength rank)
-
-        6 ->
-            Just (RunOfSixOfAKinds runLength rank)
-
-        otherwise ->
-            Nothing
+-- makeSequence : Int -> Int -> Card.Rank -> Maybe (Sequence Int Card.Rank)
+-- makeSequence runLength setSize rank =
+--     case setSize of
+--         1 ->
+--             Just (Singles runLength rank)
+--
+--         2 ->
+--             Just (Pairs runLength rank)
+--
+--         3 ->
+--             Just (Triples runLength rank)
+--
+--         4 ->
+--             Just (FourOfAKinds runLength rank)
+--
+--         5 ->
+--             Just (FiveOfAKinds runLength rank)
+--
+--         6 ->
+--             Just (SixOfAKinds runLength rank)
+--
+--         otherwise ->
+--             Nothing
