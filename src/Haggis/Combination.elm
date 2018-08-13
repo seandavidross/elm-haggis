@@ -144,7 +144,7 @@ set cards =
                     Nothing
     else
         case cards of
-            CourtCard ((rank, _), _) _ ->
+            CourtCard ((rank, _), AsNaturalCourt _) _ ->
                 rank |> Maybe.map Single
             
             otherwise ->
