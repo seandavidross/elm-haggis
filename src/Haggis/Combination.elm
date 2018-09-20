@@ -196,6 +196,9 @@ bomb cards =
 allFlush : Cards -> Bool
 allFlush cards =
     case cards of
+        first :: [] ->
+            true
+            
         first :: rest ->
             List.all (Card.isFlush first) rest
 
